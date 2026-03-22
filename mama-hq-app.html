@@ -1,0 +1,1707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Mama HQ">
+<meta name="theme-color" content="#2C2420">
+<title>Mama HQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+  /* ── RESET & BASE ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  :root {
+    --cream:      #FAF7F2;
+    --warm-white: #FDF9F5;
+    --stone:      #E8E0D5;
+    --taupe:      #C4B5A5;
+    --brown:      #8B7355;
+    --dark:       #2C2420;
+    --terracotta: #C4714F;
+    --sage:       #7A8C6E;
+    --gold:       #C9A96E;
+    --blush:      #E8C4B8;
+    --safe-top:   env(safe-area-inset-top, 44px);
+    --safe-bottom:env(safe-area-inset-bottom, 20px);
+  }
+
+  html, body {
+    height: 100%;
+    background: var(--dark);
+    font-family: 'DM Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+  }
+
+  /* ── APP SHELL ── */
+  #app {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: var(--cream);
+    max-width: 430px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ── LOADING ── */
+  #loading {
+    position: absolute;
+    inset: 0;
+    background: var(--dark);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    z-index: 100;
+    transition: opacity 0.5s ease;
+  }
+  #loading.hidden { opacity: 0; pointer-events: none; }
+  .loading-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 300;
+    color: var(--cream);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .loading-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--terracotta);
+    animation: pulse 1.4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.3; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.2); }
+  }
+
+  /* ── SCREEN ── */
+  .screen {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* ── HEADER ── */
+  .home-header {
+    background: var(--dark);
+    padding: calc(var(--safe-top) + 16px) 22px 22px;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .home-header::before {
+    content: '';
+    position: absolute;
+    top: -20px; left: -20px;
+    width: 120px; height: 120px;
+    background: radial-gradient(circle, rgba(201,169,110,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .home-header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; right: -30px;
+    width: 160px; height: 160px;
+    background: radial-gradient(circle, rgba(196,113,79,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .greeting-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--taupe);
+    margin-bottom: 3px;
+    position: relative; z-index: 1;
+  }
+  .greeting-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.4rem;
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1;
+    position: relative; z-index: 1;
+  }
+  .greeting-date {
+    font-size: 0.65rem;
+    color: var(--taupe);
+    margin-top: 6px;
+    letter-spacing: 0.06em;
+    opacity: 0.8;
+    position: relative; z-index: 1;
+  }
+
+  /* ── BODY ── */
+  .home-body {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 16px 16px calc(var(--safe-bottom) + 70px);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background: var(--cream);
+  }
+
+  /* ── SECTION TITLE ── */
+  .section-title {
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--brown);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  /* ── GLANCE STRIP ── */
+  .glance-strip {
+    display: flex;
+    gap: 8px;
+  }
+  .glance-pill {
+    flex: 1;
+    background: white;
+    border-radius: 16px;
+    padding: 13px 8px;
+    box-shadow: 0 2px 12px rgba(44,36,32,0.07);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    text-align: center;
+    transition: transform 0.15s ease;
+  }
+  .glance-pill:active { transform: scale(0.97); }
+  .glance-icon { font-size: 1.1rem; }
+  .glance-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem;
+    font-weight: 500;
+    color: var(--dark);
+    line-height: 1;
+  }
+  .glance-sub {
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--taupe);
+  }
+  .glance-pill.nudge-pill {
+    background: linear-gradient(135deg, #2C2420 0%, #3D2F28 100%);
+    border: 1px solid rgba(201,169,110,0.2);
+  }
+  .nudge-pill .glance-val {
+    font-style: italic;
+    font-size: 0.82rem;
+    color: var(--cream);
+    font-weight: 300;
+    line-height: 1.2;
+  }
+  .nudge-pill .glance-sub { color: var(--gold); }
+
+  /* ── FILL YOUR CUP ── */
+  .cup-card {
+    background: linear-gradient(135deg, #1E1A17 0%, #2E2520 60%, #1A1E18 100%);
+    border-radius: 18px;
+    padding: 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    border: 1px solid rgba(122,140,110,0.22);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.15s ease;
+  }
+  .cup-card:active { transform: scale(0.99); }
+  .cup-card::before {
+    content: '';
+    position: absolute;
+    top: -20px; right: -20px;
+    width: 90px; height: 90px;
+    background: radial-gradient(circle, rgba(122,140,110,0.18) 0%, transparent 70%);
+  }
+  .cup-orb { font-size: 1.5rem; flex-shrink: 0; margin-top: 2px; }
+  .cup-body { flex: 1; position: relative; z-index: 1; }
+  .cup-tag {
+    font-size: 0.58rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--sage);
+    font-weight: 500;
+    margin-bottom: 5px;
+  }
+  .cup-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.95rem;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.55;
+  }
+  .cup-attr {
+    font-size: 0.55rem;
+    color: var(--taupe);
+    opacity: 0.5;
+    letter-spacing: 0.06em;
+    margin-top: 6px;
+  }
+
+  /* ── DINNER CARD ── */
+  .dinner-card {
+    background: var(--dark);
+    border-radius: 16px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: transform 0.15s ease;
+  }
+  .dinner-card:active { transform: scale(0.99); }
+  .dinner-left {}
+  .dinner-tag {
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    margin-bottom: 3px;
+  }
+  .dinner-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--cream);
+    line-height: 1.2;
+  }
+  .dinner-meta { font-size: 0.62rem; color: var(--taupe); margin-top: 3px; }
+  .dinner-badge {
+    background: var(--terracotta);
+    color: white;
+    border-radius: 10px;
+    padding: 7px 12px;
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+  .dinner-empty {
+    font-size: 0.75rem;
+    color: var(--taupe);
+    font-style: italic;
+  }
+
+  /* ── TASKS ── */
+  .tasks-card {
+    background: white;
+    border-radius: 16px;
+    padding: 15px;
+    box-shadow: 0 2px 12px rgba(44,36,32,0.06);
+  }
+  .tasks-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .tasks-count {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    color: var(--dark);
+  }
+  .tasks-pct {
+    font-size: 0.65rem;
+    color: var(--sage);
+    font-weight: 500;
+    letter-spacing: 0.06em;
+  }
+  .progress-bar {
+    height: 4px;
+    background: var(--stone);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 11px;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--sage), #A8BA9A);
+    border-radius: 6px;
+    transition: width 0.6s ease;
+  }
+  .task-items { display: flex; flex-direction: column; gap: 7px; }
+  .task-row {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 0.75rem;
+    color: var(--dark);
+  }
+  .task-row.done { opacity: 0.4; }
+  .task-check {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    border: 1.5px solid var(--stone);
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s ease;
+  }
+  .task-check.ticked {
+    background: var(--sage);
+    border-color: var(--sage);
+  }
+  .task-check.ticked::after { content: '✓'; color: white; font-size: 0.55rem; font-weight: 700; }
+  .task-text.struck { text-decoration: line-through; color: var(--taupe); }
+  .task-cat {
+    font-size: 0.58rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+  .cat-kids { color: var(--terracotta); }
+  .cat-errand { color: var(--taupe); }
+  .cat-admin { color: var(--brown); }
+  .cat-home { color: var(--sage); }
+  .cat-self { color: var(--gold); }
+
+  .tasks-more {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--stone);
+  }
+  .tasks-more-count { font-size: 0.65rem; color: var(--taupe); letter-spacing: 0.04em; }
+  .tasks-more-link { font-size: 0.62rem; color: var(--terracotta); letter-spacing: 0.04em; }
+
+  /* ── UPCOMING ── */
+  .upcoming-list { display: flex; flex-direction: column; }
+  .upcoming-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--stone);
+  }
+  .upcoming-row:last-child { border-bottom: none; }
+  .upcoming-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .upcoming-info { flex: 1; }
+  .upcoming-title { font-size: 0.74rem; color: var(--dark); font-weight: 400; }
+  .upcoming-who { font-size: 0.62rem; color: var(--taupe); margin-top: 1px; }
+  .upcoming-time { font-size: 0.6rem; color: var(--taupe); text-align: right; white-space: nowrap; line-height: 1.4; }
+
+  /* ── GROCERY SHORTCUT ── */
+  .grocery-card {
+    background: white;
+    border-radius: 16px;
+    padding: 14px;
+    box-shadow: 0 2px 12px rgba(44,36,32,0.06);
+    border-left: 3px solid var(--sage);
+  }
+  .grocery-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .grocery-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sage);
+    font-weight: 500;
+  }
+  .grocery-count { font-size: 0.62rem; color: var(--taupe); }
+  .grocery-preview { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; }
+  .grocery-preview-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.72rem;
+    color: var(--dark);
+  }
+  .grocery-preview-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+  .grocery-more { font-size: 0.64rem; color: var(--taupe); opacity: 0.6; }
+  .grocery-actions { display: flex; gap: 8px; }
+  .grocery-btn-add {
+    flex: 1;
+    background: var(--sage);
+    color: white;
+    border-radius: 10px;
+    padding: 9px;
+    text-align: center;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .grocery-btn-add:active { opacity: 0.8; }
+  .grocery-btn-view {
+    padding: 9px 14px;
+    border-radius: 10px;
+    border: 1.5px solid var(--stone);
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--taupe);
+    background: none;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .grocery-btn-view:active { opacity: 0.6; }
+
+  /* ── NAV BAR ── */
+  .nav-bar {
+    background: white;
+    border-top: 1px solid var(--stone);
+    padding: 10px 8px calc(var(--safe-bottom) + 8px);
+    display: flex;
+    justify-content: space-around;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 10;
+  }
+  .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 4px 12px;
+    cursor: pointer;
+    transition: opacity 0.15s;
+    text-decoration: none;
+  }
+  .nav-item:active { opacity: 0.6; }
+  .nav-icon { font-size: 1.15rem; }
+  .nav-label {
+    font-size: 0.55rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--taupe);
+  }
+  .nav-item.active .nav-label { color: var(--terracotta); }
+  .nav-item.active .nav-icon { filter: none; }
+
+  /* ── FAB ── */
+  .fab {
+    position: absolute;
+    bottom: calc(var(--safe-bottom) + 76px);
+    right: 18px;
+    width: 48px; height: 48px;
+    background: var(--terracotta);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: white;
+    font-size: 1.4rem;
+    box-shadow: 0 4px 20px rgba(196,113,79,0.45);
+    cursor: pointer;
+    z-index: 20;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    border: none;
+  }
+  .fab:active { transform: scale(0.93); box-shadow: 0 2px 10px rgba(196,113,79,0.3); }
+
+  /* ── EMPTY STATE ── */
+  .empty-state {
+    font-size: 0.72rem;
+    color: var(--taupe);
+    font-style: italic;
+    opacity: 0.7;
+    padding: 8px 0;
+  }
+
+  /* ── ANIMATIONS ── */
+  .fade-in {
+    animation: fadeIn 0.4s ease forwards;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-in:nth-child(1) { animation-delay: 0.05s; }
+  .fade-in:nth-child(2) { animation-delay: 0.1s; }
+  .fade-in:nth-child(3) { animation-delay: 0.15s; }
+  .fade-in:nth-child(4) { animation-delay: 0.2s; }
+  .fade-in:nth-child(5) { animation-delay: 0.25s; }
+  .fade-in:nth-child(6) { animation-delay: 0.3s; }
+
+  /* ── SCREEN SWITCHING ── */
+  .screen { display: flex; }
+
+  /* ── MEALS SCREEN ── */
+  .std-header {
+    padding: calc(var(--safe-top) + 16px) 20px 14px;
+    background: var(--cream);
+    border-bottom: 1px solid var(--stone);
+    flex-shrink: 0;
+  }
+  .std-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.9rem;
+    font-weight: 300;
+    color: var(--dark);
+    line-height: 1;
+  }
+  .std-sub { font-size: 0.64rem; color: var(--taupe); margin-top: 4px; letter-spacing: 0.05em; }
+
+  .mode-tabs {
+    display: flex;
+    background: var(--cream);
+    border-bottom: 1px solid var(--stone);
+    flex-shrink: 0;
+  }
+  .mode-tab {
+    flex: 1;
+    text-align: center;
+    padding: 11px 8px;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--taupe);
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .mode-tab.active {
+    color: var(--dark);
+    border-bottom-color: var(--terracotta);
+    font-weight: 500;
+  }
+
+  .meals-body {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 14px 16px calc(var(--safe-bottom) + 70px);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  /* Planner day card */
+  .plan-day {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(44,36,32,0.06);
+  }
+  .plan-day-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 11px 14px;
+    background: var(--cream);
+    border-bottom: 1px solid var(--stone);
+  }
+  .plan-day-name {
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brown);
+    font-weight: 500;
+  }
+  .plan-day-date { font-size: 0.62rem; color: var(--taupe); }
+  .plan-day-today .plan-day-header { background: var(--dark); }
+  .plan-day-today .plan-day-name { color: var(--terracotta); }
+  .plan-day-today .plan-day-date { color: var(--taupe); }
+
+  .plan-slots { display: flex; flex-direction: column; }
+  .plan-slot {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--stone);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .plan-slot:last-child { border-bottom: none; }
+  .plan-slot:active { background: var(--cream); }
+  .slot-type-badge {
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 8px;
+    flex-shrink: 0;
+    min-width: 62px;
+    text-align: center;
+  }
+  .slot-breakfast { background: #FAF4E8; color: var(--brown); }
+  .slot-lunch { background: var(--stone); color: var(--brown); }
+  .slot-dinner { background: #F5EDE8; color: var(--terracotta); }
+  .slot-info { flex: 1; }
+  .slot-meal-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--dark);
+  }
+  .slot-meal-meta { font-size: 0.62rem; color: var(--taupe); margin-top: 1px; }
+  .slot-empty { font-size: 0.72rem; color: var(--taupe); font-style: italic; opacity: 0.7; }
+  .slot-add { font-size: 0.85rem; color: var(--stone); }
+
+  /* Favourites */
+  .fav-search-wrap { position: relative; }
+  .fav-search {
+    width: 100%;
+    background: white;
+    border: 1.5px solid var(--stone);
+    border-radius: 12px;
+    padding: 11px 14px;
+    font-size: 0.82rem;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--dark);
+    outline: none;
+  }
+  .fav-search:focus { border-color: var(--terracotta); box-shadow: 0 0 0 3px rgba(196,113,79,0.08); }
+
+  .fav-card {
+    background: white;
+    border-radius: 14px;
+    padding: 13px 14px;
+    box-shadow: 0 1px 8px rgba(44,36,32,0.05);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+  .fav-card:active { transform: scale(0.98); }
+  .fav-emoji {
+    width: 40px; height: 40px;
+    border-radius: 12px;
+    background: var(--cream);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  .fav-info { flex: 1; }
+  .fav-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--dark);
+  }
+  .fav-meta { font-size: 0.62rem; color: var(--taupe); margin-top: 2px; }
+  .fav-stars { font-size: 0.65rem; margin-top: 2px; }
+  .fav-plan-btn {
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+
+  .meals-fab { bottom: calc(var(--safe-bottom) + 76px); right: 18px; }
+
+  /* ── BOTTOM SHEET ── */
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(44,36,32,0.5);
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .bottom-sheet {
+    background: white;
+    border-radius: 24px 24px 0 0;
+    max-height: 88vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: calc(var(--safe-bottom) + 8px);
+  }
+  .sheet-handle {
+    width: 36px; height: 4px;
+    background: var(--stone);
+    border-radius: 4px;
+    margin: 12px auto 0;
+  }
+  .sheet-header { padding: 14px 20px 10px; border-bottom: 1px solid var(--stone); }
+  .sheet-eyebrow {
+    font-size: 0.6rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    margin-bottom: 3px;
+    font-weight: 500;
+  }
+  .sheet-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--dark);
+  }
+  .sheet-sub { font-size: 0.62rem; color: var(--taupe); margin-top: 2px; }
+  .sheet-body { padding: 14px 20px; display: flex; flex-direction: column; gap: 14px; }
+  .sheet-footer { padding: 8px 20px 4px; }
+
+  .add-section-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brown);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  .add-fav-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+  .add-fav-chip {
+    padding: 7px 13px;
+    border-radius: 20px;
+    background: var(--cream);
+    border: 1.5px solid var(--stone);
+    font-size: 0.72rem;
+    color: var(--dark);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .add-fav-chip.sel { background: var(--dark); color: var(--cream); border-color: var(--dark); }
+  .leftover-chip { background: #EEF2EB; border-color: var(--sage); color: var(--sage); }
+  .leftover-chip.sel { background: var(--sage); color: white; border-color: var(--sage); }
+  .add-divider {
+    text-align: center;
+    font-size: 0.62rem;
+    color: var(--taupe);
+    letter-spacing: 0.08em;
+    position: relative;
+  }
+  .add-divider::before, .add-divider::after {
+    content: '';
+    position: absolute;
+    top: 50%; width: 38%;
+    height: 1px;
+    background: var(--stone);
+  }
+  .add-divider::before { left: 0; }
+  .add-divider::after { right: 0; }
+
+  .form-field { display: flex; flex-direction: column; gap: 6px; }
+  .form-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brown);
+    font-weight: 500;
+  }
+  .form-input {
+    background: var(--warm-white);
+    border: 1.5px solid var(--stone);
+    border-radius: 12px;
+    padding: 11px 14px;
+    font-size: 0.82rem;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--dark);
+    outline: none;
+  }
+  .form-input:focus { border-color: var(--terracotta); box-shadow: 0 0 0 3px rgba(196,113,79,0.08); }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 7px; }
+  .chip {
+    padding: 6px 13px;
+    border-radius: 20px;
+    font-size: 0.68rem;
+    border: 1.5px solid var(--stone);
+    color: var(--taupe);
+    background: white;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .chip.sel { background: var(--dark); color: var(--cream); border-color: var(--dark); }
+
+  .star-row { display: flex; gap: 6px; }
+  .star { font-size: 1.3rem; cursor: pointer; opacity: 0.25; transition: opacity 0.15s; }
+  .star.lit { opacity: 1; }
+
+  .save-btn {
+    width: 100%;
+    background: var(--dark);
+    color: var(--cream);
+    border: none;
+    border-radius: 14px;
+    padding: 15px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .save-btn:active { opacity: 0.8; }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- LOADING -->
+  <div id="loading">
+    <div class="loading-name">Mama HQ</div>
+    <div class="loading-dot"></div>
+  </div>
+
+  <!-- HOME SCREEN -->
+  <div class="screen" id="home-screen">
+
+    <!-- HEADER -->
+    <div class="home-header">
+      <div class="greeting-label" id="greeting-label">Good morning</div>
+      <div class="greeting-name">Ivana.</div>
+      <div class="greeting-date" id="greeting-date">Loading...</div>
+    </div>
+
+    <!-- BODY -->
+    <div class="home-body" id="home-body">
+
+      <!-- GLANCE STRIP -->
+      <div class="fade-in">
+        <div class="section-title">Today at a glance</div>
+        <div class="glance-strip">
+          <div class="glance-pill">
+            <span class="glance-icon">📅</span>
+            <span class="glance-val" id="events-count">—</span>
+            <span class="glance-sub">Events</span>
+          </div>
+          <div class="glance-pill">
+            <span class="glance-icon">✅</span>
+            <span class="glance-val" id="tasks-count">—</span>
+            <span class="glance-sub">Tasks</span>
+          </div>
+          <div class="glance-pill nudge-pill">
+            <span class="glance-icon">🌿</span>
+            <span class="glance-val" id="nudge-preview">For you</span>
+            <span class="glance-sub">Today's nudge</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- FILL YOUR CUP -->
+      <div class="fade-in">
+        <div class="section-title">Fill your cup ✦</div>
+        <div class="cup-card">
+          <div class="cup-orb">🌿</div>
+          <div class="cup-body">
+            <div class="cup-tag">For you · from Mama HQ</div>
+            <div class="cup-text" id="cup-text">Loading your morning nudge...</div>
+            <div class="cup-attr">Refreshes daily · just for you</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TONIGHT'S DINNER -->
+      <div class="fade-in">
+        <div class="section-title">Tonight's dinner</div>
+        <div id="dinner-container"></div>
+      </div>
+
+      <!-- TASKS TODAY -->
+      <div class="fade-in">
+        <div class="section-title">Tasks today</div>
+        <div class="tasks-card">
+          <div class="tasks-top">
+            <span class="tasks-count" id="tasks-summary">Loading...</span>
+            <span class="tasks-pct" id="tasks-pct"></span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="tasks-progress" style="width:0%"></div>
+          </div>
+          <div class="task-items" id="task-items"></div>
+          <div class="tasks-more" id="tasks-more" style="display:none">
+            <span class="tasks-more-count" id="tasks-more-count"></span>
+            <span class="tasks-more-link">View all →</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- UPCOMING -->
+      <div class="fade-in">
+        <div class="section-title">Upcoming</div>
+        <div class="upcoming-list" id="upcoming-list"></div>
+      </div>
+
+      <!-- GROCERY SHORTCUT -->
+      <div class="fade-in">
+        <div class="section-title">This week's shop</div>
+        <div class="grocery-card">
+          <div class="grocery-top">
+            <div class="grocery-label">🛒 <span id="grocery-label-text">Loading...</span></div>
+            <div class="grocery-count" id="grocery-done-count"></div>
+          </div>
+          <div class="grocery-preview" id="grocery-preview"></div>
+          <div class="grocery-actions">
+            <button class="grocery-btn-add">+ Quick add</button>
+            <button class="grocery-btn-view">View all</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- FAB -->
+    <button class="fab" id="fab">+</button>
+
+    <!-- NAV -->
+    <nav class="nav-bar">
+      <a class="nav-item active" id="nav-home" onclick="showScreen('home')">
+        <span class="nav-icon">🏠</span>
+        <span class="nav-label">Home</span>
+      </a>
+      <a class="nav-item" id="nav-meals" onclick="showScreen('meals')">
+        <span class="nav-icon">🍽</span>
+        <span class="nav-label">Meals</span>
+      </a>
+      <a class="nav-item" id="nav-tasks" onclick="showScreen('tasks')">
+        <span class="nav-icon">📋</span>
+        <span class="nav-label">Tasks</span>
+      </a>
+      <a class="nav-item" id="nav-budget" onclick="showScreen('budget')">
+        <span class="nav-icon">💰</span>
+        <span class="nav-label">Budget</span>
+      </a>
+      <a class="nav-item" id="nav-shop" onclick="showScreen('shop')">
+        <span class="nav-icon">🛒</span>
+        <span class="nav-label">Shop</span>
+      </a>
+    </nav>
+
+  </div>
+
+  <!-- ── MEALS SCREEN ── -->
+  <div class="screen" id="meals-screen" style="display:none">
+
+    <div class="std-header">
+      <div class="std-title">Meals</div>
+      <div class="std-sub" id="meals-week-label">This week</div>
+    </div>
+
+    <!-- MODE TABS -->
+    <div class="mode-tabs">
+      <div class="mode-tab active" id="tab-planner" onclick="switchMealsTab('planner')">Weekly plan</div>
+      <div class="mode-tab" id="tab-favourites" onclick="switchMealsTab('favourites')">Favourites</div>
+    </div>
+
+    <!-- PLANNER VIEW -->
+    <div id="meals-planner" class="meals-body">
+      <div id="planner-days"></div>
+    </div>
+
+    <!-- FAVOURITES VIEW -->
+    <div id="meals-favourites" class="meals-body" style="display:none">
+      <div class="fav-search-wrap">
+        <input class="fav-search" id="fav-search" type="text" placeholder="Search meals…" oninput="filterFavourites(this.value)">
+      </div>
+      <div id="favourites-list"></div>
+    </div>
+
+    <!-- FAB -->
+    <button class="fab meals-fab" id="meals-fab" onclick="openAddMeal()">+</button>
+
+    <nav class="nav-bar">
+      <a class="nav-item" id="mnav-home" onclick="showScreen('home')"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></a>
+      <a class="nav-item active" id="mnav-meals" onclick="showScreen('meals')"><span class="nav-icon">🍽</span><span class="nav-label">Meals</span></a>
+      <a class="nav-item" id="mnav-tasks" onclick="showScreen('tasks')"><span class="nav-icon">📋</span><span class="nav-label">Tasks</span></a>
+      <a class="nav-item" id="mnav-budget" onclick="showScreen('budget')"><span class="nav-icon">💰</span><span class="nav-label">Budget</span></a>
+      <a class="nav-item" id="mnav-shop" onclick="showScreen('shop')"><span class="nav-icon">🛒</span><span class="nav-label">Shop</span></a>
+    </nav>
+  </div>
+
+  <!-- ── ADD MEAL SHEET ── -->
+  <div id="add-meal-overlay" class="overlay" style="display:none" onclick="closeAddMeal(event)">
+    <div class="bottom-sheet" id="add-meal-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <div class="sheet-eyebrow">🍽 Add a meal</div>
+        <div class="sheet-title" id="add-meal-title">Plan a meal</div>
+        <div class="sheet-sub" id="add-meal-sub">Choose from favourites or add new</div>
+      </div>
+      <div class="sheet-body">
+
+        <!-- LEFTOVERS -->
+        <div>
+          <div class="add-section-label">Leftovers</div>
+          <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:8px">
+            <div class="add-fav-chip leftover-chip" style="font-weight:500" onclick="selectQuickLeftover(this)">🍱 Leftovers</div>
+          </div>
+          <div class="add-section-label" style="margin-top:4px">Leftovers from...</div>
+          <div class="add-fav-chips" id="add-meal-leftovers"></div>
+        </div>
+
+        <div class="add-divider">or plan a meal</div>
+
+        <!-- PICK FROM FAVOURITES -->
+        <div class="add-section-label">Pick from favourites</div>
+        <div id="add-meal-favs" class="add-fav-chips"></div>
+
+        <div class="add-divider">or add new</div>
+
+        <!-- NEW MEAL FIELDS -->
+        <div class="form-field">
+          <div class="form-label">Meal name</div>
+          <input class="form-input" id="new-meal-name" type="text" placeholder="e.g. Pasta bake">
+        </div>
+        <div class="form-field">
+          <div class="form-label">Meal type</div>
+          <div class="chips" id="meal-type-chips">
+            <div class="chip" onclick="selectChip(this,'meal-type-chips')">Breakfast</div>
+            <div class="chip" onclick="selectChip(this,'meal-type-chips')">Lunch</div>
+            <div class="chip sel" onclick="selectChip(this,'meal-type-chips')">Dinner</div>
+            <div class="chip" onclick="selectChip(this,'meal-type-chips')">Snack</div>
+          </div>
+        </div>
+        <div class="form-field">
+          <div class="form-label">Prep time</div>
+          <div class="chips" id="prep-chips">
+            <div class="chip" onclick="selectChip(this,'prep-chips')">Under 15 min</div>
+            <div class="chip sel" onclick="selectChip(this,'prep-chips')">15–30 min</div>
+            <div class="chip" onclick="selectChip(this,'prep-chips')">30–60 min</div>
+          </div>
+        </div>
+        <div class="form-field">
+          <div class="form-label">Kid-friendly rating</div>
+          <div class="star-row" id="star-row">
+            <span class="star lit" onclick="setStars(1)">⭐</span>
+            <span class="star lit" onclick="setStars(2)">⭐</span>
+            <span class="star lit" onclick="setStars(3)">⭐</span>
+            <span class="star" onclick="setStars(4)">⭐</span>
+            <span class="star" onclick="setStars(5)">⭐</span>
+          </div>
+        </div>
+      </div>
+      <div class="sheet-footer">
+        <button class="save-btn" onclick="saveMeal()">✓ Save to planner</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ── CONFIG ──────────────────────────────────────────────────
+const SHEET_ID = '1I8nrN5vjWvZZHEYTijHHD8Ykq-rorkHzy7FSquGgWX4';
+const API_KEY  = 'AIzaSyBohVAQ6rjE6Ij5SAkG3PKv7SvJSqOkUkE';
+
+// ── HELPERS ─────────────────────────────────────────────────
+const today = new Date();
+const todayStr = [
+  today.getFullYear(),
+  String(today.getMonth() + 1).padStart(2, '0'),
+  String(today.getDate()).padStart(2, '0')
+].join('-');
+
+function getGreeting() {
+  const h = today.getHours();
+  if (h < 12) return 'Good morning';
+  if (h < 17) return 'Good afternoon';
+  return 'Good evening';
+}
+
+function formatDate(d) {
+  return d.toLocaleDateString('en-AU', {
+    weekday: 'long', day: 'numeric', month: 'long'
+  });
+}
+
+function formatShortDate(str) {
+  if (!str || typeof str !== 'string') return '';
+  try {
+    const parts = str.split('-');
+    if (parts.length !== 3) return str;
+    const d = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+    return d.toLocaleDateString('en-AU', { weekday: 'short', day: 'numeric', month: 'short' });
+  } catch(e) { return str; }
+}
+
+function getCatClass(cat) {
+  const c = (cat || '').toLowerCase();
+  if (c.includes('kid')) return 'cat-kids';
+  if (c.includes('errand')) return 'cat-errand';
+  if (c.includes('admin')) return 'cat-admin';
+  if (c.includes('home')) return 'cat-home';
+  if (c.includes('self')) return 'cat-self';
+  return 'cat-errand';
+}
+
+function normaliseDate(str) {
+  if (!str || typeof str !== 'string') return '';
+  str = str.trim();
+  if (/^\d{4}-\d{2}-\d{2}$/.test(str)) return str;
+  // M/D/YYYY
+  const mdy = str.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if (mdy) return `${mdy[3]}-${mdy[1].padStart(2,'0')}-${mdy[2].padStart(2,'0')}`;
+  // Try native parse
+  try {
+    const d = new Date(str);
+    if (!isNaN(d)) return [d.getFullYear(), String(d.getMonth()+1).padStart(2,'0'), String(d.getDate()).padStart(2,'0')].join('-');
+  } catch(e) {}
+  return str;
+}
+
+async function fetchSheet(range) {
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${encodeURIComponent(range)}?key=${API_KEY}`;
+  const res = await fetch(url);
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.error?.message || `Sheet error: ${res.status}`);
+  }
+  const data = await res.json();
+  const rows = data.values || [];
+  if (rows.length < 2) return [];
+  const headers = rows[0];
+  return rows.slice(1).map(row => {
+    const obj = {};
+    headers.forEach((h, i) => obj[h] = row[i] || '');
+    return obj;
+  });
+}
+
+// ── RENDER HELPERS ──────────────────────────────────────────
+function renderDinner(meal) {
+  const container = document.getElementById('dinner-container');
+  if (!meal) {
+    container.innerHTML = `<div class="dinner-card"><div class="dinner-empty">Nothing planned yet — tap to add</div></div>`;
+    return;
+  }
+  container.innerHTML = `
+    <div class="dinner-card">
+      <div class="dinner-left">
+        <div class="dinner-tag">Dinner · Tonight</div>
+        <div class="dinner-name">${meal['Meal Name'] || meal['Meal Name (auto)'] || 'Dinner'}</div>
+        <div class="dinner-meta">${meal['Prep Time'] || ''} ${meal['Kid Rating'] ? '· ' + meal['Kid Rating'] : ''}</div>
+      </div>
+      <div class="dinner-badge">Recipe</div>
+    </div>`;
+}
+
+function renderTasks(tasks) {
+  const allTasks = tasks || [];
+  const todayTasks = allTasks.filter(t => {
+    if (!t) return false;
+    const dueDate = normaliseDate(t['Due Date'] || t['Due date'] || '');
+    const done = (t['Done'] || t['done'] || '').trim().toUpperCase();
+    return dueDate === todayStr && done !== 'TRUE';
+  });
+  const doneTasks = allTasks.filter(t => {
+    if (!t) return false;
+    const dueDate = normaliseDate(t['Due Date'] || t['Due date'] || '');
+    const done = (t['Done'] || t['done'] || '').trim().toUpperCase();
+    return dueDate === todayStr && done === 'TRUE';
+  });
+  const total = todayTasks.length + doneTasks.length;
+  const done = doneTasks.length;
+  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+
+  document.getElementById('tasks-summary').textContent =
+    total === 0 ? 'No tasks today' : `${done} of ${total} done`;
+  document.getElementById('tasks-pct').textContent = total > 0 ? `${pct}%` : '';
+  document.getElementById('tasks-progress').style.width = `${pct}%`;
+
+  const allToday = [...doneTasks, ...todayTasks];
+  const show = allToday.slice(0, 4);
+  const rest = allToday.length - show.length;
+
+  const container = document.getElementById('task-items');
+  if (allToday.length === 0) {
+    container.innerHTML = `<div class="empty-state">All clear — nothing due today</div>`;
+    document.getElementById('tasks-count').textContent = '0';
+    return;
+  }
+
+  container.innerHTML = show.map(t => {
+    const isDone = t['Done'] === 'TRUE';
+    return `
+      <div class="task-row ${isDone ? 'done' : ''}">
+        <div class="task-check ${isDone ? 'ticked' : ''}"></div>
+        <span class="task-text ${isDone ? 'struck' : ''}">${t['Task'] || ''}</span>
+        <span class="task-cat ${getCatClass(t['Category'])}">${t['Category'] || ''}</span>
+      </div>`;
+  }).join('');
+
+  const moreEl = document.getElementById('tasks-more');
+  if (rest > 0) {
+    moreEl.style.display = 'flex';
+    document.getElementById('tasks-more-count').textContent = `+ ${rest} more task${rest > 1 ? 's' : ''}`;
+  }
+
+  document.getElementById('tasks-count').textContent = `${done}/${total}`;
+}
+
+function renderUpcoming(events) {
+  const upcoming = (events || [])
+    .filter(e => e && e['Date'] && normaliseDate(e['Date']) > todayStr)
+    .sort((a, b) => normaliseDate(a['Date'] || '').localeCompare(normaliseDate(b['Date'] || '')))
+    .slice(0, 3);
+
+  const container = document.getElementById('upcoming-list');
+  if (upcoming.length === 0) {
+    container.innerHTML = `<div class="empty-state">Nothing coming up — add an event</div>`;
+    return;
+  }
+
+  const colours = ['var(--terracotta)', 'var(--sage)', 'var(--gold)'];
+  container.innerHTML = upcoming.map((e, i) => `
+    <div class="upcoming-row">
+      <div class="upcoming-dot" style="background:${colours[i % 3]}"></div>
+      <div class="upcoming-info">
+        <div class="upcoming-title">${e['Title'] || ''}</div>
+        <div class="upcoming-who">${e['Who'] || ''} ${e['Location'] ? '· ' + e['Location'] : ''}</div>
+      </div>
+      <div class="upcoming-time">${formatShortDate(e['Date'])}<br>${e['Start Time'] || ''}</div>
+    </div>`).join('');
+
+  const todayEvents = (events || []).filter(e => e && normaliseDate(e['Date'] || '') === todayStr).length;
+  document.getElementById('events-count').textContent = todayEvents || '0';
+}
+
+function renderGrocery(items) {
+  const allItems = items || [];
+  const unticked = allItems.filter(i => i && i['Ticked'] !== 'TRUE');
+  const ticked = allItems.filter(i => i && i['Ticked'] === 'TRUE');
+  const doneCount = ticked.length;
+
+  document.getElementById('grocery-label-text').textContent =
+    `${unticked.length} item${unticked.length !== 1 ? 's' : ''} to get`;
+  document.getElementById('grocery-done-count').textContent =
+    `${doneCount} done`;
+
+  const preview = unticked.slice(0, 2);
+  const rest = unticked.length - preview.length;
+  const colours = ['var(--sage)', 'var(--terracotta)', 'var(--gold)'];
+
+  const container = document.getElementById('grocery-preview');
+  container.innerHTML = preview.map((item, i) => `
+    <div class="grocery-preview-item">
+      <div class="grocery-preview-dot" style="background:${colours[i]}"></div>
+      <span>${item['Item'] || ''} · ${item['Category'] || ''}</span>
+    </div>`).join('') +
+    (rest > 0 ? `<div class="grocery-more">+ ${rest} more items</div>` : '');
+}
+
+function renderCup(nudges) {
+  let text = 'Take a breath. You\'re doing better than you think.';
+  if (nudges && nudges.length > 0) {
+    const todayNudge = nudges.find(n => n && n['Date'] === todayStr);
+    const nudge = todayNudge || nudges[nudges.length - 1];
+    if (nudge && nudge['Nudge Text']) text = nudge['Nudge Text'];
+  }
+  document.getElementById('cup-text').textContent = `"${text}"`;
+  const words = text.split(' ').slice(0, 3).join(' ') + '…';
+  document.getElementById('nudge-preview').textContent = words;
+}
+
+// ── SCREEN SWITCHING ────────────────────────────────────────
+let currentScreen = 'home';
+let allMeals = [];
+let allMealPlan = [];
+let selectedDay = null;
+let selectedFavMeal = null;
+let starRating = 3;
+
+function showScreen(name) {
+  document.getElementById('home-screen').style.display = name === 'home' ? 'flex' : 'none';
+  document.getElementById('meals-screen').style.display = name === 'meals' ? 'flex' : 'none';
+  currentScreen = name;
+
+  // Update nav active states
+  ['home','meals','tasks','budget','shop'].forEach(s => {
+    const el = document.getElementById(`nav-${s}`);
+    const mel = document.getElementById(`mnav-${s}`);
+    if (el) el.className = `nav-item${s === name ? ' active' : ''}`;
+    if (mel) mel.className = `nav-item${s === name ? ' active' : ''}`;
+  });
+
+  if (name === 'meals') renderMealsScreen();
+}
+
+// ── MEALS SCREEN ─────────────────────────────────────────────
+function switchMealsTab(tab) {
+  document.getElementById('tab-planner').className = `mode-tab${tab === 'planner' ? ' active' : ''}`;
+  document.getElementById('tab-favourites').className = `mode-tab${tab === 'favourites' ? ' active' : ''}`;
+  document.getElementById('meals-planner').style.display = tab === 'planner' ? 'flex' : 'none';
+  document.getElementById('meals-favourites').style.display = tab === 'favourites' ? 'flex' : 'none';
+}
+
+function getMealTypeEmoji(type) {
+  const t = (type || '').toLowerCase();
+  if (t.includes('breakfast')) return '🥑';
+  if (t.includes('lunch')) return '🥗';
+  if (t.includes('dinner')) return '🍽';
+  return '🍴';
+}
+
+function getSlotClass(type) {
+  const t = (type || '').toLowerCase();
+  if (t.includes('breakfast')) return 'slot-breakfast';
+  if (t.includes('lunch')) return 'slot-lunch';
+  return 'slot-dinner';
+}
+
+function renderMealsScreen() {
+  renderWeekPlanner();
+  renderFavourites();
+}
+
+function renderWeekPlanner() {
+  const container = document.getElementById('planner-days');
+  const days = [];
+
+  // Build 7 days starting from today
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(today);
+    d.setDate(today.getDate() + i);
+    const dateStr = [
+      d.getFullYear(),
+      String(d.getMonth()+1).padStart(2,'0'),
+      String(d.getDate()).padStart(2,'0')
+    ].join('-');
+    days.push({
+      date: dateStr,
+      label: i === 0 ? 'Today' : d.toLocaleDateString('en-AU', { weekday: 'long' }),
+      dateLabel: d.toLocaleDateString('en-AU', { day: 'numeric', month: 'short' })
+    });
+  }
+
+  const mealTypes = ['Breakfast', 'Lunch', 'Dinner'];
+
+  container.innerHTML = days.map(day => {
+    const isToday = day.date === todayStr;
+    const dayMeals = allMealPlan.filter(m => normaliseDate(m['Date'] || '') === day.date);
+
+    const slots = mealTypes.map(type => {
+      const planned = dayMeals.find(m => (m['Meal Type'] || '').trim() === type);
+      const mealName = planned ? (planned['Meal Name (auto)'] || planned['Notes'] || '') : '';
+      const meal = mealName ? allMeals.find(m => m['Meal Name'] === mealName) : null;
+      const meta = meal ? `${meal['Prep Time'] || ''} ${meal['Kid Rating'] ? '· ' + meal['Kid Rating'] : ''}`.trim() : '';
+
+      return `<div class="plan-slot" onclick="openAddMealForSlot('${day.date}','${type}')">
+        <div class="slot-type-badge ${getSlotClass(type)}">${type}</div>
+        <div class="slot-info">
+          ${mealName
+            ? `<div class="slot-meal-name">${mealName}</div>${meta ? `<div class="slot-meal-meta">${meta}</div>` : ''}`
+            : `<div class="slot-empty">Tap to plan</div>`
+          }
+        </div>
+        <div class="slot-add">${mealName ? '›' : '+'}</div>
+      </div>`;
+    }).join('');
+
+    return `<div class="plan-day ${isToday ? 'plan-day-today' : ''}">
+      <div class="plan-day-header">
+        <div class="plan-day-name">${day.label}</div>
+        <div class="plan-day-date">${day.dateLabel}</div>
+      </div>
+      <div class="plan-slots">${slots}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderFavourites(filter = '') {
+  const container = document.getElementById('favourites-list');
+  const filtered = allMeals.filter(m =>
+    !filter || (m['Meal Name'] || '').toLowerCase().includes(filter.toLowerCase())
+  );
+
+  if (filtered.length === 0) {
+    container.innerHTML = `<div style="color:var(--taupe);font-style:italic;font-size:0.75rem;padding:12px 0">No meals found</div>`;
+    return;
+  }
+
+  container.innerHTML = filtered.map(m => `
+    <div class="fav-card" onclick="openAddMealFromFav('${(m['Meal Name'] || '').replace(/'/g, "\\'")}')">
+      <div class="fav-emoji">${getMealTypeEmoji(m['Type'])}</div>
+      <div class="fav-info">
+        <div class="fav-name">${m['Meal Name'] || ''}</div>
+        <div class="fav-meta">${m['Type'] || ''} · ${m['Prep Time'] || ''}</div>
+        <div class="fav-stars">${m['Kid Rating'] || ''}</div>
+      </div>
+      <div class="fav-plan-btn">+ Plan</div>
+    </div>`).join('');
+}
+
+function filterFavourites(val) {
+  renderFavourites(val);
+}
+
+// ── ADD MEAL SHEET ───────────────────────────────────────────
+function openAddMeal() {
+  selectedDay = todayStr;
+  selectedFavMeal = null;
+  document.getElementById('add-meal-title').textContent = 'Add a meal';
+  document.getElementById('add-meal-sub').textContent = 'Choose from favourites or add new';
+  populateAddMealFavs();
+  document.getElementById('add-meal-overlay').style.display = 'flex';
+}
+
+function openAddMealForSlot(date, type) {
+  selectedDay = date;
+  selectedFavMeal = null;
+  const d = new Date(date + 'T00:00:00');
+  const dayLabel = d.toLocaleDateString('en-AU', { weekday: 'long', day: 'numeric', month: 'short' });
+
+  // Check if there's already a meal planned for this slot
+  const existing = allMealPlan.find(m =>
+    normaliseDate(m['Date'] || '') === date &&
+    (m['Meal Type'] || '').trim() === type
+  );
+  const existingName = existing ? (existing['Meal Name (auto)'] || existing['Notes'] || '') : '';
+
+  if (existingName) {
+    document.getElementById('add-meal-title').textContent = `Edit · ${type} · ${dayLabel}`;
+    document.getElementById('add-meal-sub').textContent = `Currently: ${existingName}`;
+    selectedFavMeal = existingName;
+    document.getElementById('new-meal-name').value = existingName;
+  } else {
+    document.getElementById('add-meal-title').textContent = `${type} · ${dayLabel}`;
+    document.getElementById('add-meal-sub').textContent = 'Pick from your favourites or add new';
+    document.getElementById('new-meal-name').value = '';
+  }
+
+  // Pre-select the meal type chip
+  document.querySelectorAll('#meal-type-chips .chip').forEach(c => {
+    c.className = c.textContent.trim() === type ? 'chip sel' : 'chip';
+    c.onclick = function() { selectChip(this, 'meal-type-chips'); };
+  });
+
+  populateAddMealFavs(existingName);
+  document.getElementById('add-meal-overlay').style.display = 'flex';
+}
+
+function openAddMealFromFav(mealName) {
+  selectedDay = todayStr;
+  selectedFavMeal = mealName;
+  document.getElementById('add-meal-title').textContent = 'Plan this meal';
+  document.getElementById('add-meal-sub').textContent = 'Choose which day to add it to';
+  populateAddMealFavs(mealName);
+  document.getElementById('add-meal-overlay').style.display = 'flex';
+}
+
+function populateAddMealFavs(selected = '') {
+  const container = document.getElementById('add-meal-favs');
+  container.innerHTML = allMeals.map(m =>
+    `<div class="add-fav-chip ${m['Meal Name'] === selected ? 'sel' : ''}"
+      onclick="selectFavMeal(this,'${(m['Meal Name'] || '').replace(/'/g,"\\'")}')">
+      ${m['Meal Name'] || ''}
+    </div>`
+  ).join('');
+
+  // Populate leftovers — recent planned meals from the last 3 days
+  const leftoverContainer = document.getElementById('add-meal-leftovers');
+  const threeDaysAgo = new Date(today);
+  threeDaysAgo.setDate(today.getDate() - 3);
+  const threeAgoStr = [
+    threeDaysAgo.getFullYear(),
+    String(threeDaysAgo.getMonth()+1).padStart(2,'0'),
+    String(threeDaysAgo.getDate()).padStart(2,'0')
+  ].join('-');
+
+  const recentMeals = [...new Set(
+    allMealPlan
+      .filter(m => {
+        const d = normaliseDate(m['Date'] || '');
+        return d >= threeAgoStr && d <= todayStr;
+      })
+      .map(m => m['Meal Name (auto)'] || m['Notes'] || '')
+      .filter(Boolean)
+  )];
+
+  // Also include all favourites as leftover options
+  const allMealNames = [...new Set([
+    ...recentMeals,
+    ...allMeals.map(m => m['Meal Name'] || '').filter(Boolean)
+  ])].slice(0, 8);
+
+  leftoverContainer.innerHTML = allMealNames.map(name =>
+    `<div class="add-fav-chip leftover-chip"
+      onclick="selectLeftover(this,'${name.replace(/'/g,"\\'")}')">
+      🍱 ${name}
+    </div>`
+  ).join('');
+}
+
+function selectQuickLeftover(el) {
+  document.querySelectorAll('.add-fav-chip').forEach(c => c.classList.remove('sel'));
+  el.classList.add('sel');
+  selectedFavMeal = 'Leftovers';
+  document.getElementById('new-meal-name').value = 'Leftovers';
+}
+
+function selectLeftover(el, name) {
+  // Clear all selections
+  document.querySelectorAll('.add-fav-chip').forEach(c => c.classList.remove('sel'));
+  el.classList.add('sel');
+  selectedFavMeal = `Leftovers from ${name}`;
+  document.getElementById('new-meal-name').value = `Leftovers from ${name}`;
+}
+
+function selectFavMeal(el, name) {
+  document.querySelectorAll('.add-fav-chip').forEach(c => c.classList.remove('sel'));
+  el.classList.add('sel');
+  selectedFavMeal = name;
+  document.getElementById('new-meal-name').value = name;
+}
+
+function closeAddMeal(e) {
+  if (e.target.id === 'add-meal-overlay') {
+    document.getElementById('add-meal-overlay').style.display = 'none';
+  }
+}
+
+function selectChip(el, groupId) {
+  document.querySelectorAll(`#${groupId} .chip`).forEach(c => c.classList.remove('sel'));
+  el.classList.add('sel');
+}
+
+function setStars(n) {
+  starRating = n;
+  document.querySelectorAll('#star-row .star').forEach((s, i) => {
+    s.className = i < n ? 'star lit' : 'star';
+  });
+}
+
+async function saveMeal() {
+  const mealName = selectedFavMeal || document.getElementById('new-meal-name').value.trim();
+  const mealType = document.querySelector('#meal-type-chips .chip.sel')?.textContent.trim() || 'Dinner';
+
+  if (!mealName) {
+    document.getElementById('new-meal-name').style.borderColor = 'var(--terracotta)';
+    return;
+  }
+
+  // Add to Meal Plan sheet
+  const rowId = 'PLA' + Date.now();
+  const d = new Date(selectedDay + 'T00:00:00');
+  const dayName = d.toLocaleDateString('en-AU', { weekday: 'long' });
+  const newRow = [rowId, selectedDay, dayName, mealType, '', mealName, '', 'TRUE'];
+
+  try {
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/'📋 Meal Plan'!A:H:append?valueInputOption=USER_ENTERED&key=${API_KEY}`;
+    await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ values: [newRow] })
+    });
+
+    // Update local data
+    allMealPlan.push({
+      'RowID': rowId, 'Date': selectedDay, 'Day': dayName,
+      'Meal Type': mealType, 'Meal ID': '', 'Meal Name (auto)': mealName,
+      'Notes': '', 'Planned': 'TRUE'
+    });
+
+    document.getElementById('add-meal-overlay').style.display = 'none';
+    document.getElementById('new-meal-name').value = '';
+    renderWeekPlanner();
+
+    // Refresh tonight's dinner on home if needed
+    if (selectedDay === todayStr) {
+      const tonightPlan = allMealPlan.find(row => {
+        const d = normaliseDate(row['Date'] || '');
+        const type = (row['Meal Type'] || '').trim();
+        return d === todayStr && type === 'Dinner';
+      });
+      if (tonightPlan) {
+        const meal = allMeals.find(m => m['Meal Name'] === (tonightPlan['Meal Name (auto)'] || ''));
+        renderDinner(meal || { 'Meal Name': tonightPlan['Meal Name (auto)'] });
+      }
+    }
+
+  } catch(e) {
+    console.error('Save failed:', e);
+  }
+}
+async function init() {
+  // Set greeting and date
+  document.getElementById('greeting-label').textContent = getGreeting();
+  document.getElementById('greeting-date').textContent = formatDate(today);
+
+  try {
+    // Fetch each sheet individually with error handling
+    let mealPlan = [], meals = [], tasks = [], events = [], grocery = [], nudges = [];
+
+    try { mealPlan = await fetchSheet("'📋 Meal Plan'!A2:H"); } catch(e) {
+      try { mealPlan = await fetchSheet("Meal Plan!A2:H"); } catch(e2) { console.warn('mealPlan failed', e2); }
+    }
+    try { meals = await fetchSheet("'🍽️ Meals'!A2:M"); } catch(e) {
+      try { meals = await fetchSheet("Meals!A2:M"); } catch(e2) { console.warn('meals failed', e2); }
+    }
+    try { tasks = await fetchSheet("'✅ Tasks'!A2:I"); } catch(e) {
+      try { tasks = await fetchSheet("Tasks!A2:I"); } catch(e2) { console.warn('tasks failed', e2); }
+    }
+    try { events = await fetchSheet("'📅 Calendar'!A2:J"); } catch(e) {
+      try { events = await fetchSheet("Calendar!A2:J"); } catch(e2) { console.warn('events failed', e2); }
+    }
+    try { grocery = await fetchSheet("'🛒 Grocery'!A2:J"); } catch(e) {
+      try { grocery = await fetchSheet("Grocery!A2:J"); } catch(e2) { console.warn('grocery failed', e2); }
+    }
+    try { nudges = await fetchSheet("'🌿 Fill Your Cup'!A2:F"); } catch(e) {
+      try { nudges = await fetchSheet("Fill Your Cup!A2:F"); } catch(e2) { console.warn('nudges failed', e2); }
+    }
+
+    console.log('Data loaded:', { mealPlan: mealPlan.length, meals: meals.length, tasks: tasks.length, events: events.length, grocery: grocery.length, nudges: nudges.length });
+    if (tasks.length > 0) console.log('First task:', JSON.stringify(tasks[0]));
+    if (mealPlan.length > 0) console.log('First mealPlan:', JSON.stringify(mealPlan[0]));
+    console.log('todayStr:', todayStr);
+
+    // Find tonight's dinner
+    const tonightPlan = mealPlan.find(row => {
+      const d = normaliseDate(row['Date'] || '');
+      const type = (row['Meal Type'] || row['Meal type'] || '').trim();
+      return d === todayStr && type === 'Dinner';
+    });
+    let tonightMeal = null;
+    if (tonightPlan && tonightPlan['Meal ID']) {
+      tonightMeal = meals.find(m => m['RowID'] === tonightPlan['Meal ID']);
+    }
+    if (!tonightMeal && tonightPlan) {
+      tonightMeal = { 'Meal Name': tonightPlan['Meal Name (auto)'] || tonightPlan['Notes'] };
+    }
+
+    renderDinner(tonightMeal);
+    renderTasks(tasks);
+    renderUpcoming(events);
+    renderGrocery(grocery);
+    renderCup(nudges);
+
+    // Store globally for other screens
+    allMeals = meals;
+    allMealPlan = mealPlan;
+
+  } catch (err) {
+    console.error('Data error:', err);
+    // Show the actual error for debugging
+    document.getElementById('cup-text').textContent =
+      `Debug: ${err.message}`;
+    document.getElementById('dinner-container').innerHTML =
+      `<div class="dinner-card"><div class="dinner-empty">Error: ${err.message}</div></div>`;
+    document.getElementById('tasks-summary').textContent = `Error: ${err.message}`;
+    document.getElementById('grocery-label-text').textContent = 'Check console for errors';
+    document.getElementById('upcoming-list').innerHTML =
+      `<div class="empty-state">Error: ${err.message}</div>`;
+    document.getElementById('events-count').textContent = '!';
+    document.getElementById('tasks-count').textContent = '!';
+  }
+
+  // Hide loading screen
+  setTimeout(() => {
+    document.getElementById('loading').classList.add('hidden');
+  }, 800);
+}
+
+init();
+</script>
+</body>
+</html>
