@@ -585,51 +585,79 @@
 
   /* Mode screens */
   .cup-mode { flex: 1; display: flex; flex-direction: column; position: relative; overflow: hidden; }
-  .cup-mode-close { position: absolute; top: calc(var(--safe-top) + 16px); right: 20px; z-index: 10; background: rgba(255,255,255,0.15); border: none; border-radius: 50%; width: 34px; height: 34px; color: white; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-  .cup-mode-close.dark { color: #1A1A1A; background: rgba(0,0,0,0.08); }
+  .cup-mode-close { position: absolute; top: calc(var(--safe-top) + 16px); right: 20px; z-index: 10; background: rgba(255,255,255,0.15); border: none; border-radius: 50%; width: 36px; height: 36px; color: white; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+  .cup-mode-close.dark { color: #1A1A1A; background: rgba(0,0,0,0.07); }
+  .cup-mode-back { position: absolute; top: calc(var(--safe-top) + 16px); left: 20px; z-index: 10; background: rgba(255,255,255,0.15); border: none; border-radius: 50%; width: 36px; height: 36px; color: white; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .cup-mode-back.dark { color: #1A1A1A; background: rgba(0,0,0,0.07); }
 
-  /* OVERSTIMULATED — dark sensory */
-  .mode-sensory { background: #1A2420; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 24px; }
-  .sensory-canvas { position: absolute; inset: 0; }
-  .sensory-text { position: relative; z-index: 2; text-align: center; }
-  .sensory-title { font-size: 1rem; font-weight: 400; color: rgba(255,255,255,0.5); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; }
-  .sensory-sub { font-size: 0.78rem; color: rgba(255,255,255,0.3); line-height: 1.6; }
-  .sensory-noise-btn { margin-top: 32px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); border-radius: 30px; padding: 10px 24px; color: rgba(255,255,255,0.6); font-size: 0.72rem; letter-spacing: 0.08em; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; }
-  .sensory-noise-btn.playing { background: rgba(61,107,71,0.4); border-color: rgba(61,107,71,0.6); color: rgba(255,255,255,0.8); }
+  /* OVERSTIMULATED */
+  .mode-sensory { background: #111A15; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding: 0 0 calc(var(--safe-bottom) + 40px); position: relative; }
+  .sensory-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .sensory-content { position: relative; z-index: 2; text-align: center; padding: 0 32px; width: 100%; }
+  .sensory-title { font-size: 1.5rem; font-weight: 300; color: rgba(255,255,255,0.7); margin-bottom: 8px; letter-spacing: -0.01em; }
+  .sensory-sub { font-size: 0.82rem; color: rgba(255,255,255,0.35); line-height: 1.7; margin-bottom: 32px; }
+  .sensory-noise-btn { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18); border-radius: 30px; padding: 13px 28px; color: rgba(255,255,255,0.7); font-size: 0.78rem; letter-spacing: 0.06em; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: all 0.3s; width: 100%; }
+  .sensory-noise-btn.playing { background: rgba(61,107,71,0.5); border-color: rgba(100,180,120,0.5); color: white; }
 
   /* BRAIN FULL — box breathing */
-  .mode-breathing { background: #EAF2EA; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 24px; gap: 24px; }
-  .breath-circle-wrap { position: relative; width: 200px; height: 200px; display: flex; align-items: center; justify-content: center; }
-  .breath-circle-outer { position: absolute; border-radius: 50%; background: rgba(61,107,71,0.12); transition: all 4s ease-in-out; }
-  .breath-circle-inner { width: 80px; height: 80px; border-radius: 50%; background: #3D6B47; display: flex; align-items: center; justify-content: center; }
-  .breath-phase { font-size: 0.72rem; font-weight: 600; color: white; letter-spacing: 0.1em; text-transform: uppercase; text-align: center; }
-  .breath-instruction { font-size: 1.4rem; font-weight: 600; color: #1A1A1A; text-align: center; }
-  .breath-count { font-size: 3rem; font-weight: 300; color: #3D6B47; line-height: 1; }
-  .breath-hint { font-size: 0.78rem; color: #5A725A; text-align: center; line-height: 1.5; }
-  .breath-start-btn { background: #1A1A1A; color: white; border: none; border-radius: 14px; padding: 14px 40px; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.06em; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; }
+  .mode-breathing { background: white; flex: 1; display: flex; flex-direction: column; padding: calc(var(--safe-top) + 60px) 28px calc(var(--safe-bottom) + 28px); overflow-y: auto; }
+  .breathing-header { margin-bottom: 20px; }
+  .breathing-title { font-size: 1.4rem; font-weight: 700; color: #1A1A1A; margin-bottom: 6px; }
+  .breathing-desc { font-size: 0.82rem; color: #5A725A; line-height: 1.6; }
+  .breathing-what { background: #F5F8F5; border-radius: 14px; padding: 14px 16px; margin-bottom: 24px; }
+  .breathing-what-title { font-size: 0.72rem; font-weight: 700; color: #3D6B47; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+  .breathing-what-text { font-size: 0.78rem; color: #5A725A; line-height: 1.6; }
+  .breath-viz { display: flex; align-items: center; justify-content: center; margin: 8px 0 20px; position: relative; height: 220px; }
+  .breath-ring-svg { position: absolute; }
+  .breath-center { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .breath-phase-label { font-size: 0.65rem; font-weight: 700; color: #3D6B47; text-transform: uppercase; letter-spacing: 0.1em; }
+  .breath-phase-instruction { font-size: 1.1rem; font-weight: 600; color: #1A1A1A; }
+  .breath-count-large { font-size: 3.5rem; font-weight: 200; color: #3D6B47; line-height: 1; }
+  .breath-rounds { font-size: 0.72rem; color: #8FA98F; margin-bottom: 20px; text-align: center; }
+  .breath-start-btn { background: #1A1A1A; color: white; border: none; border-radius: 14px; padding: 16px; font-size: 0.85rem; font-weight: 600; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; width: 100%; margin-top: auto; }
+  .breath-phases-row { display: flex; justify-content: space-between; margin-bottom: 20px; gap: 6px; }
+  .breath-phase-pill { flex: 1; text-align: center; padding: 8px 4px; border-radius: 10px; background: #F5F8F5; }
+  .breath-phase-pill.active { background: #3D6B47; }
+  .breath-phase-pill-name { font-size: 0.6rem; font-weight: 600; color: #8FA98F; text-transform: uppercase; letter-spacing: 0.06em; }
+  .breath-phase-pill.active .breath-phase-pill-name { color: rgba(255,255,255,0.7); }
+  .breath-phase-pill-val { font-size: 0.85rem; font-weight: 700; color: #1A1A1A; }
+  .breath-phase-pill.active .breath-phase-pill-val { color: white; }
 
-  /* FIND ME — joy prompts */
-  .mode-joy { background: #F5F8F5; flex: 1; display: flex; flex-direction: column; padding: calc(var(--safe-top) + 56px) 24px calc(var(--safe-bottom) + 24px); overflow-y: auto; -webkit-overflow-scrolling: touch; }
-  .joy-prompt-card { background: #3D6B47; border-radius: 20px; padding: 28px 24px; margin-bottom: 20px; }
-  .joy-prompt-label { font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 10px; }
-  .joy-prompt-text { font-size: 1.2rem; font-weight: 500; color: white; line-height: 1.45; }
-  .joy-prompt-new { background: none; border: 1.5px solid rgba(255,255,255,0.3); border-radius: 10px; padding: 8px 16px; color: rgba(255,255,255,0.8); font-size: 0.7rem; letter-spacing: 0.06em; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; margin-top: 14px; }
-  .joy-list-title { font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: #5A725A; font-weight: 600; margin-bottom: 12px; }
-  .joy-list { display: flex; flex-direction: column; gap: 8px; }
-  .joy-list-item { background: white; border-radius: 14px; padding: 14px 16px; font-size: 0.82rem; color: #1A1A1A; line-height: 1.4; border: 1px solid #E2EAE2; cursor: pointer; transition: background 0.15s; }
-  .joy-list-item:active { background: #EAF2EA; }
+  /* FIND ME — joy */
+  .mode-joy { background: #F5F8F5; flex: 1; display: flex; flex-direction: column; padding: calc(var(--safe-top) + 60px) 20px calc(var(--safe-bottom) + 20px); overflow-y: auto; -webkit-overflow-scrolling: touch; gap: 16px; }
+  .joy-prompt-card { background: #2D4A35; border-radius: 20px; padding: 24px; flex-shrink: 0; }
+  .joy-prompt-eyebrow { font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 10px; font-weight: 600; }
+  .joy-prompt-text { font-size: 1.15rem; font-weight: 500; color: white; line-height: 1.5; margin-bottom: 16px; }
+  .joy-prompt-new { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; padding: 9px 16px; color: rgba(255,255,255,0.85); font-size: 0.75rem; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: background 0.15s; }
+  .joy-prompt-new:active { background: rgba(255,255,255,0.2); }
+  .joy-section-title { font-size: 0.78rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0; }
+  .joy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .joy-grid-item { background: white; border-radius: 14px; padding: 14px; border: 1px solid #E2EAE2; cursor: pointer; transition: all 0.15s; display: flex; flex-direction: column; gap: 6px; }
+  .joy-grid-item:active { background: #EAF2EA; border-color: #3D6B47; transform: scale(0.97); }
+  .joy-grid-icon { width: 32px; height: 32px; border-radius: 10px; background: #EAF2EA; display: flex; align-items: center; justify-content: center; }
+  .joy-grid-text { font-size: 0.75rem; color: #1A1A1A; font-weight: 500; line-height: 1.4; }
 
-  /* RUNNING EMPTY — stretches */
-  .mode-movement { background: #F5F8F5; flex: 1; display: flex; flex-direction: column; padding: calc(var(--safe-top) + 56px) 24px calc(var(--safe-bottom) + 24px); overflow-y: auto; -webkit-overflow-scrolling: touch; gap: 12px; }
-  .movement-header { margin-bottom: 8px; }
+  /* RUNNING EMPTY — movement */
+  .mode-movement { background: #F5F8F5; flex: 1; display: flex; flex-direction: column; padding: calc(var(--safe-top) + 60px) 20px calc(var(--safe-bottom) + 20px); overflow-y: auto; -webkit-overflow-scrolling: touch; gap: 10px; }
+  .movement-header { margin-bottom: 4px; }
   .movement-title { font-size: 1.3rem; font-weight: 700; color: #1A1A1A; margin-bottom: 4px; }
   .movement-sub { font-size: 0.8rem; color: #5A725A; }
-  .stretch-card { background: white; border-radius: 16px; padding: 16px 18px; display: flex; align-items: center; gap: 14px; border: 1px solid #E2EAE2; }
-  .stretch-num { width: 32px; height: 32px; border-radius: 50%; background: #EAF2EA; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: #3D6B47; flex-shrink: 0; }
+  .stretch-card { background: white; border-radius: 16px; border: 1px solid #E2EAE2; overflow: hidden; cursor: pointer; transition: all 0.2s; }
+  .stretch-card-top { padding: 14px 16px; display: flex; align-items: center; gap: 12px; }
+  .stretch-card.open { border-color: #3D6B47; }
+  .stretch-num { width: 30px; height: 30px; border-radius: 50%; background: #EAF2EA; display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 700; color: #3D6B47; flex-shrink: 0; }
   .stretch-info { flex: 1; }
-  .stretch-name { font-size: 0.85rem; font-weight: 600; color: #1A1A1A; margin-bottom: 2px; }
-  .stretch-desc { font-size: 0.72rem; color: #5A725A; line-height: 1.4; }
-  .stretch-time { font-size: 0.65rem; color: #8FA98F; font-weight: 500; flex-shrink: 0; }
+  .stretch-name { font-size: 0.85rem; font-weight: 600; color: #1A1A1A; }
+  .stretch-time-badge { font-size: 0.65rem; font-weight: 600; color: #8FA98F; background: #F5F8F5; padding: 3px 8px; border-radius: 8px; flex-shrink: 0; }
+  .stretch-chevron { font-size: 0.8rem; color: #C2D4C2; transition: transform 0.2s; flex-shrink: 0; }
+  .stretch-card.open .stretch-chevron { transform: rotate(90deg); color: #3D6B47; }
+  .stretch-detail { display: none; border-top: 1px solid #E2EAE2; }
+  .stretch-card.open .stretch-detail { display: flex; gap: 14px; padding: 14px 16px; }
+  .stretch-visual { width: 80px; height: 80px; border-radius: 12px; background: #EAF2EA; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .stretch-visual svg { color: #3D6B47; }
+  .stretch-detail-text { flex: 1; }
+  .stretch-detail-desc { font-size: 0.78rem; color: #5A725A; line-height: 1.55; margin-bottom: 8px; }
+  .stretch-detail-tip { font-size: 0.7rem; color: #8FA98F; font-style: italic; line-height: 1.4; }
 
 
   /* FILL MY CUP OVERLAY */
@@ -694,8 +722,8 @@
   .today-meal-wrap { background: white; border-radius: 0; padding: 0; }
   .today-meal-date-header { display: none; }
   .today-meal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .meal-grid-slot { background: white; border-radius: 12px; padding: 14px 14px 12px; border: 1.5px dashed #C8D8C8; cursor: pointer; transition: all 0.15s; min-height: 100px; display: flex; flex-direction: column; justify-content: space-between; }
-  .meal-grid-slot.filled { border-style: solid; border-color: #C8D8C8; }
+  .meal-grid-slot { background: white; border-radius: 12px; padding: 14px 14px 12px; border: 1.5px solid #DDE8DD; cursor: pointer; transition: all 0.15s; min-height: 100px; display: flex; flex-direction: column; justify-content: space-between; }
+  .meal-grid-slot.filled { border-color: #3D6B47; }
   .meal-grid-slot:active { background: #F0F7F0; }
   .meal-grid-type { font-size: 0.82rem; font-weight: 600; color: #1A1A1A; margin-bottom: 0; }
   .meal-grid-name { font-size: 0.82rem; color: #3D6B47; font-weight: 500; line-height: 1.3; margin-top: 6px; }
@@ -821,10 +849,7 @@
         </div>
       </div>
       <div class="fade-in">
-        <div class="today-meal-date-header" id="today-meal-date-header">
-          <span class="today-meal-date-label">Today</span>
-          <span class="today-meal-date-sub"></span>
-        </div>
+        <div class="section-title">Today's meals</div>
         <div class="today-meal-grid" id="today-meal-grid"></div>
       </div>
       <div class="fade-in">
@@ -1438,13 +1463,13 @@
     <!-- SENSORY DEPRIVATION MODE -->
     <div class="cup-mode hidden" id="cup-mode-sensory">
       <div class="mode-sensory">
-        <canvas class="sensory-canvas" id="sensory-canvas"></canvas>
-        <div class="sensory-text">
-          <div class="sensory-title">You are safe here</div>
-          <div class="sensory-sub">Let your body slow down.<br>You don't have to do anything right now.</div>
+        <canvas id="sensory-canvas"></canvas>
+        <div class="sensory-content">
+          <div class="sensory-title">You are safe here.</div>
+          <div class="sensory-sub">Let your nervous system settle.<br>You don't have to do anything right now.</div>
           <button class="sensory-noise-btn" id="noise-btn" onclick="toggleNoise()">Play brown noise</button>
         </div>
-        <button class="cup-mode-close" onclick="closeCupMode('sensory')" style="color:rgba(255,255,255,0.5)">✕</button>
+        <button class="cup-mode-close" onclick="closeCupMode('sensory')" style="color:rgba(255,255,255,0.4)">✕</button>
       </div>
     </div>
 
@@ -1452,15 +1477,34 @@
     <div class="cup-mode hidden" id="cup-mode-breathing">
       <div class="mode-breathing">
         <button class="cup-mode-close dark" onclick="closeCupMode('breathing')">✕</button>
-        <div class="breath-instruction" id="breath-instruction">Box Breathing</div>
-        <div class="breath-circle-wrap" id="breath-wrap">
-          <div class="breath-circle-outer" id="breath-outer" style="width:200px;height:200px;opacity:0.3"></div>
-          <div class="breath-circle-inner">
-            <div class="breath-phase" id="breath-phase">Ready</div>
+        <div class="breathing-header">
+          <div class="breathing-title">Box Breathing</div>
+          <div class="breathing-desc">A simple technique used by Navy SEALs and therapists alike to calm the nervous system in minutes.</div>
+        </div>
+        <div class="breathing-what">
+          <div class="breathing-what-title">How it works</div>
+          <div class="breathing-what-text">Breathe in for 4 counts, hold for 4, breathe out for 4, hold for 4. Repeat 4 rounds. The equal-length phases activate your parasympathetic nervous system — your body's built-in calm response.</div>
+        </div>
+        <div class="breath-phases-row">
+          <div class="breath-phase-pill" id="bpp-0"><div class="breath-phase-pill-name">Inhale</div><div class="breath-phase-pill-val">4s</div></div>
+          <div class="breath-phase-pill" id="bpp-1"><div class="breath-phase-pill-name">Hold</div><div class="breath-phase-pill-val">4s</div></div>
+          <div class="breath-phase-pill" id="bpp-2"><div class="breath-phase-pill-name">Exhale</div><div class="breath-phase-pill-val">4s</div></div>
+          <div class="breath-phase-pill" id="bpp-3"><div class="breath-phase-pill-name">Hold</div><div class="breath-phase-pill-val">4s</div></div>
+        </div>
+        <div class="breath-viz">
+          <svg class="breath-ring-svg" id="breath-ring-svg" width="220" height="220" viewBox="0 0 220 220">
+            <circle cx="110" cy="110" r="90" fill="none" stroke="#E2EAE2" stroke-width="8"/>
+            <circle id="breath-progress-ring" cx="110" cy="110" r="90" fill="none" stroke="#3D6B47" stroke-width="8"
+              stroke-linecap="round" stroke-dasharray="565" stroke-dashoffset="565"
+              transform="rotate(-90 110 110)" style="transition: stroke-dashoffset 1s linear, stroke 0.3s"/>
+          </svg>
+          <div class="breath-center">
+            <div class="breath-phase-label" id="breath-phase-label">Ready</div>
+            <div class="breath-phase-instruction" id="breath-phase-instruction">Tap begin</div>
+            <div class="breath-count-large" id="breath-count">4</div>
           </div>
         </div>
-        <div class="breath-count" id="breath-count">—</div>
-        <div class="breath-hint">Inhale · Hold · Exhale · Hold<br>4 seconds each. Repeat 4 times.</div>
+        <div class="breath-rounds" id="breath-rounds-label">Round 1 of 4</div>
         <button class="breath-start-btn" id="breath-btn" onclick="startBreathing()">Begin</button>
       </div>
     </div>
@@ -1468,183 +1512,65 @@
     <!-- JOY MODE -->
     <div class="cup-mode hidden" id="cup-mode-joy">
       <div class="mode-joy">
-        <button class="cup-mode-close dark" onclick="closeCupMode('joy')" style="color:#1A1A1A;background:rgba(0,0,0,0.08)">✕</button>
+        <button class="cup-mode-close dark" onclick="closeCupMode('joy')">✕</button>
         <div class="joy-prompt-card">
-          <div class="joy-prompt-label">Your moment of joy</div>
+          <div class="joy-prompt-eyebrow">Your moment of joy</div>
           <div class="joy-prompt-text" id="joy-prompt-text">Loading...</div>
-          <button class="joy-prompt-new" onclick="newJoyPrompt()">New prompt</button>
+          <button class="joy-prompt-new" onclick="newJoyPrompt()">New prompt →</button>
         </div>
-        <div class="joy-list-title">More micro-doses</div>
-        <div class="joy-list" id="joy-list"></div>
+        <div class="joy-section-title">Micro-doses of joy</div>
+        <div class="joy-grid" id="joy-list"></div>
       </div>
     </div>
 
     <!-- MOVEMENT MODE -->
     <div class="cup-mode hidden" id="cup-mode-movement">
       <div class="mode-movement">
-        <button class="cup-mode-close dark" onclick="closeCupMode('movement')" style="color:#1A1A1A;background:rgba(0,0,0,0.08)">✕</button>
+        <button class="cup-mode-close dark" onclick="closeCupMode('movement')">✕</button>
         <div class="movement-header">
           <div class="movement-title">One-minute reset</div>
-          <div class="movement-sub">Move through these gently — no rush.</div>
+          <div class="movement-sub">Tap each movement to learn more.</div>
         </div>
-        <div class="stretch-card">
-          <div class="stretch-num">1</div>
-          <div class="stretch-info">
-            <div class="stretch-name">Roll your shoulders back</div>
-            <div class="stretch-desc">Slowly lift, roll back, and drop. Feel each shoulder blade meet in the middle.</div>
+        <div class="stretch-card" id="sc-0" onclick="toggleStretch(0)">
+          <div class="stretch-card-top">
+            <div class="stretch-num">1</div>
+            <div class="stretch-info"><div class="stretch-name">Shoulder rolls</div></div>
+            <div class="stretch-time-badge">10s</div>
+            <div class="stretch-chevron">›</div>
           </div>
-          <div class="stretch-time">10s</div>
-        </div>
-        <div class="stretch-card">
-          <div class="stretch-num">2</div>
-          <div class="stretch-info">
-            <div class="stretch-name">Drop your chin to your chest</div>
-            <div class="stretch-desc">Let the weight of your head gently stretch the back of your neck. Breathe.</div>
+          <div class="stretch-detail">
+            <div class="stretch-visual"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10"/><path d="M12 6v6l4 2"/><path d="M18 8a6 6 0 0 1-6 10"/></svg></div>
+            <div class="stretch-detail-text"><div class="stretch-detail-desc">Slowly lift both shoulders up toward your ears, roll them back, and let them drop down. Do 3–5 slow rolls.</div><div class="stretch-detail-tip">Feel each shoulder blade squeeze together at the back before releasing.</div></div>
           </div>
-          <div class="stretch-time">10s</div>
         </div>
-        <div class="stretch-card">
-          <div class="stretch-num">3</div>
-          <div class="stretch-info">
-            <div class="stretch-name">Shake out your hands</div>
-            <div class="stretch-desc">Loose wrists, let everything go. Imagine stress falling off your fingertips.</div>
+        <div class="stretch-card" id="sc-1" onclick="toggleStretch(1)">
+          <div class="stretch-card-top">
+            <div class="stretch-num">2</div>
+            <div class="stretch-info"><div class="stretch-name">Chin to chest</div></div>
+            <div class="stretch-time-badge">10s</div>
+            <div class="stretch-chevron">›</div>
           </div>
-          <div class="stretch-time">10s</div>
-        </div>
-        <div class="stretch-card">
-          <div class="stretch-num">4</div>
-          <div class="stretch-info">
-            <div class="stretch-name">Three deep breaths</div>
-            <div class="stretch-desc">In through the nose, slow out through the mouth. Feel your chest soften.</div>
+          <div class="stretch-detail">
+            <div class="stretch-visual"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="6" r="3"/><path d="M12 9v6"/><path d="M9 12h6"/><path d="M10 19l2-4 2 4"/></svg></div>
+            <div class="stretch-detail-text"><div class="stretch-detail-desc">Gently drop your chin toward your chest. Close your eyes and breathe deeply. Feel the stretch along the back of your neck.</div><div class="stretch-detail-tip">Don't force it — just let gravity do the work. Hold for a full breath in and out.</div></div>
           </div>
-          <div class="stretch-time">15s</div>
         </div>
-        <div class="stretch-card">
-          <div class="stretch-num">5</div>
-          <div class="stretch-info">
-            <div class="stretch-name">Stand up and stretch tall</div>
-            <div class="stretch-desc">Arms overhead, fingertips to the sky. Hold for a moment. You're still here.</div>
+        <div class="stretch-card" id="sc-2" onclick="toggleStretch(2)">
+          <div class="stretch-card-top">
+            <div class="stretch-num">3</div>
+            <div class="stretch-info"><div class="stretch-name">Shake out your hands</div></div>
+            <div class="stretch-time-badge">10s</div>
+            <div class="stretch-chevron">›</div>
           </div>
-          <div class="stretch-time">15s</div>
-        </div>
-      </div>
-    </div>
+          <div class="stretch-detail">
+            <div class="stretch-visual"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"/><path d="M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v2"/><path d="M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg></div>
+            <div class="stretch-detail-text"><div class="stretch-detail-desc">Dangle your arms and shake your wrists loosely for 10 seconds. Let everything go limp — fingers, palms, wrists.</div><div class="stretch-detail-tip">Imagine stress dripping off your fingertips with each shake.</div></div>
+          </div>
 
-  </div>
-  <!-- ── FILL MY CUP OVERLAY ── -->
-  <div id="fmc-overlay" class="fmc-overlay hidden">
-
-    <!-- CHOICE SCREEN -->
-    <div class="fmc-choice" id="fmc-choice">
-      <button class="fmc-close" onclick="closeFillCup()">✕</button>
-      <div class="fmc-question">How does your cup feel right now?</div>
-      <div class="fmc-question-sub">This moment is just for you.</div>
-      <div class="fmc-options">
-        <button class="fmc-option" onclick="startFmcMode('sensory')">
-          <div class="fmc-option-title">I'm overstimulated</div>
-          <div class="fmc-option-sub">Everything is too much right now</div>
-        </button>
-        <button class="fmc-option" onclick="startFmcMode('breathing')">
-          <div class="fmc-option-title">My brain is full</div>
-          <div class="fmc-option-sub">I can't think anymore</div>
-        </button>
-        <button class="fmc-option" onclick="startFmcMode('joy')">
-          <div class="fmc-option-title">I need to find me</div>
-          <div class="fmc-option-sub">A moment to reconnect</div>
-        </button>
-        <button class="fmc-option" onclick="startFmcMode('move')">
-          <div class="fmc-option-title">I'm running on empty</div>
-          <div class="fmc-option-sub">I need a gentle lift</div>
-        </button>
-      </div>
-    </div>
-
-    <!-- MODE 1: SENSORY REST -->
-    <div class="fmc-mode fmc-sensory" id="fmc-sensory" style="display:none">
-      <canvas class="fmc-sensory-canvas" id="fmc-canvas"></canvas>
-      <button class="fmc-back" onclick="backToFmcChoice()">← Back</button>
-      <div class="fmc-sensory-text">
-        <div class="fmc-sensory-title">You're safe to rest here.</div>
-        <div>Let everything go quiet.</div>
-        <button class="fmc-noise-btn" id="noise-btn" onclick="toggleNoise()">Play brown noise</button>
-      </div>
-    </div>
-
-    <!-- MODE 2: BOX BREATHING -->
-    <div class="fmc-mode fmc-breathing" id="fmc-breathing" style="display:none">
-      <button class="fmc-back fmc-back-dark" onclick="backToFmcChoice()">← Back</button>
-      <div class="fmc-breath-ring-wrap">
-        <svg width="200" height="200" viewBox="0 0 200 200">
-          <circle cx="100" cy="100" r="80" fill="none" stroke="#E2EAE2" stroke-width="8"/>
-          <circle id="breath-arc" cx="100" cy="100" r="80" fill="none" stroke="#2D4A35" stroke-width="8"
-            stroke-linecap="round" stroke-dasharray="502" stroke-dashoffset="502"
-            transform="rotate(-90 100 100)" style="transition: stroke-dashoffset 0.1s linear"/>
-        </svg>
-        <div class="fmc-breath-label">
-          <div class="fmc-breath-action" id="breath-action">Ready</div>
-          <div class="fmc-breath-count" id="breath-count">4</div>
-          <div class="fmc-breath-phase" id="breath-phase">tap to begin</div>
-        </div>
-      </div>
-      <div class="fmc-breath-guide" id="breath-guide">Box breathing helps reset your nervous system. 4 counts each — in, hold, out, hold.</div>
-      <button class="save-btn" id="breath-start-btn" onclick="startBreathing()" style="max-width:280px">Begin</button>
-    </div>
-
-    <!-- MODE 3: JOY -->
-    <div class="fmc-mode fmc-joy" id="fmc-joy" style="display:none">
-      <button class="fmc-back fmc-back-dark" onclick="backToFmcChoice()">← Back</button>
-      <div class="fmc-joy-prompt-card">
-        <div class="fmc-joy-prompt-label">Your moment</div>
-        <div class="fmc-joy-prompt-text" id="joy-prompt">Loading...</div>
-        <button class="fmc-joy-prompt-btn" onclick="nextJoyPrompt()">Try another →</button>
-      </div>
-      <div class="fmc-joy-list-title">More micro-doses of joy</div>
-      <div class="fmc-joy-items" id="joy-list"></div>
-    </div>
-
-    <!-- MODE 4: MOVEMENT -->
-    <div class="fmc-mode fmc-move" id="fmc-move" style="display:none">
-      <button class="fmc-back fmc-back-dark" onclick="backToFmcChoice()">← Back</button>
-      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:1.3rem;font-weight:700;color:#1A1A1A;margin-bottom:4px">60-second reset</div>
-      <div class="fmc-move-intro">You don't need to change clothes. Just move a little — your body will thank you.</div>
-      <div class="fmc-stretch-card">
-        <div class="fmc-stretch-num">1</div>
-        <div class="fmc-stretch-body">
-          <div class="fmc-stretch-name">Shoulder rolls</div>
-          <div class="fmc-stretch-desc">Roll both shoulders slowly backwards, then forwards. Feel the tension melt.</div>
-          <div class="fmc-stretch-duration">10 seconds</div>
-        </div>
-      </div>
-      <div class="fmc-stretch-card">
-        <div class="fmc-stretch-num">2</div>
-        <div class="fmc-stretch-body">
-          <div class="fmc-stretch-name">Neck release</div>
-          <div class="fmc-stretch-desc">Drop your right ear toward your shoulder. Hold. Breathe. Switch sides.</div>
-          <div class="fmc-stretch-duration">10 seconds each side</div>
-        </div>
-      </div>
-      <div class="fmc-stretch-card">
-        <div class="fmc-stretch-num">3</div>
-        <div class="fmc-stretch-body">
-          <div class="fmc-stretch-name">Shake it out</div>
-          <div class="fmc-stretch-desc">Shake your hands, wrists, then arms. Let them go completely loose and floppy.</div>
-          <div class="fmc-stretch-duration">10 seconds</div>
-        </div>
-      </div>
-      <div class="fmc-stretch-card">
-        <div class="fmc-stretch-num">4</div>
-        <div class="fmc-stretch-body">
-          <div class="fmc-stretch-name">Standing forward fold</div>
-          <div class="fmc-stretch-desc">Stand, exhale, and let your upper body hang heavy toward the floor. Nod your head yes and no.</div>
-          <div class="fmc-stretch-duration">15 seconds</div>
-        </div>
-      </div>
-      <div class="fmc-stretch-card">
-        <div class="fmc-stretch-num">5</div>
-        <div class="fmc-stretch-body">
-          <div class="fmc-stretch-name">Three deep breaths</div>
-          <div class="fmc-stretch-desc">Inhale slowly through your nose. Sigh it out through your mouth. You're back.</div>
-          <div class="fmc-stretch-duration">15 seconds</div>
+          <div class="stretch-detail">
+            <div class="stretch-visual"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="5" r="2"/><path d="M12 7v8"/><path d="M7 12l5-3 5 3"/><path d="M9 20l3-5 3 5"/><path d="M8 3l4-1 4 1"/></svg></div>
+            <div class="stretch-detail-text"><div class="stretch-detail-desc">Stand up if you can. Raise both arms overhead, fingers spread wide. Stretch up as tall as you can and hold for a breath.</div><div class="stretch-detail-tip">You've been here. You're still standing. That counts for something.</div></div>
+          </div>
         </div>
       </div>
     </div>
@@ -1654,138 +1580,61 @@
 </div>
 
 <script>
-
-// ── SVG ICON LIBRARY ─────────────────────────────────────────
-const ICONS = {
-  home: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>`,
-  meals: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h18M3 11c0-4 2-7 5-8M21 11c0-4-2-7-5-8M9 3v8M15 3v8M5 21h14M7 15h10"/></svg>`,
-  tasks: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>`,
-  budget: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v1m0 8v1m-3-5h4.5a1.5 1.5 0 000-3H11a1.5 1.5 0 000 3H13a1.5 1.5 0 010 3H9"/></svg>`,
-  shop: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></svg>`,
-  cal: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>`,
-  cup: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><path d="M6 1v3M10 1v3M14 1v3"/></svg>`,
-  check: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
-  plus: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>`,
-  leaf: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M17 8C8 10 5.9 16.17 3.82 19.34a1 1 0 00.95 1.56 12 12 0 0014.39-7.49C20 10 20 6 20 4s-2 3-3 4z"/><path d="M3.82 19.34C5 14 9 10 12 9"/></svg>`,
-  // Category icons for grocery
-  produce: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 2a7 7 0 017 7c0 5-7 13-7 13S5 14 5 9a7 7 0 017-7z"/><circle cx="12" cy="9" r="2.5"/></svg>`,
-  dairy: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8 2h8l2 5v13a2 2 0 01-2 2H8a2 2 0 01-2-2V7l2-5z"/><path d="M6 7h12"/></svg>`,
-  meat: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M14.5 2.5c1.5 1.5 2 3.5 1 5.5L9 14.5C7 15.5 5 15 3.5 13.5S2.5 10 3.5 8.5L9.5 3c2-1 3.5-.5 5 0z"/><path d="M14 9l5 5M15 10l4 4"/></svg>`,
-  bakery: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 10a6 6 0 0112 0v1H6v-1z"/><rect x="4" y="11" width="16" height="9" rx="1"/><path d="M8 11v9M12 11v9M16 11v9"/></svg>`,
-  frozen: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="2" x2="12" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/><line x1="19.07" y1="4.93" x2="4.93" y2="19.07"/><circle cx="12" cy="12" r="2"/></svg>`,
-  pantry: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M4 9h16M4 15h16M9 3v6M9 15v6"/></svg>`,
-  other: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg>`,
-  // Budget cat icons  
-  groceries: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></svg>`,
-  kids: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a6 6 0 0112 0v2"/><path d="M9 11l1.5 2L12 11l1.5 2L15 11"/></svg>`,
-  misc: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg>`,
-  eatingout: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg>`,
-  transport: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="7" width="20" height="13" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/><circle cx="7" cy="17" r="1.5"/><circle cx="17" cy="17" r="1.5"/></svg>`,
-  household: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>`,
-  personal: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>`,
-};
-
-function icon(name, size = 20, color = 'currentColor') {
-  const svg = ICONS[name.toLowerCase().replace(/\s+/g,'').replace(/[^a-z]/g,'')];
-  if (!svg) return '';
-  return svg.replace('<svg ', `<svg width="${size}" height="${size}" style="color:${color};flex-shrink:0" `);
-}
-
-// ── SUPABASE CONFIG ─────────────────────────────────────────
 const SB_URL = 'https://lvxkfwxjsjmvymzjkfje.supabase.co';
 const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx2eGtmd3hqc2ptdnltemprZmplIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyODI0NjIsImV4cCI6MjA4OTg1ODQ2Mn0.faR6ZGDjNONeuaIHW5tDhWRtRdGWIKvNgUdYVqbQ1d0';
 
-async function sb(table, params = '') {
+async function sb(table, params='') {
   const res = await fetch(`${SB_URL}/rest/v1/${table}${params}`, {
-    headers: {
-      'apikey': SB_KEY,
-      'Authorization': `Bearer ${SB_KEY}`,
-      'Content-Type': 'application/json',
-      'Prefer': 'return=representation'
-    }
+    headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation' }
   });
-  if (!res.ok) {
-    const err = await res.text();
-    throw new Error(`Supabase error on ${table}: ${err}`);
-  }
+  if (!res.ok) { const e = await res.text(); throw new Error(`${table}: ${e}`); }
   return res.json();
 }
-
 async function sbPost(table, body) {
   const res = await fetch(`${SB_URL}/rest/v1/${table}`, {
     method: 'POST',
-    headers: {
-      'apikey': SB_KEY,
-      'Authorization': `Bearer ${SB_KEY}`,
-      'Content-Type': 'application/json',
-      'Prefer': 'return=representation'
-    },
+    headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation' },
     body: JSON.stringify(body)
   });
-  if (!res.ok) {
-    const err = await res.text();
-    throw new Error(`Supabase insert error on ${table}: ${err}`);
-  }
+  if (!res.ok) { const e = await res.text(); throw new Error(`insert ${table}: ${e}`); }
   return res.json();
 }
-
+async function sbPatch(table, id, body) {
+  const res = await fetch(`${SB_URL}/rest/v1/${table}?id=eq.${id}`, {
+    method: 'PATCH',
+    headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation' },
+    body: JSON.stringify(body)
+  });
+  if (!res.ok) { const e = await res.text(); throw new Error(`patch ${table}: ${e}`); }
+  return res.json();
+}
 async function sbDelete(table, id) {
   const res = await fetch(`${SB_URL}/rest/v1/${table}?id=eq.${id}`, {
     method: 'DELETE',
     headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` }
   });
-  if (!res.ok) { const e = await res.text(); throw new Error(`Delete ${table} failed: ${e}`); }
+  if (!res.ok) { const e = await res.text(); throw new Error(`delete ${table}: ${e}`); }
 }
 
-async function sbPatch(table, id, body) {
-  const res = await fetch(`${SB_URL}/rest/v1/${table}?id=eq.${id}`, {
-    method: 'PATCH',
-    headers: {
-      'apikey': SB_KEY,
-      'Authorization': `Bearer ${SB_KEY}`,
-      'Content-Type': 'application/json',
-      'Prefer': 'return=representation'
-    },
-    body: JSON.stringify(body)
-  });
-  if (!res.ok) {
-    const err = await res.text();
-    throw new Error(`Supabase patch error on ${table}: ${err}`);
-  }
-  return res.json();
-}
-
-// ── DATE HELPERS ────────────────────────────────────────────
 const today = new Date();
-const todayStr = [
-  today.getFullYear(),
-  String(today.getMonth() + 1).padStart(2, '0'),
-  String(today.getDate()).padStart(2, '0')
-].join('-');
+const todayStr = today.toISOString().slice(0,10);
 
 function getGreeting() {
   const h = today.getHours();
-  if (h < 12) return 'Good morning';
-  if (h < 17) return 'Good afternoon';
-  return 'Good evening';
+  return h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
 }
-
 function formatDate(d) {
   return d.toLocaleDateString('en-AU', { weekday: 'long', day: 'numeric', month: 'long' });
 }
-
 function formatShortDate(str) {
   if (!str) return '';
   try {
-    const parts = str.split('-');
-    if (parts.length !== 3) return str;
-    const d = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
-    return d.toLocaleDateString('en-AU', { weekday: 'short', day: 'numeric', month: 'short' });
+    const [y,m,d] = str.slice(0,10).split('-');
+    return new Date(+y,+m-1,+d).toLocaleDateString('en-AU', { weekday:'short', day:'numeric', month:'short' });
   } catch(e) { return str; }
 }
-
 function getCatClass(cat) {
-  const c = (cat || '').toLowerCase();
+  const c = (cat||'').toLowerCase();
   if (c.includes('kid')) return 'cat-kids';
   if (c.includes('errand')) return 'cat-errand';
   if (c.includes('admin')) return 'cat-admin';
@@ -1793,251 +1642,190 @@ function getCatClass(cat) {
   if (c.includes('self')) return 'cat-self';
   return 'cat-errand';
 }
-
+function getSlotClass(type) {
+  if (type==='Breakfast') return 'slot-breakfast';
+  if (type==='Lunch') return 'slot-lunch';
+  if (type==='Snacks') return 'slot-lunch';
+  return 'slot-dinner';
+}
 function showToast(msg) {
   const t = document.getElementById('toast');
+  if (!t) return;
   t.textContent = msg;
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2500);
 }
+function selectChip(el, groupId) {
+  document.querySelectorAll(`#${groupId} .chip`).forEach(c => c.classList.remove('sel'));
+  el.classList.add('sel');
+}
 
-// ── GLOBAL STATE ─────────────────────────────────────────────
-let allMeals = [];
-let allMealPlan = [];
-let selectedDay = null;
-let selectedFavMeal = null;
-let starRating = 3;
+let allMeals=[], allMealPlan=[], allTasksCache=[], allEvents=[], allGrocery=[], allBudgetCats=[], allExpenses=[];
 let currentScreen = 'home';
+let selectedDay = todayStr, selectedFavMeal = null, starRating = 3;
 
-// ── RENDER: HOME ─────────────────────────────────────────────
-
-function renderTodayMeals(mealPlan, meals) {
-  const container = document.getElementById('today-meal-grid');
-  if (!container) return;
-
-  // Date header: "Today  Mar 24"
-  const todayD = new Date(todayStr + 'T00:00:00');
-  const dayLabel = todayD.toLocaleDateString('en-AU', { day: 'numeric', month: 'short' });
-  // date header removed — date shown in greeting
-
-  const types = ['Breakfast', 'Lunch', 'Dinner', 'Other'];
-  container.innerHTML = types.map(type => {
-    // 'Other' maps to 'Snacks' in DB
-    const dbType = type === 'Other' ? 'Snacks' : type;
-    const planned = mealPlan.find(m => (m.date||'').slice(0,10) === todayStr && m.meal_type === dbType);
-    const name = planned?.meal_name || '';
-    return `
-      <div class="meal-grid-slot${name ? ' filled' : ''}" onclick="showScreen('meals')">
-        <div class="meal-grid-type">${type}</div>
-        <div class="meal-grid-bottom">
-          ${name
-            ? `<div class="meal-grid-name">${name}</div>`
-            : `<span class="meal-grid-empty">Add a dish</span>`
-          }
-          <span class="meal-grid-arrow">→</span>
-        </div>
-      </div>`;
-  }).join('');
-}
-function renderDinner(mealPlan, meals) {
-  const container = document.getElementById('dinner-container');
-  const tonightPlan = mealPlan.find(m => m.date === todayStr && m.meal_type === 'Dinner');
-  if (!tonightPlan) {
-    container.innerHTML = `<div class="dinner-card" onclick="showScreen('meals')"><div class="dinner-empty">Nothing planned yet — tap to add</div></div>`;
-    return;
-  }
-  const meal = meals.find(m => m.id === tonightPlan.meal_id) || {};
-  container.innerHTML = `
-    <div class="dinner-card" onclick="showScreen('meals')">
-      <div class="dinner-left">
-        <div class="dinner-tag">Dinner · Tonight</div>
-        <div class="dinner-name">${tonightPlan.meal_name || meal.meal_name || 'Dinner'}</div>
-        <div class="dinner-meta">${meal.prep_time || ''} ${meal.kid_rating ? '· ' + meal.kid_rating : ''}</div>
-      </div>
-      <div class="dinner-badge">Plan →</div>
-    </div>`;
-}
-
-function renderTasks(tasks) {
-  const todayTasks = tasks.filter(t => (t.due_date||'').slice(0,10) === todayStr && !t.done);
-  const doneTasks  = tasks.filter(t => (t.due_date||'').slice(0,10) === todayStr && t.done);
-  const total = todayTasks.length + doneTasks.length;
-  const done  = doneTasks.length;
-  const pct   = total > 0 ? Math.round((done / total) * 100) : 0;
-
-  document.getElementById('tasks-summary').textContent  = total === 0 ? 'No tasks today' : `${done} of ${total} done`;
-  document.getElementById('tasks-pct').textContent      = total > 0 ? `${pct}%` : '';
-  document.getElementById('tasks-progress').style.width = `${pct}%`;
-  document.getElementById('tasks-count').textContent    = todayTasks.length;
-
-  const allToday = [...doneTasks, ...todayTasks];
-  const show = allToday.slice(0, 4);
-  const rest = allToday.length - show.length;
-  const container = document.getElementById('task-items');
-
-  if (allToday.length === 0) {
-    container.innerHTML = `<div class="empty-state">All clear — nothing due today</div>`;
-    return;
-  }
-
-  container.innerHTML = show.map(t => `
-    <div class="task-row ${t.done ? 'done' : ''}" onclick="toggleTask('${t.id}', ${t.done})">
-      <div class="task-check ${t.done ? 'ticked' : ''}"></div>
-      <span class="task-text ${t.done ? 'struck' : ''}">${t.task}</span>
-      <span class="task-cat ${getCatClass(t.category)}">${t.category || ''}</span>
-    </div>`).join('');
-
-  const moreEl = document.getElementById('tasks-more');
-  if (rest > 0) {
-    moreEl.style.display = 'flex';
-    document.getElementById('tasks-more-count').textContent = `+ ${rest} more`;
-  }
-}
-
-async function toggleTask(id, currentDone) {
-  const newDone = !currentDone;
-  try {
-    await sbPatch('tasks', id, { done: newDone, done_date: newDone ? todayStr : null });
-    // update local state
-    const task = allTasksCache.find(t => t.id === id);
-    if (task) task.done = newDone;
-    renderTasks(allTasksCache);
-    showToast(newDone ? '✓ Task done!' : 'Task undone');
-  } catch(e) {
-    console.error('Toggle task failed:', e);
-  }
-}
-let allTasksCache = [];
-
-function renderUpcoming(events) {
-  const upcoming = events
-    .filter(e => e.date && e.date > todayStr)
-    .sort((a, b) => a.date.localeCompare(b.date))
-    .slice(0, 3);
-
-  const container = document.getElementById('upcoming-list');
-  const todayEvents = events.filter(e => e.date === todayStr).length;
-  document.getElementById('events-count').textContent = todayEvents;
-
-  if (upcoming.length === 0) {
-    container.innerHTML = `<div class="empty-state">Nothing coming up — add an event</div>`;
-    return;
-  }
-
-  const colours = ['var(--terracotta)', 'var(--sage)', 'var(--gold)'];
-  container.innerHTML = upcoming.map((e, i) => `
-    <div class="upcoming-row">
-      <div class="upcoming-dot" style="background:${colours[i % 3]}"></div>
-      <div class="upcoming-info">
-        <div class="upcoming-title">${e.title}</div>
-        <div class="upcoming-who">${e.who || ''} ${e.location ? '· ' + e.location : ''}</div>
-      </div>
-      <div class="upcoming-time">${formatShortDate(e.date)}<br>${e.start_time || ''}</div>
-    </div>`).join('');
-}
-
-function renderGrocery(items) {
-  const unticked = items.filter(i => !i.ticked);
-  const ticked   = items.filter(i => i.ticked);
-  document.getElementById('grocery-label-text').textContent = `${unticked.length} item${unticked.length !== 1 ? 's' : ''} to get`;
-  document.getElementById('grocery-done-count').textContent = `${ticked.length} done`;
-
-  const preview = unticked.slice(0, 2);
-  const rest = unticked.length - preview.length;
-  const colours = ['var(--sage)', 'var(--terracotta)', 'var(--gold)'];
-  document.getElementById('grocery-preview').innerHTML =
-    preview.map((item, i) => `
-      <div class="grocery-preview-item">
-        <div class="grocery-preview-dot" style="background:${colours[i]}"></div>
-        <span>${item.item} ${item.category ? '· ' + item.category : ''}</span>
-      </div>`).join('') +
-    (rest > 0 ? `<div class="grocery-more">+ ${rest} more items</div>` : '');
-}
-
-function renderCup(nudges) {
-  let text = 'Take a breath. You\'re doing better than you think.';
-  if (nudges.length > 0) {
-    const todayNudge = nudges.find(n => n.date === todayStr);
-    const nudge = todayNudge || nudges[0];
-    if (nudge?.nudge_text) text = nudge.nudge_text;
-  }
-  document.getElementById('cup-text').textContent = `"${text}"`;
-  document.getElementById('nudge-preview').textContent = text.split(' ').slice(0, 4).join(' ') + '…';
-}
-
-// ── SCREEN SWITCHING ─────────────────────────────────────────
 function showScreen(name) {
   ['home','meals','tasks','budget','shop','cal'].forEach(s => {
     const el = document.getElementById(`${s}-screen`);
     if (el) el.style.display = s === name ? 'flex' : 'none';
   });
   currentScreen = name;
-
   ['home','meals','tasks','budget','shop','cal'].forEach(s => {
-    const el  = document.getElementById(`nav-${s}`);
+    const el = document.getElementById(`nav-${s}`);
     const mel = document.getElementById(`mnav-${s}`);
-    if (el)  el.className  = `nav-item${s === name ? ' active' : ''}`;
-    if (mel) mel.className = `nav-item${s === name ? ' active' : ''}`;
+    if (el) el.className = `nav-item${s===name?' active':''}`;
+    if (mel) mel.className = `nav-item${s===name?' active':''}`;
   });
+  if (name==='meals') renderMealsScreen();
+  if (name==='tasks') { tasksFilter='all'; filterTasks('all'); }
+  if (name==='budget') renderBudgetScreen();
+  if (name==='shop') renderShopScreen();
+  if (name==='cal') renderCalScreen();
+}
 
-  if (name === 'meals')  renderMealsScreen();
-  if (name === 'tasks')  { tasksFilter = 'all'; filterTasks('all'); }
-  if (name === 'budget') renderBudgetScreen();
-  if (name === 'shop')   renderShopScreen();
-  if (name === 'cal')    { renderCalScreen(); }
+// ── HOME RENDER ──────────────────────────────────────────────
+function renderTodayMeals(mealPlan, meals) {
+  const container = document.getElementById('today-meal-grid');
+  if (!container) return;
+  const types = ['Breakfast','Lunch','Dinner','Other'];
+  container.innerHTML = types.map(type => {
+    const dbType = type==='Other' ? 'Snacks' : type;
+    const planned = mealPlan.find(m => (m.date||'').slice(0,10)===todayStr && m.meal_type===dbType);
+    const name = planned?.meal_name || '';
+    return `<div class="meal-grid-slot${name?' filled':''}" onclick="showScreen('meals')">
+      <div class="meal-grid-type">${type}</div>
+      <div class="meal-grid-bottom">
+        ${name ? `<div class="meal-grid-name">${name}</div>` : `<span class="meal-grid-empty">Add a dish</span>`}
+        <span class="meal-grid-arrow">→</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderTasks(tasks) {
+  const todayTasks = tasks.filter(t => (t.due_date||'').slice(0,10)===todayStr && !t.done);
+  const doneTasks = tasks.filter(t => (t.due_date||'').slice(0,10)===todayStr && t.done);
+  const total = todayTasks.length + doneTasks.length;
+  const done = doneTasks.length;
+  const pct = total > 0 ? Math.round((done/total)*100) : 0;
+  const summaryEl = document.getElementById('tasks-summary');
+  const pctEl = document.getElementById('tasks-pct');
+  const progEl = document.getElementById('tasks-progress');
+  const countEl = document.getElementById('tasks-count');
+  if (summaryEl) summaryEl.textContent = total===0 ? 'No tasks today' : `${done} of ${total} done`;
+  if (pctEl) pctEl.textContent = total>0 ? `${pct}%` : '';
+  if (progEl) progEl.style.width = `${pct}%`;
+  if (countEl) countEl.textContent = todayTasks.length;
+  const allToday = [...doneTasks, ...todayTasks];
+  const container = document.getElementById('task-items');
+  if (!container) return;
+  if (allToday.length===0) { container.innerHTML = `<div class="empty-state">All clear — nothing due today</div>`; return; }
+  container.innerHTML = allToday.slice(0,4).map(t => `
+    <div class="task-row${t.done?' done':''}" onclick="toggleTaskFromHome('${t.id}',${t.done})">
+      <div class="task-check${t.done?' ticked':''}"></div>
+      <span class="task-text${t.done?' struck':''}">${t.task||''}</span>
+      <span class="task-cat ${getCatClass(t.category)}">${t.category||''}</span>
+    </div>`).join('');
+  const moreEl = document.getElementById('tasks-more');
+  const moreCount = document.getElementById('tasks-more-count');
+  if (allToday.length > 4) {
+    if (moreEl) moreEl.style.display='flex';
+    if (moreCount) moreCount.textContent = `+${allToday.length-4} more`;
+  } else { if (moreEl) moreEl.style.display='none'; }
+}
+
+async function toggleTaskFromHome(id, currentDone) {
+  try {
+    await sbPatch('tasks', id, { done: !currentDone, done_date: !currentDone ? todayStr : null });
+    const t = allTasksCache.find(t => t.id===id);
+    if (t) t.done = !currentDone;
+    renderTasks(allTasksCache);
+    showToast(!currentDone ? '✓ Done!' : 'Marked undone');
+  } catch(e) { console.error(e); }
+}
+
+function renderUpcoming(events) {
+  const upcoming = events.filter(e => (e.date||'').slice(0,10) >= todayStr)
+    .sort((a,b) => (a.date||'').localeCompare(b.date||'')).slice(0,5);
+  const todayEvents = events.filter(e => (e.date||'').slice(0,10)===todayStr).length;
+  const countEl = document.getElementById('events-count');
+  if (countEl) countEl.textContent = todayEvents;
+  const el = document.getElementById('upcoming-list');
+  if (!el) return;
+  if (upcoming.length===0) { el.innerHTML=`<div class="upcoming-row"><div class="upcoming-info"><div class="upcoming-title" style="color:var(--taupe);font-style:italic">Nothing coming up — add an event</div></div></div>`; return; }
+  const colours = {'Whole family':'#3D6B47','Luka':'#6B8CAE','Emma':'#C9A882','Me':'#C4714F'};
+  el.innerHTML = upcoming.map(e => {
+    const col = colours[e.who]||'#8FA98F';
+    const dateStr = (e.date||'').slice(0,10);
+    const isToday = dateStr===todayStr;
+    const dateLabel = isToday ? 'Today' : formatShortDate(dateStr);
+    return `<div class="upcoming-row">
+      <div class="upcoming-dot" style="background:${col}"></div>
+      <div class="upcoming-info">
+        <div class="upcoming-title">${e.title||''}</div>
+        <div class="upcoming-who">${e.who||''}</div>
+      </div>
+      <div class="upcoming-time">${dateLabel}${e.start_time?'<br>'+e.start_time:''}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderGrocery(items) {
+  const unticked = items.filter(i => !i.ticked);
+  const ticked = items.filter(i => i.ticked);
+  const labelEl = document.getElementById('grocery-label-text');
+  const doneEl = document.getElementById('grocery-done-count');
+  if (labelEl) labelEl.textContent = `${unticked.length} item${unticked.length!==1?'s':''} to get`;
+  if (doneEl) doneEl.textContent = `${ticked.length} done`;
+  const preview = unticked.slice(0,2);
+  const rest = unticked.length - preview.length;
+  const colours = ['var(--sage)','var(--terracotta)','var(--gold)'];
+  const previewEl = document.getElementById('grocery-preview');
+  if (previewEl) previewEl.innerHTML = preview.map((item,i) =>
+    `<div class="grocery-preview-item"><div class="grocery-preview-dot" style="background:${colours[i]}"></div><span>${item.item||''}${item.category?' · '+item.category:''}</span></div>`
+  ).join('') + (rest>0 ? `<div class="grocery-more">+ ${rest} more items</div>` : '');
+}
+
+function renderCup(nudges) {
+  let text = 'Tap to check in with yourself today.';
+  if (nudges && nudges.length>0) {
+    const n = nudges.find(n => (n.date||'').slice(0,10)===todayStr) || nudges[0];
+    if (n?.nudge_text) text = n.nudge_text;
+  }
+  const cupEl = document.getElementById('cup-text');
+  if (cupEl) cupEl.textContent = `"${text}"`;
 }
 
 // ── MEALS SCREEN ─────────────────────────────────────────────
-function switchMealsTab(tab) {
-  document.getElementById('meals-planner').style.display    = tab === 'planner' ? 'flex' : 'none';
-  document.getElementById('meals-favourites').style.display = tab === 'favourites' ? 'flex' : 'none';
-  const favBtn = document.getElementById('tab-favourites-btn');
-  if (favBtn) favBtn.style.background = tab === 'favourites' ? 'var(--dark)' : '';
-  if (favBtn) favBtn.style.color = tab === 'favourites' ? 'var(--cream)' : '';
-  if (tab === 'favourites') renderFavourites();
-  if (tab === 'planner') { renderWeekStrip(); renderWeekPlanner(); }
-}
-
-function getMealEmoji(type) { return ''; }
-
-function getSlotClass(type) {
-  const t = (type || '').toLowerCase();
-  if (t.includes('breakfast')) return 'slot-breakfast';
-  if (t.includes('lunch'))     return 'slot-lunch';
-  return 'slot-dinner';
-}
-
 let selectedWeekDay = todayStr;
 
-function renderMealsScreen() {
-  renderWeekStrip();
-  renderWeekPlanner();
-  renderFavourites();
+function renderMealsScreen() { renderWeekStrip(); renderWeekPlanner(); renderFavourites(); }
+
+function switchMealsTab(tab) {
+  document.getElementById('meals-planner').style.display = tab==='planner' ? 'flex' : 'none';
+  document.getElementById('meals-favourites').style.display = tab==='favourites' ? 'flex' : 'none';
+  const favBtn = document.getElementById('tab-favourites-btn');
+  if (favBtn) { favBtn.style.background = tab==='favourites' ? '#1A1A1A' : ''; favBtn.style.color = tab==='favourites' ? 'white' : ''; }
+  if (tab==='favourites') renderFavourites();
+  if (tab==='planner') { renderWeekStrip(); renderWeekPlanner(); }
 }
 
 function renderWeekStrip() {
   const strip = document.getElementById('week-strip');
   if (!strip) return;
-  const days = [];
-  // Show Mon-Sun of current week containing today
-  const dayOfWeek = today.getDay(); // 0=Sun
+  const dow = today.getDay();
   const monday = new Date(today);
-  monday.setDate(today.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1));
-
-  for (let i = 0; i < 7; i++) {
-    const d = new Date(monday);
-    d.setDate(monday.getDate() + i);
-    const dateStr = [d.getFullYear(), String(d.getMonth()+1).padStart(2,'0'), String(d.getDate()).padStart(2,'0')].join('-');
-    const dayName = d.toLocaleDateString('en-AU', { weekday: 'short' }).slice(0,3).toUpperCase();
-    const dayNum  = d.getDate();
-    const isToday = dateStr === todayStr;
-    const isSelected = dateStr === selectedWeekDay;
-    const hasMeals = allMealPlan.some(m => m.date === dateStr);
-    days.push({ dateStr, dayName, dayNum, isToday, isSelected, hasMeals });
+  monday.setDate(today.getDate() - (dow===0 ? 6 : dow-1));
+  const days = [];
+  for (let i=0; i<7; i++) {
+    const d = new Date(monday); d.setDate(monday.getDate()+i);
+    const dateStr = d.toISOString().slice(0,10);
+    days.push({ dateStr, dayName: d.toLocaleDateString('en-AU',{weekday:'short'}).slice(0,3).toUpperCase(),
+      dayNum: d.getDate(), isToday: dateStr===todayStr, isSelected: dateStr===selectedWeekDay,
+      hasMeals: allMealPlan.some(m => m.date===dateStr) });
   }
-
   strip.innerHTML = days.map(d => `
-    <div class="week-day${d.isSelected ? ' active' : ''}" onclick="selectWeekDay('${d.dateStr}')">
+    <div class="week-day${d.isSelected?' active':''}" onclick="selectWeekDay('${d.dateStr}')">
       <div class="week-day-name">${d.dayName}</div>
       <div class="week-day-num">${d.dayNum}</div>
       ${d.isToday ? '<div class="week-day-today-label">Today</div>' : '<div style="height:12px"></div>'}
@@ -2048,281 +1836,106 @@ function renderWeekStrip() {
 function selectWeekDay(dateStr) {
   selectedWeekDay = dateStr;
   renderWeekStrip();
-  // Scroll planner to that day
-  const el = document.getElementById('day-' + dateStr);
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const el = document.getElementById('day-'+dateStr);
+  if (el) el.scrollIntoView({behavior:'smooth',block:'start'});
 }
 
 function renderWeekPlanner() {
   const container = document.getElementById('planner-days');
-  const mealTypes = ['Breakfast', 'Lunch', 'Dinner', 'Snacks'];
-  const days = [];
-
-  // Show 7 days from Monday of this week
-  const dayOfWeek = today.getDay();
+  if (!container) return;
+  const mealTypes = ['Breakfast','Lunch','Dinner','Snacks'];
+  const dow = today.getDay();
   const monday = new Date(today);
-  monday.setDate(today.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1));
-
-  for (let i = 0; i < 7; i++) {
-    const d = new Date(monday);
-    d.setDate(monday.getDate() + i);
-    const dateStr = [d.getFullYear(), String(d.getMonth()+1).padStart(2,'0'), String(d.getDate()).padStart(2,'0')].join('-');
-    days.push({
-      date: dateStr,
-      label: d.toLocaleDateString('en-AU', { weekday: 'long' }),
-      dateLabel: d.toLocaleDateString('en-AU', { day: 'numeric', month: 'short' }),
-      isToday: dateStr === todayStr
-    });
+  monday.setDate(today.getDate() - (dow===0 ? 6 : dow-1));
+  const days = [];
+  for (let i=0; i<7; i++) {
+    const d = new Date(monday); d.setDate(monday.getDate()+i);
+    const dateStr = d.toISOString().slice(0,10);
+    days.push({ date: dateStr, label: d.toLocaleDateString('en-AU',{weekday:'long'}),
+      dateLabel: d.toLocaleDateString('en-AU',{day:'numeric',month:'short'}), isToday: dateStr===todayStr });
   }
-
   container.innerHTML = days.map(day => {
-    const dayMeals = allMealPlan.filter(m => m.date === day.date);
+    const dayMeals = allMealPlan.filter(m => m.date===day.date);
     const slots = mealTypes.map(type => {
-      const planned = dayMeals.find(m => m.meal_type === type);
+      const planned = dayMeals.find(m => m.meal_type===type);
       const mealName = planned?.meal_name || '';
       return `<div class="plan-slot" onclick="openAddMealForSlot('${day.date}','${type}')">
         <div class="slot-type-badge ${getSlotClass(type)}">${type}</div>
-        <div class="slot-info">
-          ${mealName
-            ? `<div class="slot-meal-name">${mealName}</div>`
-            : `<div class="slot-empty">Tap to plan</div>`}
-        </div>
-        <div class="slot-add">${mealName ? '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>' : '+'}</div>
+        <div class="slot-info">${mealName ? `<div class="slot-meal-name">${mealName}</div>` : `<div class="slot-empty">Tap to plan</div>`}</div>
+        <div class="slot-add">${mealName ? '›' : '+'}</div>
       </div>`;
     }).join('');
-
     return `<div class="plan-day-section" id="day-${day.date}">
       <div class="plan-day-section-header">
         <div class="plan-day-section-name">${day.label}</div>
         <div class="plan-day-section-date">${day.dateLabel}</div>
         ${day.isToday ? '<span class="plan-day-section-today">Today</span>' : ''}
       </div>
-      <div class="plan-day ${day.isToday ? 'plan-day-today' : ''}">
-        <div class="plan-slots">${slots}</div>
-      </div>
+      <div class="plan-day${day.isToday?' plan-day-today':''}"><div class="plan-slots">${slots}</div></div>
     </div>`;
   }).join('');
 }
 
 async function copyLastWeek() {
   const btn = document.querySelector('.meals-action-btn');
-  if (btn) { btn.textContent = 'Copying…'; btn.disabled = true; }
+  if (btn) { btn.textContent='Copying…'; btn.disabled=true; }
   try {
-    // Get last week's meals
-    const lastWeekStart = new Date(today);
-    lastWeekStart.setDate(today.getDate() - 7);
-    const lwStr = [lastWeekStart.getFullYear(), String(lastWeekStart.getMonth()+1).padStart(2,'0'), String(lastWeekStart.getDate()).padStart(2,'0')].join('-');
-
-    const lastWeekMeals = allMealPlan.filter(m => {
-      const d = m.date?.slice(0,10) || '';
-      return d >= lwStr && d < todayStr;
+    const lastWeekStart = new Date(today); lastWeekStart.setDate(today.getDate()-7);
+    const lwStr = lastWeekStart.toISOString().slice(0,10);
+    const lwMeals = allMealPlan.filter(m => { const d=m.date?.slice(0,10)||''; return d>=lwStr && d<todayStr; });
+    if (lwMeals.length===0) { showToast('No meals found from last week'); return; }
+    const inserts = lwMeals.map(m => {
+      const d = new Date(m.date+'T00:00:00'); d.setDate(d.getDate()+7);
+      const nd = d.toISOString().slice(0,10);
+      return sbPost('meal_plan',{date:nd,day:d.toLocaleDateString('en-AU',{weekday:'long'}),meal_type:m.meal_type,meal_name:m.meal_name,planned:true});
     });
-
-    if (lastWeekMeals.length === 0) {
-      showToast('No meals found from last week');
-      return;
-    }
-
-    // Insert shifted by +7 days
-    const inserts = lastWeekMeals.map(m => {
-      const d = new Date(m.date + 'T00:00:00');
-      d.setDate(d.getDate() + 7);
-      const newDate = [d.getFullYear(), String(d.getMonth()+1).padStart(2,'0'), String(d.getDate()).padStart(2,'0')].join('-');
-      return sbPost('meal_plan', { date: newDate, day: d.toLocaleDateString('en-AU',{weekday:'long'}), meal_type: m.meal_type, meal_name: m.meal_name, planned: true });
-    });
-
     const results = await Promise.all(inserts);
-    results.forEach(r => { if (r && r[0]) allMealPlan.push(r[0]); });
-    renderMealsScreen();
-    showToast(`${results.length} meals copied!`);
-  } catch(e) {
-    console.error(e);
-    showToast('Could not copy — try again');
-  } finally {
-    const btn = document.querySelector('.meals-action-btn');
-    if (btn) { btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copy last week'; btn.disabled = false; }
+    results.forEach(r => { if (r&&r[0]) allMealPlan.push(r[0]); });
+    renderMealsScreen(); showToast(`${results.length} meals copied!`);
+  } catch(e) { showToast('Could not copy'); } finally {
+    if (btn) { btn.innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copy last week'; btn.disabled=false; }
   }
 }
 
-function renderFavourites(filter = '') {
+function renderFavourites(filter='') {
   const container = document.getElementById('favourites-list');
-  const filtered = allMeals.filter(m =>
-    !filter || m.meal_name.toLowerCase().includes(filter.toLowerCase())
-  );
-
-  if (filtered.length === 0) {
-    container.innerHTML = `<div style="color:var(--taupe);font-style:italic;font-size:0.75rem;padding:12px 0">No meals found</div>`;
-    return;
-  }
-
+  if (!container) return;
+  const filtered = allMeals.filter(m => !filter || (m.meal_name||'').toLowerCase().includes(filter.toLowerCase()));
+  if (filtered.length===0) { container.innerHTML=`<div style="color:var(--taupe);font-style:italic;font-size:0.75rem;padding:12px 0">No meals found</div>`; return; }
   container.innerHTML = filtered.map(m => `
-    <div class="fav-card" onclick="openAddMealFromFav('${(m.meal_name || '').replace(/'/g,"\\'")}')">
+    <div class="fav-card" onclick="openAddMealFromFav('${(m.meal_name||'').replace(/'/g,"\'")}')">
       <div class="fav-info">
-        <div class="fav-name">${m.meal_name}</div>
-        <div class="fav-meta">${m.type || 'Dinner'} · ${m.prep_time || ''}</div>
-        <div class="fav-stars">${m.kid_rating || ''}</div>
+        <div class="fav-name">${m.meal_name||''}</div>
+        <div class="fav-meta">${m.type||'Dinner'} · ${m.prep_time||''}</div>
+        <div class="fav-stars">${m.kid_rating||''}</div>
       </div>
       <div class="fav-plan-btn">+ Plan</div>
     </div>`).join('');
 }
-
 function filterFavourites(val) { renderFavourites(val); }
 
-// ── TASKS SCREEN ─────────────────────────────────────────────
-let tasksFilter = 'all';
-
-function renderTasksScreen() {
-  const tasks = allTasksCache;
-  let filtered;
-  const tomorrowStr = new Date(Date.now() + 86400000).toISOString().slice(0,10);
-
-  if (tasksFilter === 'today') {
-    filtered = tasks.filter(t => (t.due_date||'').slice(0,10) === todayStr && !t.done);
-  } else if (tasksFilter === 'upcoming') {
-    filtered = tasks.filter(t => (t.due_date||'').slice(0,10) > todayStr && !t.done);
-  } else if (tasksFilter === 'done') {
-    filtered = tasks.filter(t => t.done);
-  } else {
-    filtered = tasks.filter(t => !t.done);
-  }
-
-  // Sort by due_date
-  filtered.sort((a, b) => (a.due_date||'9999').localeCompare(b.due_date||'9999'));
-
-  const total = tasks.filter(t => !t.done).length;
-  const done  = tasks.filter(t => t.done).length;
-  document.getElementById('tasks-screen-sub').textContent =
-    `${done} done · ${total} remaining`;
-
-  const container = document.getElementById('tasks-full-list');
-  if (filtered.length === 0) {
-    container.innerHTML = `<div class="empty-state" style="padding:24px 0">Nothing here — tap + to add a task</div>`;
-    return;
-  }
-
-  // Group by date
-  const groups = {};
-  filtered.forEach(t => {
-    const d = (t.due_date || '').slice(0,10);
-    const label = d === todayStr ? 'Today'
-      : d === new Date(Date.now() + 86400000).toISOString().slice(0,10) ? 'Tomorrow'
-      : d ? formatShortDate(d) : 'No date';
-    if (!groups[label]) groups[label] = [];
-    groups[label].push(t);
-  });
-
-  container.innerHTML = Object.entries(groups).map(([label, items]) => `
-    <div class="task-group">
-      <div class="task-group-label">${label}</div>
-      ${items.map(t => `
-        <div class="task-full-row ${t.done ? 'done' : ''}" onclick="toggleTaskFull('${t.id}', ${t.done})">
-          <div class="task-check ${t.done ? 'ticked' : ''}"></div>
-          <div class="task-full-body">
-            <div class="task-full-text ${t.done ? 'struck' : ''}">${t.task || ''}</div>
-            ${t.category ? `<div class="task-full-meta"><span class="task-cat ${getCatClass(t.category)}">${t.category}</span>${t.priority ? ` · ${t.priority}` : ''}</div>` : ''}
-          </div>
-          <button class="task-delete-btn" onclick="deleteTask(event,'${t.id}')">✕</button>
-        </div>`).join('')}
-    </div>`).join('');
-}
-
-function filterTasks(filter) {
-  tasksFilter = filter;
-  ['all','today','upcoming','done'].forEach(f => {
-    document.getElementById(`ttab-${f}`).className =
-      'mode-tab' + (f === filter ? ' active' : '');
-  });
-  renderTasksScreen();
-}
-
-function openAddTask() {
-  document.getElementById('task-name-input').value = '';
-  document.getElementById('task-due-input').value = todayStr;
-  document.getElementById('add-task-title').textContent = 'New task';
-  document.getElementById('add-task-overlay').style.display = 'flex';
-  setTimeout(() => document.getElementById('task-name-input').focus(), 100);
-}
-
-function closeAddTask(e) {
-  if (e.target.id === 'add-task-overlay') {
-    document.getElementById('add-task-overlay').style.display = 'none';
-  }
-}
-
-async function saveTask() {
-  const name = document.getElementById('task-name-input').value.trim();
-  if (!name) {
-    document.getElementById('task-name-input').style.borderColor = 'var(--terracotta)';
-    return;
-  }
-  const category = document.querySelector('#task-cat-chips .chip.sel')?.textContent.trim() || 'Home';
-  const priority  = document.querySelector('#task-priority-chips .chip.sel')?.textContent.trim() || null;
-  const due_date  = document.getElementById('task-due-input').value || todayStr;
-
-  const btn = document.getElementById('save-task-btn');
-  btn.textContent = 'Saving…'; btn.disabled = true;
-  try {
-    const inserted = await sbPost('tasks', { task: name, category, priority, due_date, done: false });
-    if (inserted && inserted[0]) allTasksCache.push(inserted[0]);
-    document.getElementById('add-task-overlay').style.display = 'none';
-    renderTasksScreen();
-    renderTasks(allTasksCache);
-    showToast('Task added!');
-  } catch(e) {
-    console.error('Save task failed:', e);
-    alert('Could not save task — try again');
-  } finally {
-    btn.textContent = '✓ Add task'; btn.disabled = false;
-  }
-}
-
-async function toggleTaskFull(id, currentDone) {
-  const newDone = !currentDone;
-  try {
-    await sbPatch('tasks', id, { done: newDone, done_date: newDone ? todayStr : null });
-    const task = allTasksCache.find(t => t.id === id);
-    if (task) task.done = newDone;
-    renderTasksScreen();
-    renderTasks(allTasksCache);
-    showToast(newDone ? '✓ Done!' : 'Marked undone');
-  } catch(e) { console.error(e); }
-}
-
-async function deleteTask(e, id) {
-  e.stopPropagation();
-  try {
-    await sbDelete('tasks', id);
-    allTasksCache = allTasksCache.filter(t => t.id !== id);
-    renderTasksScreen();
-    renderTasks(allTasksCache);
-    showToast('Task deleted');
-  } catch(e) { console.error(e); }
-}
-
-// ── ADD MEAL SHEET ────────────────────────────────────────────
 function openAddMeal() {
-  selectedDay = todayStr;
-  selectedFavMeal = null;
+  selectedDay = todayStr; selectedFavMeal = null;
   document.getElementById('add-meal-title').textContent = 'Add a meal';
   document.getElementById('add-meal-sub').textContent = 'Choose from favourites or add new';
   document.getElementById('new-meal-name').value = '';
-  // reset meal type to Dinner
-  document.querySelectorAll('#meal-type-chips .chip').forEach(c => {
-    c.className = c.textContent.trim() === 'Dinner' ? 'chip sel' : 'chip';
-  });
+  document.querySelectorAll('#meal-type-chips .chip').forEach(c => c.className = c.textContent.trim()==='Dinner'?'chip sel':'chip');
   populateAddMealFavs();
-  document.getElementById('add-meal-overlay').style.display = 'flex';
+  document.getElementById('add-meal-overlay').style.display='flex';
 }
-
+function openAddMealFromFav(mealName) {
+  selectedDay = todayStr; selectedFavMeal = mealName;
+  document.getElementById('add-meal-title').textContent = 'Plan this meal';
+  document.getElementById('add-meal-sub').textContent = 'Choose which day to add it to';
+  populateAddMealFavs(mealName);
+  document.getElementById('add-meal-overlay').style.display='flex';
+}
 function openAddMealForSlot(date, type) {
-  selectedDay = date;
-  selectedFavMeal = null;
-  const d = new Date(date + 'T00:00:00');
-  const dayLabel = d.toLocaleDateString('en-AU', { weekday: 'long', day: 'numeric', month: 'short' });
-
-  const existing = allMealPlan.find(m => m.date === date && m.meal_type === type);
+  selectedDay = date; selectedFavMeal = null;
+  const d = new Date(date+'T00:00:00');
+  const dayLabel = d.toLocaleDateString('en-AU',{weekday:'long',day:'numeric',month:'short'});
+  const existing = allMealPlan.find(m => m.date===date && m.meal_type===type);
   const existingName = existing?.meal_name || '';
-
   if (existingName) {
     document.getElementById('add-meal-title').textContent = `Edit · ${type} · ${dayLabel}`;
     document.getElementById('add-meal-sub').textContent = `Currently: ${existingName}`;
@@ -2333,992 +1946,480 @@ function openAddMealForSlot(date, type) {
     document.getElementById('add-meal-sub').textContent = 'Pick from favourites or add new';
     document.getElementById('new-meal-name').value = '';
   }
-
-  document.querySelectorAll('#meal-type-chips .chip').forEach(c => {
-    c.className = c.textContent.trim() === type ? 'chip sel' : 'chip';
-    c.onclick = function() { selectChip(this, 'meal-type-chips'); };
-  });
-
+  document.querySelectorAll('#meal-type-chips .chip').forEach(c => { c.className = c.textContent.trim()===type?'chip sel':'chip'; });
   populateAddMealFavs(existingName);
-  document.getElementById('add-meal-overlay').style.display = 'flex';
+  document.getElementById('add-meal-overlay').style.display='flex';
 }
-
-function openAddMealFromFav(mealName) {
-  selectedDay = todayStr;
-  selectedFavMeal = mealName;
-  document.getElementById('add-meal-title').textContent = 'Plan this meal';
-  document.getElementById('add-meal-sub').textContent = 'Choose which day to add it to';
-  document.getElementById('new-meal-name').value = mealName;
-  populateAddMealFavs(mealName);
-  document.getElementById('add-meal-overlay').style.display = 'flex';
-}
-
-function populateAddMealFavs(selected = '') {
+function populateAddMealFavs(selected='') {
   const container = document.getElementById('add-meal-favs');
-  container.innerHTML = allMeals.map(m =>
-    `<div class="add-fav-chip ${m.meal_name === selected ? 'sel' : ''}"
-      onclick="selectFavMeal(this,'${(m.meal_name || '').replace(/'/g,"\\'")}')">
-      ${m.meal_name}
-    </div>`
-  ).join('');
-
-  // Leftovers chips
+  if (container) container.innerHTML = allMeals.map(m =>
+    `<div class="add-fav-chip${m.meal_name===selected?' sel':''}" onclick="selectFavMeal(this,'${(m.meal_name||'').replace(/'/g,"\'")}')">
+      ${m.meal_name||''}</div>`).join('');
   const leftoverContainer = document.getElementById('add-meal-leftovers');
-  const allMealNames = [...new Set(allMeals.map(m => m.meal_name).filter(Boolean))].slice(0, 8);
-  leftoverContainer.innerHTML = allMealNames.map(name =>
-    `<div class="add-fav-chip leftover-chip"
-      onclick="selectLeftover(this,'${name.replace(/'/g,"\\'")}')">
-      ${name}
-    </div>`
-  ).join('');
-}
-
-function selectQuickLeftover(el) {
-  document.querySelectorAll('.add-fav-chip').forEach(c => c.classList.remove('sel'));
-  el.classList.add('sel');
-  selectedFavMeal = 'Leftovers';
-  document.getElementById('new-meal-name').value = 'Leftovers';
-}
-
-function selectLeftover(el, name) {
-  document.querySelectorAll('.add-fav-chip').forEach(c => c.classList.remove('sel'));
-  el.classList.add('sel');
-  selectedFavMeal = `Leftovers from ${name}`;
-  document.getElementById('new-meal-name').value = `Leftovers from ${name}`;
-}
-
-function selectFavMeal(el, name) {
-  document.querySelectorAll('.add-fav-chip').forEach(c => c.classList.remove('sel'));
-  el.classList.add('sel');
-  selectedFavMeal = name;
-  document.getElementById('new-meal-name').value = name;
-}
-
-function closeAddMeal(e) {
-  if (e.target.id === 'add-meal-overlay') {
-    document.getElementById('add-meal-overlay').style.display = 'none';
+  if (leftoverContainer) {
+    const recentMeals = [...new Set(allMealPlan.map(m=>m.meal_name).filter(Boolean))].slice(0,8);
+    leftoverContainer.innerHTML = recentMeals.map(name =>
+      `<div class="add-fav-chip leftover-chip" onclick="selectLeftover(this,'${name.replace(/'/g,"\'")}')">
+        ${name}</div>`).join('');
   }
 }
-
-function selectChip(el, groupId) {
-  document.querySelectorAll(`#${groupId} .chip`).forEach(c => c.classList.remove('sel'));
-  el.classList.add('sel');
-}
-
-function setStars(n) {
-  starRating = n;
-  document.querySelectorAll('#star-row .star').forEach((s, i) => {
-    s.className = i < n ? 'star lit' : 'star';
-  });
-}
+function selectQuickLeftover(el) { document.querySelectorAll('.add-fav-chip').forEach(c=>c.classList.remove('sel')); el.classList.add('sel'); selectedFavMeal='Leftovers'; document.getElementById('new-meal-name').value='Leftovers'; }
+function selectLeftover(el,name) { document.querySelectorAll('.add-fav-chip').forEach(c=>c.classList.remove('sel')); el.classList.add('sel'); selectedFavMeal=`Leftovers from ${name}`; document.getElementById('new-meal-name').value=`Leftovers from ${name}`; }
+function selectFavMeal(el,name) { document.querySelectorAll('.add-fav-chip').forEach(c=>c.classList.remove('sel')); el.classList.add('sel'); selectedFavMeal=name; document.getElementById('new-meal-name').value=name; }
+function closeAddMeal(e) { if(e.target.id==='add-meal-overlay') document.getElementById('add-meal-overlay').style.display='none'; }
 
 async function saveMeal() {
   const mealName = selectedFavMeal || document.getElementById('new-meal-name').value.trim();
   const mealType = document.querySelector('#meal-type-chips .chip.sel')?.textContent.trim() || 'Dinner';
-
-  if (!mealName) {
-    document.getElementById('new-meal-name').style.borderColor = 'var(--terracotta)';
-    return;
-  }
-
-  const btn = document.getElementById('save-meal-btn');
-  btn.disabled = true;
-  btn.textContent = 'Saving…';
-
+  if (!mealName) { document.getElementById('new-meal-name').style.borderColor='var(--terracotta)'; return; }
+  const d = new Date(selectedDay+'T00:00:00');
+  const dayName = d.toLocaleDateString('en-AU',{weekday:'long'});
+  const existingIdx = allMealPlan.findIndex(m => m.date===selectedDay && m.meal_type===mealType);
+  const btn = document.querySelector('.save-btn[onclick="saveMeal()"]') || document.getElementById('save-meal-btn');
+  if (btn) { btn.textContent='Saving…'; btn.disabled=true; }
   try {
-    const d = new Date(selectedDay + 'T00:00:00');
-    const dayName = d.toLocaleDateString('en-AU', { weekday: 'long' });
-
-    // Find matching meal id if it exists
-    const matchedMeal = allMeals.find(m => m.meal_name === mealName);
-
-    // Check if there's an existing plan for this slot (to update instead of insert)
-    const existing = allMealPlan.find(m => m.date === selectedDay && m.meal_type === mealType);
-
-    if (existing) {
-      // Update existing record
-      await sbPatch('meal_plan', existing.id, {
-        meal_name: mealName,
-        meal_id: matchedMeal?.id || null,
-        notes: ''
-      });
-      // Update local state
-      existing.meal_name = mealName;
-      existing.meal_id = matchedMeal?.id || null;
+    if (existingIdx>=0 && allMealPlan[existingIdx].id) {
+      await sbPatch('meal_plan', allMealPlan[existingIdx].id, {meal_name:mealName,day:dayName});
+      allMealPlan[existingIdx].meal_name = mealName;
     } else {
-      // Insert new record
-      const newPlan = {
-        date: selectedDay,
-        day: dayName,
-        meal_type: mealType,
-        meal_name: mealName,
-        meal_id: matchedMeal?.id || null,
-        planned: true
-      };
-      const inserted = await sbPost('meal_plan', newPlan);
-      allMealPlan.push(inserted[0] || newPlan);
+      const inserted = await sbPost('meal_plan',{date:selectedDay,day:dayName,meal_type:mealType,meal_name:mealName,planned:true});
+      if (inserted&&inserted[0]) allMealPlan.push(inserted[0]);
     }
-
-    document.getElementById('add-meal-overlay').style.display = 'none';
-    document.getElementById('new-meal-name').value = '';
-    selectedFavMeal = null;
-    renderWeekPlanner();
-    showToast('✓ Meal saved!');
-
-    // Also refresh tonight's dinner on home
-    renderTodayMeals(allMealPlan, allMeals);
-    renderDinner(allMealPlan, allMeals);
-
-  } catch(e) {
-    console.error('Save meal failed:', e);
-    showToast('⚠ Could not save — try again');
-  } finally {
-    btn.disabled = false;
-    btn.textContent = '✓ Save to planner';
-  }
+    document.getElementById('add-meal-overlay').style.display='none';
+    document.getElementById('new-meal-name').value=''; selectedFavMeal='';
+    renderWeekPlanner(); renderTodayMeals(allMealPlan,allMeals);
+    showToast('Meal saved!');
+  } catch(e) { console.error(e); showToast('Could not save: '+e.message.slice(0,40)); }
+  finally { if(btn){btn.textContent='✓ Save to planner';btn.disabled=false;} }
 }
 
-// ── CALENDAR SCREEN ──────────────────────────────────────────
-const WHO_COLOURS = {
-  'Whole family': '#7A8C6E', 'Luka': '#6B8CAE', 'Emma': '#C9A96E', 'Me': '#C4714F'
-};
-let allEvents    = [];
-let calYear      = new Date().getFullYear();
-let calMonth     = new Date().getMonth();
-let calSelected  = todayStr;
+// ── TASKS SCREEN ─────────────────────────────────────────────
+let tasksFilter = 'all';
 
-function renderCalScreen() {
-  const monthLabel = new Date(calYear, calMonth, 1)
-    .toLocaleDateString('en-AU', { month: 'long', year: 'numeric' });
-  document.getElementById('cal-month-label').textContent = monthLabel;
-
-  const firstDay = new Date(calYear, calMonth, 1).getDay();
-  const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
-  const daysInPrev  = new Date(calYear, calMonth, 0).getDate();
-
-  const cells = [];
-  // Prev month padding
-  for (let i = firstDay - 1; i >= 0; i--)
-    cells.push({ day: daysInPrev - i, month: calMonth - 1, other: true });
-  // This month
-  for (let d = 1; d <= daysInMonth; d++)
-    cells.push({ day: d, month: calMonth, other: false });
-  // Next month padding
-  let next = 1;
-  while (cells.length % 7 !== 0) cells.push({ day: next++, month: calMonth + 1, other: true });
-
-  const daysEl = document.getElementById('cal-days');
-  daysEl.innerHTML = cells.map(cell => {
-    if (cell.other) return `<div class="cal-day other-month empty"><div class="cal-day-num">${cell.day}</div></div>`;
-    const dateStr = `${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(cell.day).padStart(2,'0')}`;
-    const isToday    = dateStr === todayStr;
-    const isSelected = dateStr === calSelected;
-    const dayEvents  = allEvents.filter(e => (e.date||'').slice(0,10) === dateStr);
-    const dots = dayEvents.slice(0,3).map(e => {
-      const col = WHO_COLOURS[e.who] || '#C4B5A5';
-      return `<div class="cal-dot" style="background:${col}"></div>`;
-    }).join('');
-    return `
-      <div class="cal-day${isToday ? ' today' : ''}${isSelected ? ' selected' : ''}" onclick="calSelectDay('${dateStr}')">
-        <div class="cal-day-num">${cell.day}</div>
-        ${dots ? `<div class="cal-dots">${dots}</div>` : ''}
-      </div>`;
-  }).join('');
-
-  renderCalDayDetail(calSelected);
-}
-
-function calSelectDay(dateStr) {
-  calSelected = dateStr;
-  renderCalScreen();
-}
-
-function renderCalDayDetail(dateStr) {
-  const d = new Date(dateStr + 'T00:00:00');
-  const label = d.toLocaleDateString('en-AU', { weekday: 'long', day: 'numeric', month: 'long' });
-  document.getElementById('cal-detail-date').textContent = label;
-  document.getElementById('cal-detail-add-btn').style.display = 'inline';
-  document.getElementById('event-date-input').value = dateStr;
-
-  const dayEvents = allEvents.filter(e => (e.date||'').slice(0,10) === dateStr);
-  const evEl = document.getElementById('cal-day-events');
-
-  if (dayEvents.length === 0) {
-    evEl.innerHTML = `<div class="cal-empty">No events — tap + Add event</div>`;
-    return;
-  }
-
-  evEl.innerHTML = dayEvents.map(e => {
-    const col = WHO_COLOURS[e.who] || '#C4B5A5';
-    const time = e.start_time ? `${e.start_time} · ` : '';
-    const loc  = e.location   ? ` · ${e.location}` : '';
-    return `
-      <div class="cal-event-row">
-        <div class="cal-event-dot" style="background:${col}"></div>
-        <div class="cal-event-info">
-          <div class="cal-event-title">${e.title || ''}</div>
-          <div class="cal-event-meta">${time}${e.who || ''}${loc}</div>
-        </div>
-        <button class="cal-event-delete" onclick="deleteEvent(event,'${e.id}')">✕</button>
-      </div>`;
-  }).join('');
-}
-
-function calPrevMonth() {
-  calMonth--;
-  if (calMonth < 0) { calMonth = 11; calYear--; }
-  renderCalScreen();
-}
-
-function calNextMonth() {
-  calMonth++;
-  if (calMonth > 11) { calMonth = 0; calYear++; }
-  renderCalScreen();
-}
-
-function openAddEvent() {
-  document.getElementById('event-title-input').value = '';
-  document.getElementById('event-time-input').value = '';
-  document.getElementById('event-location-input').value = '';
-  document.getElementById('event-date-input').value = calSelected;
-  document.getElementById('add-event-title').textContent =
-    new Date(calSelected + 'T00:00:00').toLocaleDateString('en-AU', { weekday: 'long', day: 'numeric', month: 'short' });
-  document.getElementById('add-event-overlay').style.display = 'flex';
-  setTimeout(() => document.getElementById('event-title-input').focus(), 100);
-}
-
-function closeAddEvent(e) {
-  if (e.target.id === 'add-event-overlay')
-    document.getElementById('add-event-overlay').style.display = 'none';
-}
-
-async function saveEvent() {
-  const title    = document.getElementById('event-title-input').value.trim();
-  const date     = document.getElementById('event-date-input').value || calSelected;
-  const who      = document.querySelector('#event-who-chips .chip.sel')?.textContent.trim() || 'Whole family';
-  const start_time = document.getElementById('event-time-input').value || null;
-  const location = document.getElementById('event-location-input').value.trim() || null;
-
-  if (!title) {
-    document.getElementById('event-title-input').style.borderColor = 'var(--terracotta)';
-    return;
-  }
-
-  const btn = document.getElementById('save-event-btn');
-  btn.textContent = 'Saving…'; btn.disabled = true;
-  try {
-    const inserted = await sbPost('calendar', { title, date, who, start_time, location });
-    if (inserted && inserted[0]) allEvents.push(inserted[0]);
-    document.getElementById('add-event-overlay').style.display = 'none';
-    renderCalScreen();
-    showToast('Event added!');
-  } catch(err) {
-    console.error(err);
-    alert('Could not save — try again');
-  } finally {
-    btn.textContent = '✓ Add event'; btn.disabled = false;
-  }
-}
-
-async function deleteEvent(e, id) {
-  e.stopPropagation();
-  try {
-    await sbDelete('calendar', id);
-    allEvents = allEvents.filter(ev => ev.id !== id);
-    renderCalScreen();
-    showToast('Event removed');
-  } catch(err) { console.error(err); }
-}
-
-// ── SHOP / GROCERY SCREEN ────────────────────────────────────
-const ITEM_CAT_ORDER = ['Produce','Dairy','Meat','Bakery','Frozen','Pantry','Other'];
-const ITEM_CAT_EMOJI = {}; // replaced by SVG icons
-let allGrocery = [];
-
-function renderShopScreen() {
-  const items = allGrocery;
-  const total = items.length;
-  const done  = items.filter(i => i.ticked).length;
-  const pct   = total > 0 ? Math.round((done/total)*100) : 0;
-
-  document.getElementById('shop-progress').style.width = pct + '%';
-  document.getElementById('shop-done-label').textContent = `${done} of ${total} items done`;
-  document.getElementById('shop-sub').textContent = `${total - done} remaining`;
-
-  // Group by category — unticked first, then ticked
-  const unticked = items.filter(i => !i.ticked);
-  const ticked   = items.filter(i => i.ticked);
-  const ordered  = [...unticked, ...ticked];
-
+function renderTasksScreen() {
+  const tasks = allTasksCache;
+  let filtered;
+  if (tasksFilter==='today') filtered = tasks.filter(t => (t.due_date||'').slice(0,10)===todayStr && !t.done);
+  else if (tasksFilter==='upcoming') filtered = tasks.filter(t => (t.due_date||'').slice(0,10)>todayStr && !t.done);
+  else if (tasksFilter==='done') filtered = tasks.filter(t => t.done);
+  else filtered = tasks.filter(t => !t.done);
+  filtered.sort((a,b) => (a.due_date||'9999').localeCompare(b.due_date||'9999'));
+  const total = tasks.filter(t => !t.done).length;
+  const done = tasks.filter(t => t.done).length;
+  const subEl = document.getElementById('tasks-screen-sub');
+  if (subEl) subEl.textContent = `${done} done · ${total} remaining`;
+  const container = document.getElementById('tasks-full-list');
+  if (!container) return;
+  if (filtered.length===0) { container.innerHTML=`<div class="empty-state" style="padding:24px 0">Nothing here — tap + to add a task</div>`; return; }
   const groups = {};
-  ordered.forEach(i => {
-    const cat = i.category || 'Other';
-    if (!groups[cat]) groups[cat] = [];
-    groups[cat].push(i);
+  filtered.forEach(t => {
+    const d = (t.due_date||'').slice(0,10);
+    const label = d===todayStr ? 'Today' : d===new Date(Date.now()+86400000).toISOString().slice(0,10) ? 'Tomorrow' : d ? formatShortDate(d) : 'No date';
+    if (!groups[label]) groups[label]=[];
+    groups[label].push(t);
   });
-
-  const groupsEl = document.getElementById('shop-groups');
-  if (items.length === 0) {
-    groupsEl.innerHTML = `<div style="padding:32px 20px;text-align:center"><div class="empty-state">Nothing on the list yet — tap + to add</div></div>`;
-    return;
-  }
-
-  // Sort groups by category order
-  const sortedCats = [...new Set([
-    ...ITEM_CAT_ORDER.filter(c => groups[c]),
-    ...Object.keys(groups).filter(c => !ITEM_CAT_ORDER.includes(c))
-  ])];
-
-  groupsEl.innerHTML = sortedCats.map(cat => {
-    const catSvgs = {
-      'Produce': '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 2a7 7 0 017 7c0 5-7 13-7 13S5 14 5 9a7 7 0 017-7z"/></svg>',
-      'Dairy':   '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M8 2h8l2 5v13a2 2 0 01-2 2H8a2 2 0 01-2-2V7l2-5z"/><path d="M6 7h12"/></svg>',
-      'Meat':    '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M14.5 2.5c1.5 1.5 2 3.5 1 5.5L9 14.5C7 15.5 5 15 3.5 13.5S2.5 10 3.5 8.5L9.5 3c2-1 3.5-.5 5 0z"/></svg>',
-      'Bakery':  '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 10a6 6 0 0112 0v1H6v-1z"/><rect x="4" y="11" width="16" height="9" rx="1"/></svg>',
-      'Frozen':  '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="2" x2="12" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/><line x1="19.07" y1="4.93" x2="4.93" y2="19.07"/></svg>',
-      'Pantry':  '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M4 9h16M4 15h16"/></svg>',
-      'Other':   '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/></svg>',
-    };
-    const catIcon = catSvgs[cat] || catSvgs['Other'];
-    const checkSvg = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
-    return `
-    <div class="shop-cat-section">
-      <div class="shop-cat-label">${cat}</div>
-      <div class="shop-items-list">
-        ${groups[cat].map(item => `
-          <div class="shop-item-row ${item.ticked ? 'ticked' : ''}" onclick="toggleItem('${item.id}', ${item.ticked})">
-            <div class="shop-check ${item.ticked ? 'ticked' : ''}">
-              <span class="shop-check-mark">${checkSvg}</span>
-            </div>
-            <div class="shop-item-name ${item.ticked ? 'struck' : ''}">${item.item || ''}</div>
-            ${item.quantity ? `<div class="shop-item-qty">${item.quantity}</div>` : ''}
-            <button class="shop-item-delete" onclick="deleteItem(event,'${item.id}')">✕</button>
-          </div>`).join('')}
-      </div>
-    </div>`;
-  }).join('');
-
-  // Populate meal plan chips in add sheet
-  const mealChips = document.getElementById('meal-plan-chips');
-  if (mealChips) {
-    const thisWeekMeals = [...new Set(allMealPlan
-      .filter(m => (m.date||'') >= todayStr)
-      .map(m => m.meal_name).filter(Boolean))];
-    mealChips.innerHTML = thisWeekMeals.length
-      ? thisWeekMeals.map(name => `<div class="shop-meal-chip" onclick="addMealItems('${name.replace(/'/g,"\'")}',this)">${name}</div>`).join('')
-      : `<div class="empty-state" style="font-size:0.7rem">Plan your meals first to auto-populate</div>`;
-  }
+  container.innerHTML = Object.entries(groups).map(([label,items]) => `
+    <div class="task-group">
+      <div class="task-group-label">${label}</div>
+      ${items.map(t => `
+        <div class="task-full-row${t.done?' done':''}" onclick="toggleTaskFull('${t.id}',${t.done})">
+          <div class="task-check${t.done?' ticked':''}"></div>
+          <div class="task-full-body">
+            <div class="task-full-text${t.done?' struck':''}">${t.task||''}</div>
+            ${t.category ? `<div class="task-full-meta"><span class="task-cat ${getCatClass(t.category)}">${t.category}</span>${t.priority?' · '+t.priority:''}</div>` : ''}
+          </div>
+          <button class="task-delete-btn" onclick="deleteTask(event,'${t.id}')">✕</button>
+        </div>`).join('')}
+    </div>`).join('');
 }
 
-async function toggleItem(id, currentTicked) {
-  const newTicked = !currentTicked;
+function filterTasks(filter) {
+  tasksFilter=filter;
+  ['all','today','upcoming','done'].forEach(f => {
+    const el = document.getElementById(`ttab-${f}`);
+    if (el) el.className = 'mode-tab'+(f===filter?' active':'');
+  });
+  renderTasksScreen();
+}
+
+function openAddTask() {
+  document.getElementById('task-name-input').value='';
+  document.getElementById('task-due-input').value=todayStr;
+  document.getElementById('add-task-title').textContent='New task';
+  document.getElementById('add-task-overlay').style.display='flex';
+  setTimeout(()=>document.getElementById('task-name-input').focus(),100);
+}
+function closeAddTask(e) { if(e.target.id==='add-task-overlay') document.getElementById('add-task-overlay').style.display='none'; }
+
+async function saveTask() {
+  const name = document.getElementById('task-name-input').value.trim();
+  if (!name) { document.getElementById('task-name-input').style.borderColor='var(--terracotta)'; return; }
+  const category = document.querySelector('#task-cat-chips .chip.sel')?.textContent.trim() || 'Home';
+  const priority = document.querySelector('#task-priority-chips .chip.sel')?.textContent.trim() || null;
+  const due_date = document.getElementById('task-due-input').value || todayStr;
+  const btn = document.getElementById('save-task-btn');
+  btn.textContent='Saving…'; btn.disabled=true;
   try {
-    await sbPatch('grocery', id, { ticked: newTicked });
-    const item = allGrocery.find(i => i.id === id);
-    if (item) item.ticked = newTicked;
-    renderShopScreen();
+    const inserted = await sbPost('tasks',{task:name,category,priority,due_date,done:false});
+    if (inserted&&inserted[0]) allTasksCache.push(inserted[0]);
+    document.getElementById('add-task-overlay').style.display='none';
+    renderTasksScreen(); renderTasks(allTasksCache);
+    showToast('Task added!');
+  } catch(e) { showToast('Could not save: '+e.message.slice(0,40)); }
+  finally { btn.textContent='✓ Add task'; btn.disabled=false; }
+}
+
+async function toggleTaskFull(id, currentDone) {
+  const newDone = !currentDone;
+  try {
+    await sbPatch('tasks',id,{done:newDone,done_date:newDone?todayStr:null});
+    const task = allTasksCache.find(t=>t.id===id);
+    if (task) task.done=newDone;
+    renderTasksScreen(); renderTasks(allTasksCache);
+    showToast(newDone?'✓ Done!':'Marked undone');
   } catch(e) { console.error(e); }
 }
-
-async function deleteItem(e, id) {
+async function deleteTask(e,id) {
   e.stopPropagation();
   try {
-    await sbDelete('grocery', id);
-    allGrocery = allGrocery.filter(i => i.id !== id);
-    renderShopScreen();
-    showToast('Removed');
+    await sbDelete('tasks',id);
+    allTasksCache = allTasksCache.filter(t=>t.id!==id);
+    renderTasksScreen(); renderTasks(allTasksCache);
+    showToast('Task deleted');
   } catch(e) { console.error(e); }
 }
 
-async function clearTicked() {
-  const tickedIds = allGrocery.filter(i => i.ticked).map(i => i.id);
-  if (!tickedIds.length) return;
-  try {
-    await Promise.all(tickedIds.map(id => sbDelete('grocery', id)));
-    allGrocery = allGrocery.filter(i => !i.ticked);
-    renderShopScreen();
-    showToast(`${tickedIds.length} items cleared`);
-  } catch(e) { console.error(e); }
-}
-
-function openAddItem() {
-  document.getElementById('item-name-input').value = '';
-  document.getElementById('item-qty-input').value = '';
-  renderShopScreen(); // refresh meal chips
-  document.getElementById('add-item-overlay').style.display = 'flex';
-  setTimeout(() => document.getElementById('item-name-input').focus(), 100);
-}
-
-function closeAddItem(e) {
-  if (e.target.id === 'add-item-overlay')
-    document.getElementById('add-item-overlay').style.display = 'none';
-}
-
-async function saveItem() {
-  const name = document.getElementById('item-name-input').value.trim();
-  if (!name) {
-    document.getElementById('item-name-input').style.borderColor = 'var(--terracotta)';
-    return;
-  }
-  const category = document.querySelector('#item-cat-chips .chip.sel')?.textContent.trim() || 'Other';
-  const quantity  = document.getElementById('item-qty-input').value.trim();
-  await addGroceryItem(name, category, quantity);
-  document.getElementById('item-name-input').value = '';
-  document.getElementById('item-qty-input').value = '';
-  showToast('Added!');
-}
-
-async function quickAddItem(el, name) {
-  el.style.opacity = '0.4';
-  el.style.pointerEvents = 'none';
-  const catMap = {
-    'Milk':'Dairy','Butter':'Dairy','Cheese':'Dairy','Yoghurt':'Dairy',
-    'Bread':'Bakery',
-    'Eggs':'Dairy','Chicken':'Meat',
-    'Pasta':'Pantry','Rice':'Pantry','Olive Oil':'Pantry',
-    'Bananas':'Produce','Apples':'Produce','Tomatoes':'Produce',
-    'Onions':'Produce','Carrots':'Produce','Spinach':'Produce'
-  };
-  await addGroceryItem(name, catMap[name] || 'Other', '');
-  showToast(`${name} added!`);
-}
-
-async function addMealItems(mealName, el) {
-  el.style.opacity = '0.4'; el.style.pointerEvents = 'none';
-  // Add meal name as a generic item under Pantry (user can adjust)
-  await addGroceryItem(`Ingredients for ${mealName}`, 'Other', '');
-  showToast('Added!');
-}
-
-async function addGroceryItem(item, category, quantity) {
-  try {
-    const inserted = await sbPost('grocery', {
-      item, category, quantity: quantity || null, ticked: false,
-      week_of: todayStr
-    });
-    if (inserted && inserted[0]) allGrocery.push(inserted[0]);
-    renderShopScreen();
-  } catch(e) { console.error('Add item failed:', e); }
-}
-
-
-// ── FILL MY CUP ──────────────────────────────────────────────
-let noiseNode = null, noiseGain = null, audioCtx = null;
-let breathInterval = null, breathRunning = false;
-let sensoryAnim = null;
-let currentJoyIdx = 0;
-
-const JOY_PROMPTS = [
-  "Name one thing you saw today that was genuinely beautiful.",
-  "What is one small thing that made you smile this week?",
-  "Think of someone who loves you. What would they say to you right now?",
-  "What is one thing your body did today that you are grateful for?",
-  "Name a sound you love. Close your eyes and imagine it.",
-  "What is something you are quietly proud of that no one else knows about?",
-  "If today was a colour, what would it be — and is that okay?",
-  "What is one tiny pleasure you had today, even a small one?",
-  "Name something in the room you are in right now that you find comforting.",
-  "What would you tell your past self from one year ago?",
-];
-
-const JOY_LIST = [
-  "Step outside for 60 seconds. Feel the air on your face.",
-  "Text someone you love a single sentence — just that you are thinking of them.",
-  "Make yourself a hot drink. Hold the cup with both hands.",
-  "Put on one song you loved at age 16. Just one.",
-  "Write down three words for how you want to feel tonight.",
-  "Look up from your phone and notice what is directly in front of you.",
-  "Stretch your arms above your head. Hold for 5 seconds. Let go.",
-  "Say out loud: I am doing enough. Even if it feels untrue.",
-];
-
-function openFillCup() {
-  document.getElementById('fmc-choice').style.display = 'flex';
-  ['fmc-sensory','fmc-breathing','fmc-joy','fmc-move'].forEach(id => {
-    document.getElementById(id).style.display = 'none';
-  });
-  const overlay = document.getElementById('fmc-overlay');
-  overlay.style.display = 'flex';
-  requestAnimationFrame(() => overlay.classList.remove('hidden'));
-}
-
-function closeFillCup() {
-  stopNoise();
-  stopBreathing();
-  stopSensoryAnim();
-  const overlay = document.getElementById('fmc-overlay');
-  overlay.classList.add('hidden');
-  setTimeout(() => overlay.style.display = 'none', 400);
-}
-
-function backToFmcChoice() {
-  stopNoise();
-  stopBreathing();
-  stopSensoryAnim();
-  ['fmc-sensory','fmc-breathing','fmc-joy','fmc-move'].forEach(id => {
-    document.getElementById(id).style.display = 'none';
-  });
-  document.getElementById('fmc-choice').style.display = 'flex';
-}
-
-function startFmcMode(mode) {
-  document.getElementById('fmc-choice').style.display = 'none';
-  const el = document.getElementById('fmc-' + mode);
-  el.style.display = 'flex';
-
-  if (mode === 'sensory') startSensoryAnim();
-  if (mode === 'breathing') resetBreathing();
-  if (mode === 'joy') {
-    shuffleJoy();
-    const list = document.getElementById('joy-list');
-    list.innerHTML = JOY_LIST.map(item =>
-      `<div class="fmc-joy-item">${item}</div>`
-    ).join('');
-  }
-}
-
-// ── SENSORY MODE ─────────────────────────────────────────────
-function startSensoryAnim() {
-  const canvas = document.getElementById('fmc-canvas');
-  const ctx = canvas.getContext('2d');
-  let shapes = [];
-
-  function resize() {
-    canvas.width  = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
-  }
-  resize();
-
-  // Spawn slow drifting shapes
-  for (let i = 0; i < 6; i++) {
-    shapes.push({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      r: 40 + Math.random() * 80,
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: (Math.random() - 0.5) * 0.3,
-      opacity: 0.04 + Math.random() * 0.08,
-      type: Math.random() > 0.5 ? 'circle' : 'rect',
-      rotation: Math.random() * Math.PI * 2,
-      rotSpeed: (Math.random() - 0.5) * 0.003,
-    });
-  }
-
-  function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    shapes.forEach(s => {
-      ctx.save();
-      ctx.globalAlpha = s.opacity;
-      ctx.translate(s.x, s.y);
-      ctx.rotate(s.rotation);
-      ctx.fillStyle = '#5A8C5A';
-      if (s.type === 'circle') {
-        ctx.beginPath();
-        ctx.arc(0, 0, s.r, 0, Math.PI * 2);
-        ctx.fill();
-      } else {
-        ctx.fillRect(-s.r, -s.r * 0.6, s.r * 2, s.r * 1.2);
-      }
-      ctx.restore();
-
-      s.x += s.vx; s.y += s.vy; s.rotation += s.rotSpeed;
-      if (s.x < -s.r) s.x = canvas.width + s.r;
-      if (s.x > canvas.width + s.r) s.x = -s.r;
-      if (s.y < -s.r) s.y = canvas.height + s.r;
-      if (s.y > canvas.height + s.r) s.y = -s.r;
-    });
-    sensoryAnim = requestAnimationFrame(draw);
-  }
-  draw();
-}
-
-function stopSensoryAnim() {
-  if (sensoryAnim) { cancelAnimationFrame(sensoryAnim); sensoryAnim = null; }
-}
-
-// ── BROWN NOISE ───────────────────────────────────────────────
-function toggleNoise() {
-  const btn = document.getElementById('noise-btn');
-  if (noiseNode) {
-    stopNoise();
-    btn.textContent = 'Play brown noise';
-  } else {
-    startNoise();
-    btn.textContent = 'Stop brown noise';
-  }
-}
-
-function startNoise() {
-  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  const bufferSize = 4096;
-  noiseNode = audioCtx.createScriptProcessor(bufferSize, 1, 1);
-  let lastOut = 0;
-  noiseNode.onaudioprocess = function(e) {
-    const output = e.outputBuffer.getChannelData(0);
-    for (let i = 0; i < bufferSize; i++) {
-      const white = Math.random() * 2 - 1;
-      output[i] = (lastOut + (0.02 * white)) / 1.02;
-      lastOut = output[i];
-      output[i] *= 3.5;
-    }
-  };
-  noiseGain = audioCtx.createGain();
-  noiseGain.gain.setValueAtTime(0, audioCtx.currentTime);
-  noiseGain.gain.linearRampToValueAtTime(0.35, audioCtx.currentTime + 2);
-  noiseNode.connect(noiseGain);
-  noiseGain.connect(audioCtx.destination);
-}
-
-function stopNoise() {
-  if (noiseNode) { noiseNode.disconnect(); noiseNode = null; }
-  if (noiseGain) { noiseGain.disconnect(); noiseGain = null; }
-  if (audioCtx)  { audioCtx.close(); audioCtx = null; }
-  const btn = document.getElementById('noise-btn');
-  if (btn) btn.textContent = 'Play brown noise';
-}
-
-// ── BOX BREATHING ─────────────────────────────────────────────
-const BREATH_PHASES = [
-  { label: 'Inhale',  action: 'Breathe in',  count: 4, fill: true  },
-  { label: 'Hold',    action: 'Hold',         count: 4, fill: false },
-  { label: 'Exhale',  action: 'Breathe out',  count: 4, fill: true  },
-  { label: 'Hold',    action: 'Hold',         count: 4, fill: false },
-];
-let breathPhaseIdx = 0, breathCount = 4, breathCycles = 0;
-const BREATH_CIRC = 502;
-
-function resetBreathing() {
-  breathRunning = false; breathPhaseIdx = 0; breathCount = 4; breathCycles = 0;
-  document.getElementById('breath-action').textContent = 'Ready';
-  document.getElementById('breath-count').textContent  = '4';
-  document.getElementById('breath-phase').textContent  = 'tap to begin';
-  document.getElementById('breath-arc').style.strokeDashoffset = BREATH_CIRC;
-  document.getElementById('breath-start-btn').textContent = 'Begin';
-  document.getElementById('breath-guide').textContent = 'Box breathing helps reset your nervous system. 4 counts each — in, hold, out, hold.';
-}
-
-function startBreathing() {
-  if (breathRunning) { stopBreathing(); resetBreathing(); return; }
-  breathRunning = true;
-  document.getElementById('breath-start-btn').textContent = 'Stop';
-  runBreathPhase();
-}
-
-function runBreathPhase() {
-  if (!breathRunning) return;
-  const phase = BREATH_PHASES[breathPhaseIdx];
-  breathCount = phase.count;
-  document.getElementById('breath-action').textContent = phase.action;
-  document.getElementById('breath-phase').textContent  = phase.label;
-  updateBreathArc(phase);
-  breathInterval = setInterval(() => {
-    breathCount--;
-    document.getElementById('breath-count').textContent = breathCount;
-    updateBreathArc(phase);
-    if (breathCount <= 0) {
-      clearInterval(breathInterval);
-      breathPhaseIdx = (breathPhaseIdx + 1) % 4;
-      if (breathPhaseIdx === 0) {
-        breathCycles++;
-        if (breathCycles >= 4) {
-          stopBreathing();
-          document.getElementById('breath-action').textContent = 'Done';
-          document.getElementById('breath-count').textContent  = '';
-          document.getElementById('breath-phase').textContent  = 'You did it';
-          document.getElementById('breath-guide').textContent  = 'Notice how you feel. You just gave your nervous system a reset.';
-          document.getElementById('breath-start-btn').textContent = 'Again';
-          breathRunning = false;
-          return;
-        }
-      }
-      setTimeout(runBreathPhase, 200);
-    }
-  }, 1000);
-}
-
-function updateBreathArc(phase) {
-  const arc = document.getElementById('breath-arc');
-  const total = phase.count;
-  const pct   = (total - breathCount) / total;
-  const offset = BREATH_CIRC * (1 - pct);
-  arc.style.strokeDashoffset = offset;
-  arc.style.stroke = phase.fill ? '#2D4A35' : '#7DB87C';
-}
-
-function stopBreathing() {
-  if (breathInterval) { clearInterval(breathInterval); breathInterval = null; }
-  breathRunning = false;
-}
-
-// ── JOY ───────────────────────────────────────────────────────
-function shuffleJoy() {
-  currentJoyIdx = Math.floor(Math.random() * JOY_PROMPTS.length);
-  document.getElementById('joy-prompt').textContent = JOY_PROMPTS[currentJoyIdx];
-}
-
-function nextJoyPrompt() {
-  currentJoyIdx = (currentJoyIdx + 1) % JOY_PROMPTS.length;
-  document.getElementById('joy-prompt').textContent = JOY_PROMPTS[currentJoyIdx];
-}
-
-// ── BUDGET SCREEN ────────────────────────────────────────────
-const CAT_COLOURS = {
-  'Groceries': '#7A8C6E', 'Kids': '#C4714F', 'Misc': '#C4B5A5',
-  'Eating Out': '#C9A96E', 'Transport': '#8B7355', 'Household': '#6B8CAE', 'Personal': '#B07BA8'
-};
-const CAT_ICONS = {};
-
-let allBudgetCats = [];
-let allExpenses = [];
+// ── BUDGET SCREEN ─────────────────────────────────────────────
+const CAT_COLOURS = {'Groceries':'#7A8C6E','Kids':'#C4714F','Misc':'#C4B5A5','Eating Out':'#C9A96E','Transport':'#8B7355','Household':'#6B8CAE','Personal':'#B07BA8'};
+let currentBudgetCat = null, quickAddType = 'expense';
 
 function renderBudgetScreen() {
   const now = new Date();
-  const monthStr = now.toLocaleDateString('en-AU', { month: 'long', year: 'numeric' });
-  document.getElementById('budget-month-sub').textContent = monthStr;
-
+  const monthStr = now.toLocaleDateString('en-AU',{month:'long',year:'numeric'});
+  const subEl = document.getElementById('budget-month-sub');
+  if (subEl) subEl.textContent = monthStr;
   const monthStart = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-01`;
-  const monthExpenses = allExpenses.filter(e => (e.date||'') >= monthStart);
-
-  const totalSpent  = monthExpenses.reduce((sum, e) => sum + parseFloat(e.amount||0), 0);
-  const totalBudget = allBudgetCats.reduce((sum, cat) => sum + parseFloat(cat.monthly_limit||0), 0);
-  const remaining   = Math.max(0, totalBudget - totalSpent);
-  const pctUsed     = totalBudget > 0 ? Math.min(1, totalSpent / totalBudget) : 0;
-
-  // Update dial
-  const circumference = 2 * Math.PI * 72; // 452.4
+  const monthEnd = new Date(now.getFullYear(),now.getMonth()+1,1).toISOString().slice(0,10);
+  const monthExpenses = allExpenses.filter(e => (e.date||'')>=monthStart && (e.date||'')<monthEnd);
+  const totalSpent = monthExpenses.reduce((s,e)=>s+parseFloat(e.amount||0),0);
+  const totalBudget = allBudgetCats.reduce((s,c)=>s+parseFloat(c.monthly_limit||0),0);
+  const remaining = Math.max(0,totalBudget-totalSpent);
+  const pctUsed = totalBudget>0 ? Math.min(1,totalSpent/totalBudget) : 0;
+  const circ = 452;
   const arc = document.getElementById('budget-dial-arc');
   if (arc) {
-    const offset = circumference * (1 - pctUsed);
-    arc.setAttribute('stroke-dashoffset', offset.toFixed(1));
-    arc.setAttribute('stroke', pctUsed >= 1 ? '#E05252' : pctUsed >= 0.8 ? '#C8A84A' : '#5B8C5A');
+    arc.setAttribute('stroke-dashoffset',(circ*(1-pctUsed)).toFixed(1));
+    arc.setAttribute('stroke',pctUsed>=1?'#E05252':pctUsed>=0.8?'#C9A84A':'#3D6B47');
   }
-  document.getElementById('budget-dial-remaining').textContent = `$${remaining.toFixed(0)}`;
-  document.getElementById('budget-dial-sub').textContent = `$${totalSpent.toFixed(0)} spent of $${totalBudget.toFixed(0)}`;
-
-  // Categories — clean rows, no cards
-  const catsEl = document.getElementById('budget-cats');
-  catsEl.innerHTML = allBudgetCats.map(cat => {
-    const spent = monthExpenses
-      .filter(e => e.category === cat.category)
-      .reduce((sum, e) => sum + parseFloat(e.amount||0), 0);
-    const limit = parseFloat(cat.monthly_limit||0);
-    const pct   = limit > 0 ? Math.min(100, (spent/limit)*100) : 0;
-    const barColour = pct >= 100 ? '#C4714F' : pct >= 80 ? '#C9A96E' : (CAT_COLOURS[cat.category] || '#7A8C6E');
-    const budSvgs = {
-      'Groceries': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></svg>',
-      'Kids': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a6 6 0 0112 0v2"/></svg>',
-      'Misc': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg>',
-      'Eating Out': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg>',
-      'Transport': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="7" width="20" height="13" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/><circle cx="7" cy="17" r="1.5"/><circle cx="17" cy="17" r="1.5"/></svg>',
-      'Household': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>',
-      'Personal': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>',
-    };
-    const icon = `<span style="display:flex;align-items:center;justify-content:center;width:32px;height:32px;background:var(--cream);border-radius:10px;color:${colour}">${budSvgs[cat.category] || budSvgs['Misc']}</span>`;
-    return `
-      <div class="budget-cat-row" onclick="openBudgetCatView('${cat.category}')" style="cursor:pointer">
-        <div class="budget-cat-emoji" style="width:10px;height:10px;border-radius:50%;background:${colour};flex-shrink:0;margin-top:2px"></div>
-        <div class="budget-cat-info">
-          <div class="budget-cat-name">${cat.category}</div>
-          <div class="budget-cat-bar"><div class="budget-cat-bar-fill" style="width:${pct}%;background:${barColour}"></div></div>
-        </div>
-        <div class="budget-cat-right">
-          <div class="budget-cat-spent">$${spent.toFixed(0)}</div>
-          <div class="budget-cat-limit">${limit > 0 ? `of $${limit}` : 'no limit'} ›</div>
-        </div>
-      </div>`;
+  const remEl=document.getElementById('budget-dial-remaining'), subBudget=document.getElementById('budget-dial-sub');
+  if (remEl) remEl.textContent=`$${remaining.toFixed(0)}`;
+  if (subBudget) subBudget.textContent=`$${totalSpent.toFixed(0)} spent of $${totalBudget.toFixed(0)}`;
+  const catsEl=document.getElementById('budget-cats');
+  if (catsEl) catsEl.innerHTML = allBudgetCats.map(cat => {
+    const spent=monthExpenses.filter(e=>e.category===cat.category).reduce((s,e)=>s+parseFloat(e.amount||0),0);
+    const limit=parseFloat(cat.monthly_limit||0);
+    const pct=limit>0?Math.min(100,(spent/limit)*100):0;
+    const barColour=pct>=100?'#E05252':pct>=80?'#C9A84A':(CAT_COLOURS[cat.category]||'#7A8C6E');
+    const colour=CAT_COLOURS[cat.category]||'#C4B5A5';
+    return `<div class="budget-cat-row" onclick="openBudgetCatView('${cat.category}')" style="cursor:pointer">
+      <div class="budget-cat-emoji" style="width:10px;height:10px;border-radius:50%;background:${colour};flex-shrink:0;margin-top:2px"></div>
+      <div class="budget-cat-info">
+        <div class="budget-cat-name">${cat.category}</div>
+        <div class="budget-cat-bar"><div class="budget-cat-bar-fill" style="width:${pct}%;background:${barColour}"></div></div>
+      </div>
+      <div class="budget-cat-right">
+        <div class="budget-cat-spent">$${spent.toFixed(0)}</div>
+        <div class="budget-cat-limit">${limit>0?`of $${limit}`:'no limit'} ›</div>
+      </div>
+    </div>`;
   }).join('');
-
-  // Expense log
-  const recent = [...monthExpenses].sort((a,b) => (b.date||'').localeCompare(a.date||'')).slice(0,20);
-  const expEl = document.getElementById('expense-list');
-  if (recent.length === 0) {
-    expEl.innerHTML = `<div class="empty-state" style="padding:8px 0">No expenses yet — tap + to add</div>`;
-    return;
-  }
-  expEl.innerHTML = recent.map(e => {
-    const colour    = CAT_COLOURS[e.category] || '#C4B5A5';
-    const dateLabel = e.date ? formatShortDate(e.date) : '';
-    return `
-      <div class="expense-row">
+  const expEl=document.getElementById('expense-list');
+  if (expEl) {
+    const recent=[...monthExpenses].sort((a,b)=>(b.date||'').localeCompare(a.date||'')).slice(0,10);
+    if (recent.length===0) { expEl.innerHTML=`<div class="empty-state">No expenses yet — tap + to add</div>`; return; }
+    expEl.innerHTML=recent.map(e=>{
+      const colour=CAT_COLOURS[e.category]||'#C4B5A5';
+      return `<div class="expense-row">
         <div class="expense-cat-dot" style="background:${colour}"></div>
-        <div class="expense-info">
-          <div class="expense-desc">${e.description || e.category}</div>
-          <div class="expense-meta">${e.category}${dateLabel ? ' · ' + dateLabel : ''}</div>
-        </div>
+        <div class="expense-info"><div class="expense-desc">${e.description||e.category}</div><div class="expense-meta">${e.category}${e.date?' · '+formatShortDate(e.date):''}</div></div>
         <div class="expense-amount">$${parseFloat(e.amount||0).toFixed(2)}</div>
         <button class="expense-delete" onclick="deleteExpense(event,'${e.id}')">✕</button>
       </div>`;
+    }).join('');
+  }
+}
+
+function setQuickAddType(type) {
+  quickAddType=type;
+  document.getElementById('qa-tab-expense').className='quick-add-tab'+(type==='expense'?' active':'');
+  document.getElementById('qa-tab-income').className='quick-add-tab'+(type==='income'?' active income':'');
+  document.getElementById('qa-cat-field').style.display=type==='expense'?'':'none';
+  document.getElementById('qa-freq-field').style.display=type==='income'?'':'none';
+  document.getElementById('save-expense-btn').textContent=type==='expense'?'✓ Add expense':'✓ Add income';
+}
+function openQuickAdd(type) { openAddExpense(); setQuickAddType(type||'expense'); }
+
+function openBudgetCatView(cat) {
+  currentBudgetCat=cat;
+  const catObj=allBudgetCats.find(b=>b.category===cat);
+  const limit=catObj?parseFloat(catObj.monthly_limit||0):0;
+  document.getElementById('budget-cat-view-title').textContent=cat;
+  const now=new Date();
+  const months=[];
+  for(let i=5;i>=0;i--){const d=new Date();d.setMonth(d.getMonth()-i);months.push({year:d.getFullYear(),month:d.getMonth(),label:d.toLocaleDateString('en-AU',{month:'short'}),start:`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-01`});}
+  const strip=document.getElementById('budget-cat-month-strip');
+  if(strip)strip.innerHTML=months.map((m,idx)=>{
+    const end=new Date(m.year,m.month+1,1).toISOString().slice(0,10);
+    const spent=allExpenses.filter(e=>e.category===cat&&(e.date||'')>=m.start&&(e.date||'')<end).reduce((s,e)=>s+parseFloat(e.amount||0),0);
+    return `<div class="budget-month-chip${idx===5?' active':''}" onclick="selectBudgetCatMonth(this,'${m.start}','${end}')"><div class="budget-month-chip-label">${m.label}</div><div class="budget-month-chip-amount">$${spent.toFixed(0)}</div></div>`;
   }).join('');
+  const cur=months[5];
+  const curEnd=new Date(cur.year,cur.month+1,1).toISOString().slice(0,10);
+  renderBudgetCatExpenses(cat,cur.start,curEnd);
+  const total=allExpenses.filter(e=>e.category===cat&&(e.date||'')>=cur.start&&(e.date||'')<curEnd).reduce((s,e)=>s+parseFloat(e.amount||0),0);
+  const totalEl=document.getElementById('budget-cat-total'),limitEl=document.getElementById('budget-cat-limit');
+  if(totalEl)totalEl.textContent=`$${total.toFixed(2)}`;
+  if(limitEl)limitEl.textContent=limit>0?`of $${limit} budget`:'No limit set';
+  document.getElementById('budget-cat-view').classList.add('open');
 }
+function selectBudgetCatMonth(el,start,end){document.querySelectorAll('.budget-month-chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');renderBudgetCatExpenses(currentBudgetCat,start,end);const total=allExpenses.filter(e=>e.category===currentBudgetCat&&(e.date||'')>=start&&(e.date||'')<end).reduce((s,e)=>s+parseFloat(e.amount||0),0);const el2=document.getElementById('budget-cat-total');if(el2)el2.textContent=`$${total.toFixed(2)}`;}
+function renderBudgetCatExpenses(cat,start,end){const items=allExpenses.filter(e=>e.category===cat&&(e.date||'')>=start&&(e.date||'')<end).sort((a,b)=>(b.date||'').localeCompare(a.date||''));const el=document.getElementById('budget-cat-exp-list');if(!el)return;if(items.length===0){el.innerHTML=`<div class="empty-state" style="padding:24px 0;text-align:center">No expenses this month</div>`;return;}el.innerHTML=items.map(e=>`<div class="budget-exp-item"><div class="budget-exp-left"><div class="budget-exp-desc">${e.description||e.category}</div><div class="budget-exp-meta">${e.date?formatShortDate(e.date):''}</div></div><div class="budget-exp-right"><div class="budget-exp-amount">$${parseFloat(e.amount||0).toFixed(2)}</div><button class="budget-exp-delete" onclick="deleteCatExpense('${e.id}')">✕</button></div></div>`).join('');}
+async function deleteCatExpense(id){try{await sbDelete('expenses',id);allExpenses=allExpenses.filter(e=>e.id!==id);const ac=document.querySelector('.budget-month-chip.active');if(ac)ac.click();renderBudgetScreen();showToast('Deleted');}catch(e){console.error(e);}}
+function closeBudgetCatView(){document.getElementById('budget-cat-view').classList.remove('open');currentBudgetCat=null;}
+function openBudgetMonthly(){const body=document.getElementById('budget-monthly-body');if(!body)return;const months=[];for(let i=5;i>=0;i--){const d=new Date();d.setMonth(d.getMonth()-i);months.push({label:d.toLocaleDateString('en-AU',{month:'long'}),year:d.getFullYear(),month:d.getMonth(),start:`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-01`});}body.innerHTML=months.reverse().map(m=>{const end=new Date(m.year,m.month+1,1).toISOString().slice(0,10);const spent=allExpenses.filter(e=>(e.date||'')>=m.start&&(e.date||'')<end).reduce((s,e)=>s+parseFloat(e.amount||0),0);const budget=allBudgetCats.reduce((s,c)=>s+parseFloat(c.monthly_limit||0),0);const net=budget-spent;const netClass=net>=0?'val-positive':'val-negative';const netStr=net>=0?`$${net.toFixed(0)}`:`-$${Math.abs(net).toFixed(0)}`;return `<div class="budget-monthly-card"><div class="budget-monthly-card-title">${m.label}</div><div class="budget-monthly-row"><div class="budget-monthly-col"><div class="budget-monthly-col-label">Budget</div><div class="budget-monthly-col-val val-income">$${budget.toFixed(0)}</div></div><div class="budget-monthly-col"><div class="budget-monthly-col-label">Expenses</div><div class="budget-monthly-col-val val-expense">$${spent.toFixed(0)}</div></div><div class="budget-monthly-col"><div class="budget-monthly-col-label">Remaining</div><div class="budget-monthly-col-val ${netClass}">${netStr}</div></div></div></div>`;}).join('');}
+function closeBudgetMonthly(){document.getElementById('budget-monthly-view').classList.remove('open');}
 
-function openAddExpense() {
-  document.getElementById('expense-desc-input').value = '';
-  document.getElementById('expense-amount-input').value = '';
-  document.getElementById('expense-date-input').value = todayStr;
-  document.getElementById('add-expense-overlay').style.display = 'flex';
-  setTimeout(() => document.getElementById('expense-desc-input').focus(), 100);
+function openEditLimit(){const cat=currentBudgetCat;if(!cat)return;const catObj=allBudgetCats.find(b=>b.category===cat);const cur=catObj?parseFloat(catObj.monthly_limit||0):0;document.getElementById('edit-limit-title').textContent=`${cat} — monthly limit`;document.getElementById('edit-limit-sub').textContent=`How much do you want to spend on ${cat.toLowerCase()} each month?`;document.getElementById('edit-limit-current-val').textContent=cur>0?`$${cur}`:'No limit';document.getElementById('edit-limit-input').value=cur>0?cur:'';document.getElementById('edit-limit-modal').classList.remove('hidden');setTimeout(()=>document.getElementById('edit-limit-input').focus(),150);}
+function closeEditLimit(e){if(!e||e.target.id==='edit-limit-modal')document.getElementById('edit-limit-modal').classList.add('hidden');}
+function setLimitPreset(amount){document.getElementById('edit-limit-input').value=amount>0?amount:'';}
+async function saveEditLimit(){const cat=currentBudgetCat;const val=parseFloat(document.getElementById('edit-limit-input').value);const newLimit=isNaN(val)||val<=0?null:val;const catObj=allBudgetCats.find(b=>b.category===cat);if(!catObj)return;const btn=document.querySelector('.edit-limit-save');btn.textContent='Saving…';btn.disabled=true;try{await sbPatch('budget',catObj.id,{monthly_limit:newLimit});catObj.monthly_limit=newLimit;document.getElementById('edit-limit-current-val').textContent=newLimit?`$${newLimit}`:'No limit';document.getElementById('budget-cat-limit').textContent=newLimit?`of $${newLimit} budget`:'No limit set';closeEditLimit();renderBudgetScreen();showToast(`${cat} limit updated!`);}catch(e){showToast('Could not save');}finally{btn.textContent='Save limit';btn.disabled=false;}}
+
+function openAddExpense(){document.getElementById('expense-desc-input').value='';document.getElementById('expense-amount-input').value='';document.getElementById('expense-date-input').value=todayStr;setQuickAddType('expense');document.getElementById('add-expense-overlay').style.display='flex';setTimeout(()=>document.getElementById('expense-amount-input').focus(),100);}
+function closeAddExpense(e){if(e.target.id==='add-expense-overlay')document.getElementById('add-expense-overlay').style.display='none';}
+async function saveExpense(){
+  const description=document.getElementById('expense-desc-input').value.trim();
+  const amount=parseFloat(document.getElementById('expense-amount-input').value);
+  const category=document.querySelector('#expense-cat-chips .chip.sel')?.textContent.trim()||'Misc';
+  const date=document.getElementById('expense-date-input').value||todayStr;
+  if(!description){document.getElementById('expense-desc-input').style.borderColor='#E05252';document.getElementById('expense-desc-input').focus();return;}
+  if(isNaN(amount)||amount<=0){document.getElementById('expense-amount-input').style.borderColor='#E05252';document.getElementById('expense-amount-input').focus();return;}
+  const btn=document.getElementById('save-expense-btn');const orig=btn.textContent;btn.textContent='Saving…';btn.disabled=true;
+  try{const inserted=await sbPost('expenses',{description,amount,category,date});if(inserted&&inserted[0])allExpenses.push(inserted[0]);document.getElementById('add-expense-overlay').style.display='none';document.getElementById('expense-desc-input').value='';document.getElementById('expense-amount-input').value='';renderBudgetScreen();showToast('Expense added!');}
+  catch(e){console.error(e);showToast('Could not save: '+e.message.slice(0,40));}
+  finally{btn.textContent=orig;btn.disabled=false;}
 }
+async function deleteExpense(e,id){e.stopPropagation();try{await sbDelete('expenses',id);allExpenses=allExpenses.filter(ex=>ex.id!==id);renderBudgetScreen();showToast('Deleted');}catch(e){console.error(e);}}
 
-function closeAddExpense(e) {
-  if (e.target.id === 'add-expense-overlay')
-    document.getElementById('add-expense-overlay').style.display = 'none';
+// ── SHOP SCREEN ──────────────────────────────────────────────
+const ITEM_CAT_ORDER=['Produce','Dairy','Meat','Bakery','Frozen','Pantry','Other'];
+function renderShopScreen(){
+  const items=allGrocery;const total=items.length;const done=items.filter(i=>i.ticked).length;
+  const pct=total>0?Math.round((done/total)*100):0;
+  const progEl=document.getElementById('shop-progress'),doneEl=document.getElementById('shop-done-label'),subEl=document.getElementById('shop-sub');
+  if(progEl)progEl.style.width=pct+'%';
+  if(doneEl)doneEl.textContent=`${done} of ${total} items done`;
+  if(subEl)subEl.textContent=`${total-done} remaining`;
+  const unticked=items.filter(i=>!i.ticked),ticked=items.filter(i=>i.ticked);
+  const ordered=[...unticked,...ticked];
+  const groups={};
+  ordered.forEach(i=>{const cat=i.category||'Other';if(!groups[cat])groups[cat]=[];groups[cat].push(i);});
+  const sortedCats=[...new Set([...ITEM_CAT_ORDER.filter(c=>groups[c]),...Object.keys(groups).filter(c=>!ITEM_CAT_ORDER.includes(c))])];
+  const groupsEl=document.getElementById('shop-groups');
+  if(!groupsEl)return;
+  if(items.length===0){groupsEl.innerHTML=`<div style="padding:32px 20px;text-align:center"><div class="empty-state">Nothing on the list yet — tap + to add</div></div>`;return;}
+  const checkSvg='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+  groupsEl.innerHTML=sortedCats.map(cat=>`
+    <div class="shop-cat-section">
+      <div class="shop-cat-label">${cat}</div>
+      <div class="shop-items-list">
+        ${groups[cat].map(item=>`
+          <div class="shop-item-row${item.ticked?' ticked':''}" onclick="toggleItem('${item.id}',${item.ticked})">
+            <div class="shop-check${item.ticked?' ticked':''}"><span class="shop-check-mark">${item.ticked?checkSvg:''}</span></div>
+            <div class="shop-item-name${item.ticked?' struck':''}">${item.item||''}</div>
+            ${item.quantity?`<div class="shop-item-qty">${item.quantity}</div>`:''}
+            <button class="shop-item-delete" onclick="deleteItem(event,'${item.id}')">✕</button>
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+  const mealChips=document.getElementById('meal-plan-chips');
+  if(mealChips){const thisWeekMeals=[...new Set(allMealPlan.filter(m=>(m.date||'')>=todayStr).map(m=>m.meal_name).filter(Boolean))];mealChips.innerHTML=thisWeekMeals.length?thisWeekMeals.map(name=>`<div class="shop-meal-chip" onclick="addMealItems('${name.replace(/'/g,"\'")}',this)">${name}</div>`).join(''):`<div class="empty-state" style="font-size:0.7rem">Plan your meals first to auto-populate</div>`;}
 }
+async function toggleItem(id,cur){try{await sbPatch('grocery',id,{ticked:!cur});const item=allGrocery.find(i=>i.id===id);if(item)item.ticked=!cur;renderShopScreen();}catch(e){console.error(e);}}
+async function deleteItem(e,id){e.stopPropagation();try{await sbDelete('grocery',id);allGrocery=allGrocery.filter(i=>i.id!==id);renderShopScreen();showToast('Removed');}catch(e){console.error(e);}}
+async function clearTicked(){const ids=allGrocery.filter(i=>i.ticked).map(i=>i.id);if(!ids.length)return;try{await Promise.all(ids.map(id=>sbDelete('grocery',id)));allGrocery=allGrocery.filter(i=>!i.ticked);renderShopScreen();showToast(`${ids.length} items cleared`);}catch(e){console.error(e);}}
+function openAddItem(){document.getElementById('item-name-input').value='';document.getElementById('item-qty-input').value='';renderShopScreen();document.getElementById('add-item-overlay').style.display='flex';setTimeout(()=>document.getElementById('item-name-input').focus(),100);}
+function closeAddItem(e){if(e.target.id==='add-item-overlay')document.getElementById('add-item-overlay').style.display='none';}
+async function saveItem(){const name=document.getElementById('item-name-input').value.trim();if(!name){document.getElementById('item-name-input').style.borderColor='var(--terracotta)';return;}const category=document.querySelector('#item-cat-chips .chip.sel')?.textContent.trim()||'Other';const quantity=document.getElementById('item-qty-input').value.trim();await addGroceryItem(name,category,quantity);document.getElementById('item-name-input').value='';document.getElementById('item-qty-input').value='';showToast('Added!');}
+async function quickAddItem(el,name){el.style.opacity='0.4';el.style.pointerEvents='none';const catMap={'Milk':'Dairy','Butter':'Dairy','Cheese':'Dairy','Yoghurt':'Dairy','Bread':'Bakery','Eggs':'Dairy','Chicken':'Meat','Pasta':'Pantry','Rice':'Pantry','Olive Oil':'Pantry','Bananas':'Produce','Apples':'Produce','Tomatoes':'Produce','Onions':'Produce','Carrots':'Produce','Spinach':'Produce'};await addGroceryItem(name,catMap[name]||'Other','');showToast(`${name} added!`);}
+async function addMealItems(mealName,el){el.style.opacity='0.4';el.style.pointerEvents='none';await addGroceryItem(`Ingredients for ${mealName}`,'Other','');showToast('Added!');}
+async function addGroceryItem(item,category,quantity){try{const inserted=await sbPost('grocery',{item,category,quantity:quantity||null,ticked:false,week_of:todayStr});if(inserted&&inserted[0])allGrocery.push(inserted[0]);renderShopScreen();}catch(e){console.error('Add item failed:',e);showToast('Could not add: '+e.message.slice(0,30));}}
 
-async function saveExpense() {
-  const description = document.getElementById('expense-desc-input').value.trim();
-  const amount = parseFloat(document.getElementById('expense-amount-input').value);
-  const category = document.querySelector('#expense-cat-chips .chip.sel')?.textContent.trim() || 'Misc';
-  const date = document.getElementById('expense-date-input').value || todayStr;
-
-  if (!description) {
-    document.getElementById('expense-desc-input').style.borderColor = '#E05252';
-    document.getElementById('expense-desc-input').focus();
-    return;
-  }
-  if (isNaN(amount) || amount <= 0) {
-    document.getElementById('expense-amount-input').style.borderColor = '#E05252';
-    document.getElementById('expense-amount-input').focus();
-    return;
-  }
-
-  const btn = document.getElementById('save-expense-btn');
-  const originalText = btn.textContent;
-  btn.textContent = 'Saving…'; btn.disabled = true;
-
-  try {
-    const payload = { description, amount, category, date };
-    console.log('Saving expense:', payload);
-    const inserted = await sbPost('expenses', payload);
-    console.log('Saved:', inserted);
-    if (inserted && inserted[0]) allExpenses.push(inserted[0]);
-    document.getElementById('add-expense-overlay').style.display = 'none';
-    document.getElementById('expense-desc-input').value = '';
-    document.getElementById('expense-amount-input').value = '';
-    renderBudgetScreen();
-    showToast('Expense added!');
-  } catch(e) {
-    console.error('Save expense error:', e);
-    showToast('Could not save: ' + e.message.slice(0, 40));
-  } finally {
-    btn.textContent = originalText; btn.disabled = false;
-  }
+// ── CALENDAR SCREEN ──────────────────────────────────────────
+const WHO_COLOURS={'Whole family':'#3D6B47','Luka':'#6B8CAE','Emma':'#C9A882','Me':'#C4714F'};
+let calYear=new Date().getFullYear(),calMonth=new Date().getMonth(),calSelected=todayStr;
+function renderCalScreen(){
+  const monthLabel=new Date(calYear,calMonth,1).toLocaleDateString('en-AU',{month:'long',year:'numeric'});
+  const ml=document.getElementById('cal-month-label');if(ml)ml.textContent=monthLabel;
+  const firstDay=new Date(calYear,calMonth,1).getDay();
+  const daysInMonth=new Date(calYear,calMonth+1,0).getDate();
+  const daysInPrev=new Date(calYear,calMonth,0).getDate();
+  const cells=[];
+  for(let i=firstDay-1;i>=0;i--)cells.push({day:daysInPrev-i,other:true});
+  for(let d=1;d<=daysInMonth;d++)cells.push({day:d,other:false});
+  let next=1;while(cells.length%7!==0)cells.push({day:next++,other:true});
+  const daysEl=document.getElementById('cal-days');
+  if(!daysEl)return;
+  daysEl.innerHTML=cells.map(cell=>{
+    if(cell.other)return`<div class="cal-day other-month empty"><div class="cal-day-num">${cell.day}</div></div>`;
+    const dateStr=`${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(cell.day).padStart(2,'0')}`;
+    const isToday=dateStr===todayStr,isSelected=dateStr===calSelected;
+    const dayEvents=allEvents.filter(e=>(e.date||'').slice(0,10)===dateStr);
+    const dots=dayEvents.slice(0,3).map(e=>`<div class="cal-dot" style="background:${WHO_COLOURS[e.who]||'#C4B5A5'}"></div>`).join('');
+    return`<div class="cal-day${isToday?' today':''}${isSelected?' selected':''}" onclick="calSelectDay('${dateStr}')"><div class="cal-day-num">${cell.day}</div>${dots?`<div class="cal-dots">${dots}</div>`:''}</div>`;
+  }).join('');
+  renderCalDayDetail(calSelected);
 }
-
-async function deleteExpense(e, id) {
-  e.stopPropagation();
-  try {
-    await sbDelete('expenses', id);
-    allExpenses = allExpenses.filter(ex => ex.id !== id);
-    renderBudgetScreen();
-    showToast('Deleted');
-  } catch(e) { console.error(e); }
+function calSelectDay(d){calSelected=d;renderCalScreen();}
+function renderCalDayDetail(dateStr){
+  const d=new Date(dateStr+'T00:00:00');
+  const label=d.toLocaleDateString('en-AU',{weekday:'long',day:'numeric',month:'long'});
+  const dateEl=document.getElementById('cal-detail-date'),addBtn=document.getElementById('cal-detail-add-btn');
+  if(dateEl)dateEl.textContent=label;
+  if(addBtn)addBtn.style.display='inline';
+  const dateInput=document.getElementById('event-date-input');if(dateInput)dateInput.value=dateStr;
+  const dayEvents=allEvents.filter(e=>(e.date||'').slice(0,10)===dateStr);
+  const evEl=document.getElementById('cal-day-events');if(!evEl)return;
+  if(dayEvents.length===0){evEl.innerHTML=`<div class="cal-empty">No events — tap + Add event</div>`;return;}
+  evEl.innerHTML=dayEvents.map(e=>{const col=WHO_COLOURS[e.who]||'#C4B5A5';return`<div class="cal-event-row"><div class="cal-event-dot" style="background:${col}"></div><div class="cal-event-info"><div class="cal-event-title">${e.title||''}</div><div class="cal-event-meta">${e.start_time?e.start_time+' · ':''}${e.who||''}${e.location?' · '+e.location:''}</div></div><button class="cal-event-delete" onclick="deleteEvent(event,'${e.id}')">✕</button></div>`;}).join('');
 }
+function calPrevMonth(){calMonth--;if(calMonth<0){calMonth=11;calYear--;}renderCalScreen();}
+function calNextMonth(){calMonth++;if(calMonth>11){calMonth=0;calYear++;}renderCalScreen();}
+function openAddEvent(){document.getElementById('event-title-input').value='';document.getElementById('event-time-input').value='';document.getElementById('event-location-input').value='';document.getElementById('event-date-input').value=calSelected;document.getElementById('add-event-title').textContent=new Date(calSelected+'T00:00:00').toLocaleDateString('en-AU',{weekday:'long',day:'numeric',month:'short'});document.getElementById('add-event-overlay').style.display='flex';setTimeout(()=>document.getElementById('event-title-input').focus(),100);}
+function closeAddEvent(e){if(e.target.id==='add-event-overlay')document.getElementById('add-event-overlay').style.display='none';}
+async function saveEvent(){const title=document.getElementById('event-title-input').value.trim();const date=document.getElementById('event-date-input').value||calSelected;const who=document.querySelector('#event-who-chips .chip.sel')?.textContent.trim()||'Whole family';const start_time=document.getElementById('event-time-input').value||null;const location=document.getElementById('event-location-input').value.trim()||null;if(!title){document.getElementById('event-title-input').style.borderColor='var(--terracotta)';return;}const btn=document.getElementById('save-event-btn');btn.textContent='Saving…';btn.disabled=true;try{const inserted=await sbPost('calendar',{title,date,who,start_time,location});if(inserted&&inserted[0])allEvents.push(inserted[0]);document.getElementById('add-event-overlay').style.display='none';renderCalScreen();showToast('Event added!');}catch(e){console.error(e);showToast('Could not save: '+e.message.slice(0,40));}finally{btn.textContent='✓ Add event';btn.disabled=false;}}
+async function deleteEvent(e,id){e.stopPropagation();try{await sbDelete('calendar',id);allEvents=allEvents.filter(ev=>ev.id!==id);renderCalScreen();showToast('Event removed');}catch(e){console.error(e);}}
 
+// ── FILL MY CUP ──────────────────────────────────────────────
+let audioCtx=null,noiseNode=null,noiseGain=null,noiseOn=false,breathTimer=null,sensoryAnimFrame=null;
+let breathPhaseIdx=0,breathCountdown=4,breathRound=0,breathRunning=false;
+const BREATH_CIRCUMFERENCE=2*Math.PI*90;
 
+const JOY_PROMPTS=[
+  "What's one small thing that made you smile this week?",
+  "Name something beautiful you saw today — even something tiny.",
+  "What's a smell that instantly takes you somewhere safe?",
+  "Think of someone who made you feel seen recently. What did they do?",
+  "What's something your body did today that you're grateful for?",
+  "What's a song that always lifts you. Why does it?",
+  "What did you love as a child that you've forgotten about?",
+  "What's one thing you're proud of that nobody knows about?",
+  "If you had one completely free hour today, what would feel most like you?",
+  "What would you tell a friend who's having the kind of day you're having?",
+  "Name one texture, colour or sound that feels like comfort.",
+  "What's something that happened recently that was unexpectedly lovely?",
+];
+const JOY_LIST_ITEMS=["Step outside for 60 seconds. Look up.","Text someone you love something specific you appreciate about them.","Make something warm to drink — slowly, on purpose.","Watch a video that always makes you laugh.","Look at a photo that makes you feel something good.","Do one thing with your hands that isn't a screen.","Say out loud three things that are true and good right now.","Put on one song and just sit with it."];
+let currentJoyIdx=0;
 
-// ── SENSORY MODE ──────────────────────────────────────────────
-function initSensory() {
-  const canvas = document.getElementById('sensory-canvas');
-  const ctx = canvas.getContext('2d');
+function openFillCup(){const o=document.getElementById('cup-overlay');o.classList.remove('hidden');document.getElementById('cup-choice-screen').style.display='flex';['sensory','breathing','joy','movement'].forEach(m=>document.getElementById('cup-mode-'+m).classList.add('hidden'));}
+function closeFillCup(){document.getElementById('cup-overlay').classList.add('hidden');stopNoise();stopBreathing();if(sensoryAnimFrame){cancelAnimationFrame(sensoryAnimFrame);sensoryAnimFrame=null;}}
+function startCupMode(mode){document.getElementById('cup-choice-screen').style.display='none';['sensory','breathing','joy','movement'].forEach(m=>document.getElementById('cup-mode-'+m).classList.add('hidden'));document.getElementById('cup-mode-'+mode).classList.remove('hidden');if(mode==='sensory')initSensory();if(mode==='breathing')initBreathing();if(mode==='joy')initJoy();}
+function closeCupMode(mode){document.getElementById('cup-mode-'+mode).classList.add('hidden');document.getElementById('cup-choice-screen').style.display='flex';stopNoise();stopBreathing();if(sensoryAnimFrame){cancelAnimationFrame(sensoryAnimFrame);sensoryAnimFrame=null;}}
 
-  function resize() {
-    canvas.width  = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
-  const shapes = Array.from({length: 6}, (_, i) => ({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    size: 60 + Math.random() * 120,
-    vx: (Math.random() - 0.5) * 0.3,
-    vy: (Math.random() - 0.5) * 0.3,
-    opacity: 0.04 + Math.random() * 0.06,
-    type: i % 3, // 0=circle, 1=triangle, 2=square
-    rotation: Math.random() * Math.PI * 2,
-    rotSpeed: (Math.random() - 0.5) * 0.002,
-  }));
-
-  function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    shapes.forEach(s => {
-      s.x += s.vx; s.y += s.vy; s.rotation += s.rotSpeed;
-      if (s.x < -s.size) s.x = canvas.width + s.size;
-      if (s.x > canvas.width + s.size) s.x = -s.size;
-      if (s.y < -s.size) s.y = canvas.height + s.size;
-      if (s.y > canvas.height + s.size) s.y = -s.size;
-
-      ctx.save();
-      ctx.translate(s.x, s.y);
-      ctx.rotate(s.rotation);
-      ctx.globalAlpha = s.opacity;
-      ctx.strokeStyle = '#7DB87C';
-      ctx.lineWidth = 1.5;
-      ctx.beginPath();
-      if (s.type === 0) {
-        ctx.arc(0, 0, s.size / 2, 0, Math.PI * 2);
-      } else if (s.type === 1) {
-        const h = s.size * 0.866;
-        ctx.moveTo(0, -s.size/2); ctx.lineTo(s.size/2, h/2); ctx.lineTo(-s.size/2, h/2); ctx.closePath();
-      } else {
-        ctx.rect(-s.size/2, -s.size/2, s.size, s.size);
-      }
-      ctx.stroke();
-      ctx.restore();
-    });
-    sensoryAnimFrame = requestAnimationFrame(draw);
-  }
+function initSensory(){
+  const canvas=document.getElementById('sensory-canvas');if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  function resize(){canvas.width=canvas.parentElement.offsetWidth||window.innerWidth;canvas.height=canvas.parentElement.offsetHeight||window.innerHeight;}
+  setTimeout(resize,50);window.addEventListener('resize',resize);
+  const shapes=Array.from({length:8},(_,i)=>({x:Math.random()*800,y:Math.random()*900,size:60+Math.random()*120,vx:(Math.random()-0.5)*0.4,vy:(Math.random()-0.5)*0.4,opacity:0.04+Math.random()*0.06,type:i%3,rotation:Math.random()*Math.PI*2,rotSpeed:(Math.random()-0.5)*0.003}));
+  function draw(){ctx.clearRect(0,0,canvas.width,canvas.height);shapes.forEach(s=>{s.x+=s.vx;s.y+=s.vy;s.rotation+=s.rotSpeed;if(s.x<-s.size)s.x=canvas.width+s.size;if(s.x>canvas.width+s.size)s.x=-s.size;if(s.y<-s.size)s.y=canvas.height+s.size;if(s.y>canvas.height+s.size)s.y=-s.size;ctx.save();ctx.translate(s.x,s.y);ctx.rotate(s.rotation);ctx.globalAlpha=s.opacity;ctx.strokeStyle='#7DB87C';ctx.lineWidth=1.5;ctx.beginPath();if(s.type===0)ctx.arc(0,0,s.size/2,0,Math.PI*2);else if(s.type===1){const h=s.size*0.866;ctx.moveTo(0,-s.size/2);ctx.lineTo(s.size/2,h/2);ctx.lineTo(-s.size/2,h/2);ctx.closePath();}else ctx.rect(-s.size/2,-s.size/2,s.size,s.size);ctx.stroke();ctx.restore();});sensoryAnimFrame=requestAnimationFrame(draw);}
   draw();
 }
 
+function toggleNoise(){
+  const btn=document.getElementById('noise-btn');
+  if(noiseOn){stopNoise();return;}
+  try{
+    audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+    const bufSize=audioCtx.sampleRate*4;const buffer=audioCtx.createBuffer(1,bufSize,audioCtx.sampleRate);const data=buffer.getChannelData(0);let last=0;
+    for(let i=0;i<bufSize;i++){const w=Math.random()*2-1;data[i]=(last+(0.02*w))/1.02;last=data[i];data[i]*=3.5;}
+    noiseNode=audioCtx.createBufferSource();noiseNode.buffer=buffer;noiseNode.loop=true;
+    noiseGain=audioCtx.createGain();noiseGain.gain.setValueAtTime(0,audioCtx.currentTime);noiseGain.gain.linearRampToValueAtTime(0.4,audioCtx.currentTime+2);
+    noiseNode.connect(noiseGain);noiseGain.connect(audioCtx.destination);noiseNode.start();
+    noiseOn=true;if(btn){btn.textContent='Stop brown noise';btn.classList.add('playing');}
+  }catch(e){console.error('Audio failed:',e);}
+}
+function stopNoise(){if(noiseNode){try{noiseNode.stop();}catch(e){}noiseNode=null;}if(audioCtx){try{audioCtx.close();}catch(e){}audioCtx=null;}noiseOn=false;const btn=document.getElementById('noise-btn');if(btn){btn.textContent='Play brown noise';btn.classList.remove('playing');}}
+
+const BREATH_PHASES=[{name:'Inhale',instruction:'Breathe in',duration:4,idx:0},{name:'Hold',instruction:'Hold',duration:4,idx:1},{name:'Exhale',instruction:'Breathe out',duration:4,idx:2},{name:'Hold',instruction:'Hold',duration:4,idx:3}];
+
+function initBreathing(){
+  breathPhaseIdx=0;breathCountdown=4;breathRound=0;breathRunning=false;
+  const ring=document.getElementById('breath-progress-ring');if(ring){ring.style.strokeDashoffset=BREATH_CIRCUMFERENCE;ring.style.transition='none';}
+  const btn=document.getElementById('breath-btn');if(btn){btn.textContent='Begin';btn.style.display='block';}
+  setBreathUI('Ready','Tap begin','4');
+  document.querySelectorAll('.breath-phase-pill').forEach(p=>p.classList.remove('active'));
+}
+function setBreathUI(phase,instruction,count){
+  const pl=document.getElementById('breath-phase-label'),pi=document.getElementById('breath-phase-instruction'),pc=document.getElementById('breath-count');
+  if(pl)pl.textContent=phase;if(pi)pi.textContent=instruction;if(pc)pc.textContent=count;
+}
+function startBreathing(){if(breathRunning)return;breathRunning=true;breathPhaseIdx=0;breathRound=0;const rl=document.getElementById('breath-rounds-label');if(rl)rl.textContent='Round 1 of 4';document.getElementById('breath-btn').style.display='none';runBreathPhase();}
+function runBreathPhase(){
+  if(!breathRunning)return;const phase=BREATH_PHASES[breathPhaseIdx];breathCountdown=phase.duration;
+  document.querySelectorAll('.breath-phase-pill').forEach((p,i)=>p.classList.toggle('active',i===phase.idx));
+  setBreathUI(phase.name,phase.instruction,breathCountdown);
+  const ring=document.getElementById('breath-progress-ring');
+  if(ring){
+    const start=phase.idx===0?BREATH_CIRCUMFERENCE:phase.idx===1?0:phase.idx===2?0:BREATH_CIRCUMFERENCE;
+    const end=phase.idx===0?0:phase.idx===1?0:phase.idx===2?BREATH_CIRCUMFERENCE:BREATH_CIRCUMFERENCE;
+    ring.style.transition='none';ring.style.strokeDashoffset=start;
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{ring.style.transition=`stroke-dashoffset ${phase.duration}s linear`;ring.style.strokeDashoffset=end;}));
+  }
+  breathTimer=setInterval(()=>{
+    breathCountdown--;setBreathUI(phase.name,phase.instruction,breathCountdown>0?breathCountdown:'');
+    if(breathCountdown<=0){
+      clearInterval(breathTimer);breathPhaseIdx++;
+      if(breathPhaseIdx>=BREATH_PHASES.length){breathPhaseIdx=0;breathRound++;const rl=document.getElementById('breath-rounds-label');
+        if(breathRound>=4){breathRunning=false;setBreathUI('Done','Well done','✓');if(rl)rl.textContent='4 rounds complete';document.querySelectorAll('.breath-phase-pill').forEach(p=>p.classList.remove('active'));const b=document.getElementById('breath-btn');if(b){b.textContent='Again';b.style.display='block';}return;}
+        if(rl)rl.textContent=`Round ${breathRound+1} of 4`;}
+      runBreathPhase();}
+  },1000);
+}
+function stopBreathing(){breathRunning=false;if(breathTimer){clearInterval(breathTimer);breathTimer=null;}}
+
+function initJoy(){
+  currentJoyIdx=Math.floor(Math.random()*JOY_PROMPTS.length);
+  document.getElementById('joy-prompt-text').textContent=JOY_PROMPTS[currentJoyIdx];
+  const icons=['<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>','<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>','<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>','<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>','<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>','<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>','<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>','<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>'];
+  document.getElementById('joy-list').innerHTML=JOY_LIST_ITEMS.map((item,i)=>`<div class="joy-grid-item"><div class="joy-grid-icon">${icons[i%icons.length]}</div><div class="joy-grid-text">${item}</div></div>`).join('');
+}
+function newJoyPrompt(){currentJoyIdx=(currentJoyIdx+1)%JOY_PROMPTS.length;document.getElementById('joy-prompt-text').textContent=JOY_PROMPTS[currentJoyIdx];}
+
+function toggleStretch(idx){const card=document.getElementById('sc-'+idx);if(!card)return;const isOpen=card.classList.contains('open');for(let i=0;i<5;i++){const c=document.getElementById('sc-'+i);if(c)c.classList.remove('open');}if(!isOpen)card.classList.add('open');}
 
 // ── INIT ─────────────────────────────────────────────────────
 async function init() {
   document.getElementById('greeting-label').textContent = getGreeting();
-  document.getElementById('greeting-date').textContent  = formatDate(today);
-
-  // Render empty states immediately so UI never looks blank
-  renderTodayMeals([], []);
-  renderTasks([]);
-  renderUpcoming([]);
-  renderGrocery([]);
-
-  const hideLoader = () => document.getElementById('loading').classList.add('hidden');
-  const loaderTimeout = setTimeout(hideLoader, 3000);
-
-  // Safe fetch — one failure won't crash everything
-  const safe = (p) => p.catch(e => { console.warn('Fetch failed:', e.message); return []; });
-
-  const [meals, mealPlan, tasks, events, grocery, nudges, budgetCats, expenses] = await Promise.all([
-    safe(sb('meals', '?order=meal_name')),
-    safe(sb('meal_plan', '?order=date.asc')),
-    safe(sb('tasks', '?order=due_date.asc')),
-    safe(sb('calendar', '?order=date.asc')),
-    safe(sb('grocery', '?ticked=eq.false&order=created_at.asc')),
-    safe(sb('fill_your_cup', '?order=date.desc&limit=5')),
-    safe(sb('budget', '?order=category.asc')),
-    safe(sb('expenses', '?order=date.desc'))
+  document.getElementById('greeting-date').textContent = formatDate(today);
+  renderTodayMeals([],[]);renderTasks([]);renderUpcoming([]);renderGrocery([]);
+  const hideLoader=()=>document.getElementById('loading').classList.add('hidden');
+  const loaderTimeout=setTimeout(hideLoader,3000);
+  const safe=(p)=>p.catch(e=>{console.warn('Fetch failed:',e.message);return[];});
+  const [meals,mealPlan,tasks,events,grocery,nudges,budgetCats,expenses]=await Promise.all([
+    safe(sb('meals','?order=meal_name')),
+    safe(sb('meal_plan','?order=date.asc')),
+    safe(sb('tasks','?order=due_date.asc')),
+    safe(sb('calendar','?order=date.asc')),
+    safe(sb('grocery','?ticked=eq.false&order=created_at.asc')),
+    safe(sb('fill_your_cup','?order=date.desc&limit=5')),
+    safe(sb('budget','?order=category.asc')),
+    safe(sb('expenses','?order=date.desc'))
   ]);
-
-  allMeals      = meals;
-  allMealPlan   = mealPlan;
-  allTasksCache = tasks;
-  allEvents     = events;
-  allGrocery    = grocery;
-  allBudgetCats = budgetCats;
-  allExpenses   = expenses;
-
-  console.log('Loaded:', { meals:meals.length, mealPlan:mealPlan.length, tasks:tasks.length, events:events.length, grocery:grocery.length });
-
-  renderTodayMeals(mealPlan, meals);
-  renderTasks(tasks);
-  renderUpcoming(events);
-  renderGrocery(grocery);
-  renderCup(nudges);
-
-  clearTimeout(loaderTimeout);
-  hideLoader();
+  allMeals=meals;allMealPlan=mealPlan;allTasksCache=tasks;allEvents=events;allGrocery=grocery;allBudgetCats=budgetCats;allExpenses=expenses;
+  console.log('Loaded:',{meals:meals.length,mealPlan:mealPlan.length,tasks:tasks.length,events:events.length,grocery:grocery.length});
+  renderTodayMeals(mealPlan,meals);renderTasks(tasks);renderUpcoming(events);renderGrocery(grocery);renderCup(nudges);
+  clearTimeout(loaderTimeout);hideLoader();
 }
 
 init();
