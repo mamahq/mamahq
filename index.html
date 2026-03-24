@@ -3170,25 +3170,37 @@ async function saveExpense() {
   const category = document.querySelector('#expense-cat-chips .chip.sel')?.textContent.trim() || 'Misc';
   const date = document.getElementById('expense-date-input').value || todayStr;
 
-  if (!description || isNaN(amount) || amount <= 0) {
-    if (!description) document.getElementById('expense-desc-input').style.borderColor = 'var(--terracotta)';
-    if (isNaN(amount) || amount <= 0) document.getElementById('expense-amount-input').style.borderColor = 'var(--terracotta)';
+  if (!description) {
+    document.getElementById('expense-desc-input').style.borderColor = '#E05252';
+    document.getElementById('expense-desc-input').focus();
+    return;
+  }
+  if (isNaN(amount) || amount <= 0) {
+    document.getElementById('expense-amount-input').style.borderColor = '#E05252';
+    document.getElementById('expense-amount-input').focus();
     return;
   }
 
   const btn = document.getElementById('save-expense-btn');
+  const originalText = btn.textContent;
   btn.textContent = 'Saving…'; btn.disabled = true;
+
   try {
-    const inserted = await sbPost('expenses', { description, amount, category, date });
+    const payload = { description, amount, category, date };
+    console.log('Saving expense:', payload);
+    const inserted = await sbPost('expenses', payload);
+    console.log('Saved:', inserted);
     if (inserted && inserted[0]) allExpenses.push(inserted[0]);
     document.getElementById('add-expense-overlay').style.display = 'none';
+    document.getElementById('expense-desc-input').value = '';
+    document.getElementById('expense-amount-input').value = '';
     renderBudgetScreen();
     showToast('Expense added!');
   } catch(e) {
-    console.error(e);
-    alert('Could not save — try again');
+    console.error('Save expense error:', e);
+    showToast('Could not save: ' + e.message.slice(0, 40));
   } finally {
-    btn.textContent = '✓ Add expense'; btn.disabled = false;
+    btn.textContent = originalText; btn.disabled = false;
   }
 }
 
