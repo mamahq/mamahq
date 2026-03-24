@@ -331,6 +331,7 @@
   .empty-state { font-size: 0.72rem; color: var(--taupe); font-style: normal; opacity: 0.7; padding: 8px 0; }
 
   .fade-in { animation: fadeIn 0.4s ease forwards; }
+  .home-body > .fade-in:last-child { margin-bottom: 0; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
   .fade-in:nth-child(1) { animation-delay: 0.05s; }
   .fade-in:nth-child(2) { animation-delay: 0.1s; }
@@ -836,16 +837,16 @@
           <div class="glance-pill" onclick="showScreen('cal')" style="cursor:pointer">
             
             <span class="glance-val" id="events-count">—</span>
-            <span class="glance-sub">Events</span>
+            <span class="glance-sub" id="events-sub">Events</span>
           </div>
           <div class="glance-pill" onclick="showScreen('tasks')" style="cursor:pointer">
             
             <span class="glance-val" id="tasks-count">—</span>
-            <span class="glance-sub">Due today</span>
+            <span class="glance-sub">Tasks due</span>
           </div>
           <div class="glance-pill nudge-pill" onclick="openFillCup()" style="cursor:pointer">
+            <svg width="28" height="16" viewBox="0 0 56 20" fill="none" style="opacity:0.5;margin-bottom:2px"><path d="M2 10 Q14 2 28 10 Q42 18 54 10" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M2 15 Q14 7 28 15 Q42 23 54 15" stroke="rgba(255,255,255,0.4)" stroke-width="1" fill="none" stroke-linecap="round"/></svg>
             <span class="glance-val" style="font-size:0.85rem;font-weight:600">Fill my cup</span>
-            <span class="glance-sub">How are you feeling?</span>
           </div>
         </div>
       </div>
@@ -1042,7 +1043,11 @@
         </div>
         <div class="form-field">
           <div class="form-label">Recipe link (optional)</div>
-          <input class="form-input" id="new-meal-url" type="url" placeholder="Paste recipe URL">
+          <div style="display:flex;gap:8px;align-items:center">
+            <input class="form-input" id="new-meal-url" type="url" placeholder="Paste a recipe URL…" style="flex:1" oninput="onRecipeUrlInput(this.value)">
+            <button type="button" id="recipe-fetch-btn" onclick="fetchRecipeFromUrl()" style="background:#3D6B47;color:white;border:none;border-radius:12px;padding:12px 14px;font-size:0.75rem;font-weight:600;cursor:pointer;white-space:nowrap;font-family:'Plus Jakarta Sans',sans-serif;flex-shrink:0">Import</button>
+          </div>
+          <div id="recipe-fetch-status" style="font-size:0.72rem;color:#8FA98F;margin-top:4px;display:none">Fetching recipe…</div>
         </div>
         <div class="form-field">
           <div class="form-label">Meal type</div>
@@ -1995,7 +2000,18 @@ async function saveMeal() {
     document.getElementById('add-meal-overlay').style.display='none';
     document.getElementById('new-meal-name').value='';if(document.getElementById('new-meal-url'))document.getElementById('new-meal-url').value=''; selectedFavMeal='';
     renderWeekPlanner();renderTodayMeals(allMealPlan,allMeals);
-    showToast('Meal saved!');
+    // Add recipe ingredients to grocery list if imported
+    if (window._recipeIngredients && window._recipeIngredients.length > 0) {
+      const mealForIngredients = window._recipeName || mealName;
+      showToast(`Meal saved! Adding ${window._recipeIngredients.length} ingredients to shop…`);
+      for (const ingredient of window._recipeIngredients) {
+        try { await addGroceryItem(ingredient, 'Other', ''); } catch(e) {}
+      }
+      window._recipeIngredients = null; window._recipeName = null;
+      showToast('Ingredients added to your shop list!');
+    } else {
+      showToast('Meal saved!');
+    }
   } catch(e) { console.error(e); showToast('Could not save: '+e.message.slice(0,40)); }
   finally { if(btn){btn.textContent='✓ Save to planner';btn.disabled=false;} }
 }
@@ -2303,7 +2319,7 @@ function calPrevMonth(){calMonth--;if(calMonth<0){calMonth=11;calYear--;}renderC
 function calNextMonth(){calMonth++;if(calMonth>11){calMonth=0;calYear++;}renderCalScreen();}
 function openAddEvent(){document.getElementById('event-title-input').value='';document.getElementById('event-time-input').value='';document.getElementById('event-location-input').value='';document.getElementById('event-date-input').value=calSelected;document.getElementById('add-event-title').textContent=new Date(calSelected+'T00:00:00').toLocaleDateString('en-AU',{weekday:'long',day:'numeric',month:'short'});document.getElementById('add-event-overlay').style.display='flex';setTimeout(()=>document.getElementById('event-title-input').focus(),100);}
 function closeAddEvent(e){if(e.target.id==='add-event-overlay')document.getElementById('add-event-overlay').style.display='none';}
-async function saveEvent(){const title=document.getElementById('event-title-input').value.trim();const date=document.getElementById('event-date-input').value||calSelected;const who=document.querySelector('#event-who-chips .chip.sel')?.textContent.trim()||'Whole family';const start_time=document.getElementById('event-time-input').value||null;const location=document.getElementById('event-location-input').value.trim()||null;if(!title){document.getElementById('event-title-input').style.borderColor='var(--terracotta)';return;}const btn=document.getElementById('save-event-btn');btn.textContent='Saving…';btn.disabled=true;try{const inserted=await sbPost('calendar',{title,date,who,start_time,location});if(inserted&&inserted[0])allEvents.push(inserted[0]);document.getElementById('add-event-overlay').style.display='none';renderCalScreen();renderUpcoming(allEvents);const countEl=document.getElementById('events-count');if(countEl)countEl.textContent=allEvents.filter(e=>(e.date||'').slice(0,10)===todayStr).length;showToast('Event added!');}catch(e){console.error(e);showToast('Could not save: '+e.message.slice(0,40));}finally{btn.textContent='✓ Add event';btn.disabled=false;}}
+async function saveEvent(){const title=document.getElementById('event-title-input').value.trim();const date=document.getElementById('event-date-input').value||calSelected;const who=document.querySelector('#event-who-chips .chip.sel')?.textContent.trim()||'Whole family';const start_time=document.getElementById('event-time-input').value||null;const location=document.getElementById('event-location-input').value.trim()||null;if(!title){document.getElementById('event-title-input').style.borderColor='var(--terracotta)';return;}const btn=document.getElementById('save-event-btn');btn.textContent='Saving…';btn.disabled=true;try{const inserted=await sbPost('calendar',{title,date,who,start_time,location});if(inserted&&inserted[0])allEvents.push(inserted[0]);document.getElementById('add-event-overlay').style.display='none';renderCalScreen();renderUpcoming(allEvents);const countEl=document.getElementById('events-count');const evCount=allEvents.filter(e=>(e.date||'').slice(0,10)===todayStr).length;if(countEl)countEl.textContent=evCount;const subEl=document.getElementById('events-sub');if(subEl)subEl.textContent=evCount===1?'Event':'Events';showToast('Event added!');}catch(e){console.error(e);showToast('Could not save: '+e.message.slice(0,40));}finally{btn.textContent='✓ Add event';btn.disabled=false;}}
 async function deleteEvent(e,id){e.stopPropagation();try{await sbDelete('calendar',id);allEvents=allEvents.filter(ev=>ev.id!==id);renderCalScreen();showToast('Event removed');}catch(e){console.error(e);}}
 
 // ── FILL MY CUP ──────────────────────────────────────────────
@@ -2346,33 +2362,45 @@ function initSensory(){
 function toggleNoise(){
   const btn=document.getElementById('noise-btn');
   if(noiseOn){stopNoise();return;}
+  // Create AudioContext fresh on each tap — required by iOS
   try{
-    audioCtx=new(window.AudioContext||window.webkitAudioContext)();
-    // Resume context if suspended (required after user gesture on iOS/Chrome)
-    if(audioCtx.state==='suspended') audioCtx.resume();
-    // Use ScriptProcessor for reliable cross-browser brown noise
-    const bufSize=4096;
-    noiseNode=audioCtx.createScriptProcessor(bufSize,1,1);
-    let lastOut=0;
-    noiseNode.onaudioprocess=function(e){
-      const output=e.outputBuffer.getChannelData(0);
-      for(let i=0;i<bufSize;i++){
-        const white=Math.random()*2-1;
-        output[i]=(lastOut+(0.02*white))/1.02;
-        lastOut=output[i];
-        output[i]*=3.5;
-      }
+    const AC=window.AudioContext||window.webkitAudioContext;
+    if(!AC){if(btn)btn.textContent='Not supported on this device';return;}
+    audioCtx=new AC();
+
+    // iOS requires explicit resume inside user gesture
+    const startNoise=function(){
+      const bufSize=4096;
+      noiseNode=audioCtx.createScriptProcessor(bufSize,1,1);
+      let lastOut=0;
+      noiseNode.onaudioprocess=function(e){
+        const out=e.outputBuffer.getChannelData(0);
+        for(let i=0;i<bufSize;i++){
+          const w=Math.random()*2-1;
+          out[i]=(lastOut+(0.02*w))/1.02;
+          lastOut=out[i];
+          out[i]*=3.5;
+        }
+      };
+      noiseGain=audioCtx.createGain();
+      noiseGain.gain.setValueAtTime(0,audioCtx.currentTime);
+      noiseGain.gain.linearRampToValueAtTime(0.35,audioCtx.currentTime+2);
+      noiseNode.connect(noiseGain);
+      noiseGain.connect(audioCtx.destination);
+      noiseOn=true;
+      if(btn){btn.textContent='Stop brown noise';btn.classList.add('playing');}
     };
-    noiseGain=audioCtx.createGain();
-    noiseGain.gain.setValueAtTime(0,audioCtx.currentTime);
-    noiseGain.gain.linearRampToValueAtTime(0.35,audioCtx.currentTime+2);
-    noiseNode.connect(noiseGain);
-    noiseGain.connect(audioCtx.destination);
-    noiseOn=true;
-    if(btn){btn.textContent='Stop brown noise';btn.classList.add('playing');}
+
+    if(audioCtx.state==='suspended'){
+      audioCtx.resume().then(startNoise).catch(function(e){
+        console.error('Resume failed:',e);
+        if(btn)btn.textContent='Tap again to play';
+      });
+    } else {
+      startNoise();
+    }
   }catch(e){
     console.error('Audio failed:',e);
-    const btn=document.getElementById('noise-btn');
     if(btn)btn.textContent='Audio not supported';
   }
 }
