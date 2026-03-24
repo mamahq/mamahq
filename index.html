@@ -702,6 +702,83 @@
   .meal-grid-bottom { display: flex; align-items: center; justify-content: space-between; margin-top: 16px; }
   .meal-grid-empty { font-size: 0.82rem; color: #B0BFB0; }
   .meal-grid-arrow { font-size: 0.9rem; color: #C0CFC0; }
+
+  /* BUDGET HEADER ACTIONS */
+  .budget-header-actions { display: flex; gap: 8px; padding: 12px 20px; background: white; border-bottom: 1px solid #E2EAE2; }
+  .budget-header-btn { flex: 1; padding: 9px; border-radius: 12px; border: 1.5px solid #E2EAE2; background: white; font-size: 0.72rem; font-weight: 600; color: #1A1A1A; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: all 0.15s; }
+  .budget-header-btn:active { background: #EAF2EA; border-color: #3D6B47; }
+  .budget-header-btn.primary { background: #1A1A1A; color: white; border-color: #1A1A1A; }
+
+  /* CATEGORY EXPENSES VIEW */
+  .budget-cat-view { position: absolute; inset: 0; background: #F5F8F5; z-index: 30; display: flex; flex-direction: column; transform: translateX(100%); transition: transform 0.3s ease; }
+  .budget-cat-view.open { transform: translateX(0); }
+  .budget-cat-view-header { display: flex; align-items: center; gap: 12px; padding: calc(var(--safe-top) + 16px) 20px 14px; background: white; border-bottom: 1px solid #E2EAE2; }
+  .budget-cat-back { background: none; border: none; font-size: 1.2rem; color: #1A1A1A; cursor: pointer; padding: 4px; }
+  .budget-cat-view-title { font-size: 1rem; font-weight: 700; color: #1A1A1A; flex: 1; }
+  .budget-cat-view-add { font-size: 1.4rem; color: #3D6B47; background: none; border: none; cursor: pointer; }
+  .budget-cat-total-bar { background: white; padding: 16px 20px; text-align: center; border-bottom: 1px solid #E2EAE2; }
+  .budget-cat-total-label { font-size: 0.75rem; color: #8FA98F; margin-bottom: 4px; }
+  .budget-cat-total-amount { font-size: 2rem; font-weight: 700; color: #3D6B47; }
+  .budget-cat-total-limit { font-size: 0.75rem; color: #8FA98F; margin-top: 2px; }
+  .budget-cat-month-strip { display: flex; padding: 12px 16px; gap: 8px; overflow-x: auto; background: white; border-bottom: 1px solid #E2EAE2; -webkit-overflow-scrolling: touch; }
+  .budget-cat-month-strip::-webkit-scrollbar { display: none; }
+  .budget-month-chip { flex-shrink: 0; padding: 8px 14px; border-radius: 12px; background: #F5F8F5; font-size: 0.72rem; font-weight: 500; color: #5A725A; cursor: pointer; text-align: center; }
+  .budget-month-chip.active { background: #3D6B47; color: white; }
+  .budget-month-chip-label { font-size: 0.65rem; opacity: 0.8; }
+  .budget-month-chip-amount { font-size: 0.78rem; font-weight: 700; }
+  .budget-exp-list { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 12px 16px calc(var(--safe-bottom) + 20px); display: flex; flex-direction: column; gap: 8px; }
+  .budget-exp-item { background: white; border-radius: 14px; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
+  .budget-exp-left { flex: 1; }
+  .budget-exp-desc { font-size: 0.85rem; font-weight: 600; color: #1A1A1A; margin-bottom: 3px; }
+  .budget-exp-meta { font-size: 0.72rem; color: #8FA98F; }
+  .budget-exp-right { display: flex; align-items: center; gap: 10px; }
+  .budget-exp-amount { font-size: 0.9rem; font-weight: 700; color: #3D6B47; }
+  .budget-exp-delete { background: none; border: none; cursor: pointer; padding: 4px; color: #E05252; font-size: 0.8rem; }
+
+  /* MONTHLY VIEW */
+  .budget-monthly-view { position: absolute; inset: 0; background: #F5F8F5; z-index: 30; display: flex; flex-direction: column; transform: translateX(100%); transition: transform 0.3s ease; }
+  .budget-monthly-view.open { transform: translateX(0); }
+  .budget-monthly-header { display: flex; align-items: center; gap: 12px; padding: calc(var(--safe-top) + 16px) 20px 14px; background: white; border-bottom: 1px solid #E2EAE2; }
+  .budget-monthly-body { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+  .budget-monthly-card { background: white; border-radius: 16px; padding: 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
+  .budget-monthly-card-title { font-size: 1rem; font-weight: 700; color: #1A1A1A; text-align: center; margin-bottom: 14px; }
+  .budget-monthly-row { display: flex; justify-content: space-around; }
+  .budget-monthly-col { text-align: center; }
+  .budget-monthly-col-label { font-size: 0.68rem; color: #8FA98F; margin-bottom: 4px; }
+  .budget-monthly-col-val { font-size: 1rem; font-weight: 700; }
+  .val-income { color: #C9A84A; }
+  .val-expense { color: #3D6B47; }
+  .val-positive { color: #3D9B6B; }
+  .val-negative { color: #E05252; }
+
+  /* QUICK ADD SHEET upgrade */
+  .quick-add-toggle { display: flex; background: #F0F5F0; border-radius: 14px; padding: 3px; margin-bottom: 4px; }
+  .quick-add-tab { flex: 1; padding: 9px; border-radius: 11px; text-align: center; font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all 0.2s; color: #5A725A; }
+  .quick-add-tab.active { background: white; color: #1A1A1A; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+  .quick-add-tab.active.income { background: #3D6B47; color: white; }
+
+  /* EDIT LIMIT MODAL */
+  .edit-limit-modal { position: absolute; inset: 0; background: rgba(0,0,0,0.4); z-index: 50; display: flex; align-items: flex-end; }
+  .edit-limit-modal.hidden { display: none; }
+  .edit-limit-sheet { background: white; border-radius: 24px 24px 0 0; padding: 0 0 calc(var(--safe-bottom) + 16px); width: 100%; }
+  .edit-limit-handle { width: 36px; height: 4px; background: #E2EAE2; border-radius: 4px; margin: 12px auto 0; }
+  .edit-limit-header { padding: 16px 20px 12px; border-bottom: 1px solid #E2EAE2; }
+  .edit-limit-title { font-size: 1rem; font-weight: 700; color: #1A1A1A; margin-bottom: 2px; }
+  .edit-limit-sub { font-size: 0.78rem; color: #8FA98F; }
+  .edit-limit-body { padding: 20px; }
+  .edit-limit-current { text-align: center; margin-bottom: 20px; }
+  .edit-limit-current-label { font-size: 0.72rem; color: #8FA98F; margin-bottom: 4px; }
+  .edit-limit-current-val { font-size: 2rem; font-weight: 700; color: #3D6B47; }
+  .edit-limit-input-wrap { display: flex; align-items: center; gap: 8px; background: #F5F8F5; border-radius: 14px; padding: 14px 16px; border: 2px solid #E2EAE2; margin-bottom: 16px; transition: border-color 0.15s; }
+  .edit-limit-input-wrap:focus-within { border-color: #3D6B47; }
+  .edit-limit-dollar { font-size: 1.2rem; font-weight: 600; color: #5A725A; }
+  .edit-limit-input { flex: 1; background: none; border: none; outline: none; font-size: 1.4rem; font-weight: 700; color: #1A1A1A; font-family: 'Plus Jakarta Sans', sans-serif; }
+  .edit-limit-presets { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+  .edit-limit-preset { padding: 7px 14px; border-radius: 20px; background: #F5F8F5; border: 1.5px solid #E2EAE2; font-size: 0.75rem; font-weight: 600; color: #5A725A; cursor: pointer; transition: all 0.15s; }
+  .edit-limit-preset:active { background: #3D6B47; color: white; border-color: #3D6B47; }
+  .edit-limit-no-limit { width: 100%; padding: 11px; border-radius: 12px; background: none; border: 1.5px solid #E2EAE2; font-size: 0.78rem; color: #8FA98F; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; margin-bottom: 10px; transition: all 0.15s; }
+  .edit-limit-no-limit:active { background: #F5F8F5; }
+  .edit-limit-save { width: 100%; padding: 15px; border-radius: 14px; background: #1A1A1A; color: white; border: none; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.06em; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; }
 </style>
 </head>
 <body>
@@ -970,18 +1047,24 @@
   </div>
 
   <!-- ── BUDGET SCREEN ── -->
-  <div class="screen" id="budget-screen" style="display:none">
+  <div class="screen" id="budget-screen" style="display:none;position:relative">
     <div class="std-header">
       <div class="std-title">Budget</div>
       <div class="std-sub" id="budget-month-sub">March 2026</div>
+    </div>
+    <!-- ACTION BUTTONS -->
+    <div class="budget-header-actions">
+      <button class="budget-header-btn" onclick="openBudgetMonthly()">Monthly view</button>
+      <button class="budget-header-btn" onclick="openAddExpense()">+ Add expense</button>
+      <button class="budget-header-btn primary" onclick="openQuickAdd('income')">+ Income</button>
     </div>
     <div class="budget-body">
       <!-- DIAL -->
       <div class="budget-dial-wrap">
         <div class="budget-dial-inner">
           <svg viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="90" cy="90" r="72" stroke="#E8E0D5" stroke-width="10" fill="none"/>
-            <circle id="budget-dial-arc" cx="90" cy="90" r="72" stroke="#7A8C6E" stroke-width="10" fill="none"
+            <circle cx="90" cy="90" r="72" stroke="#E2EAE2" stroke-width="10" fill="none"/>
+            <circle id="budget-dial-arc" cx="90" cy="90" r="72" stroke="#3D6B47" stroke-width="10" fill="none"
               stroke-linecap="round" stroke-dasharray="452" stroke-dashoffset="452"
               transform="rotate(-90 90 90)" style="transition: stroke-dashoffset 0.8s ease, stroke 0.4s ease"/>
           </svg>
@@ -1001,6 +1084,62 @@
       </div>
     </div>
     <button class="fab" onclick="openAddExpense()">+</button>
+
+    <!-- CATEGORY EXPENSES SLIDE-IN VIEW -->
+    <div class="budget-cat-view" id="budget-cat-view">
+      <div class="budget-cat-view-header">
+        <button class="budget-cat-back" onclick="closeBudgetCatView()">‹</button>
+        <div class="budget-cat-view-title" id="budget-cat-view-title">Category</div>
+        <button class="budget-cat-view-add" onclick="openEditLimit()" style="font-size:0.72rem;font-weight:600;color:#5A725A;padding:6px 12px;border:1.5px solid #E2EAE2;border-radius:10px;margin-right:4px">Edit limit</button><button class="budget-cat-view-add" onclick="openAddExpense()">+</button>
+      </div>
+      <div class="budget-cat-total-bar">
+        <div class="budget-cat-total-label">Spent this month</div>
+        <div class="budget-cat-total-amount" id="budget-cat-total">$0</div>
+        <div class="budget-cat-total-limit" id="budget-cat-limit"></div>
+      </div>
+      <div class="budget-cat-month-strip" id="budget-cat-month-strip"></div>
+      <div class="budget-exp-list" id="budget-cat-exp-list"></div>
+
+      <!-- EDIT LIMIT MODAL (inside cat view) -->
+      <div class="edit-limit-modal hidden" id="edit-limit-modal" onclick="closeEditLimit(event)">
+        <div class="edit-limit-sheet">
+          <div class="edit-limit-handle"></div>
+          <div class="edit-limit-header">
+            <div class="edit-limit-title" id="edit-limit-title">Edit budget limit</div>
+            <div class="edit-limit-sub" id="edit-limit-sub">Set your monthly limit for this category</div>
+          </div>
+          <div class="edit-limit-body">
+            <div class="edit-limit-current">
+              <div class="edit-limit-current-label">Current limit</div>
+              <div class="edit-limit-current-val" id="edit-limit-current-val">$0</div>
+            </div>
+            <div class="edit-limit-input-wrap">
+              <span class="edit-limit-dollar">$</span>
+              <input class="edit-limit-input" id="edit-limit-input" type="number" inputmode="decimal" placeholder="0">
+            </div>
+            <div class="edit-limit-presets" id="edit-limit-presets">
+              <div class="edit-limit-preset" onclick="setLimitPreset(100)">$100</div>
+              <div class="edit-limit-preset" onclick="setLimitPreset(200)">$200</div>
+              <div class="edit-limit-preset" onclick="setLimitPreset(300)">$300</div>
+              <div class="edit-limit-preset" onclick="setLimitPreset(500)">$500</div>
+              <div class="edit-limit-preset" onclick="setLimitPreset(800)">$800</div>
+              <div class="edit-limit-preset" onclick="setLimitPreset(1000)">$1,000</div>
+            </div>
+            <button class="edit-limit-no-limit" onclick="setLimitPreset(0)">Remove limit</button>
+            <button class="edit-limit-save" onclick="saveEditLimit()">Save limit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MONTHLY VIEW SLIDE-IN -->
+    <div class="budget-monthly-view" id="budget-monthly-view">
+      <div class="budget-monthly-header">
+        <button class="budget-cat-back" onclick="closeBudgetMonthly()">‹</button>
+        <div class="budget-cat-view-title">Monthly overview</div>
+      </div>
+      <div class="budget-monthly-body" id="budget-monthly-body"></div>
+    </div>
     <nav class="nav-bar">
       <a class="nav-item" onclick="showScreen('home')"><span class="nav-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg></span><span class="nav-label">Home</span></a>
       <a class="nav-item" onclick="showScreen('meals')"><span class="nav-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="2" x2="8" y2="22"/><path d="M5 2v6a3 3 0 006 0V2"/><path d="M19 2v22M19 12h-2a2 2 0 000 4h2"/></svg></span><span class="nav-label">Meals</span></a>
@@ -1010,25 +1149,30 @@
     </nav>
   </div>
 
-  <!-- ── ADD EXPENSE SHEET ── -->
+  <!-- ── QUICK ADD SHEET ── -->
   <div id="add-expense-overlay" class="overlay" style="display:none" onclick="closeAddExpense(event)">
     <div class="bottom-sheet">
       <div class="sheet-handle"></div>
       <div class="sheet-header" style="position:relative">
         <div class="sheet-eyebrow">Budget</div>
         <button class="sheet-close" onclick="document.getElementById('add-expense-overlay').style.display='none'">✕</button>
-        <div class="sheet-title">Add expense</div>
+        <div class="sheet-title">Quick Add</div>
       </div>
       <div class="sheet-body">
+        <!-- EXPENSE / INCOME TOGGLE -->
+        <div class="quick-add-toggle">
+          <div class="quick-add-tab active" id="qa-tab-expense" onclick="setQuickAddType('expense')">Expense</div>
+          <div class="quick-add-tab" id="qa-tab-income" onclick="setQuickAddType('income')">Income</div>
+        </div>
+        <div class="form-field">
+          <div class="form-label">Amount ($)</div>
+          <input class="form-input" id="expense-amount-input" type="number" inputmode="decimal" placeholder="0.00" style="font-size:1.2rem;font-weight:700;text-align:center">
+        </div>
         <div class="form-field">
           <div class="form-label">Description</div>
           <input class="form-input" id="expense-desc-input" type="text" placeholder="e.g. Woolworths shop">
         </div>
-        <div class="form-field">
-          <div class="form-label">Amount ($)</div>
-          <input class="form-input" id="expense-amount-input" type="number" inputmode="decimal" placeholder="0.00">
-        </div>
-        <div class="form-field">
+        <div class="form-field" id="qa-cat-field">
           <div class="form-label">Category</div>
           <div class="chips" id="expense-cat-chips">
             <div class="chip sel" onclick="selectChip(this,'expense-cat-chips')">Groceries</div>
@@ -1043,6 +1187,14 @@
         <div class="form-field">
           <div class="form-label">Date</div>
           <input class="form-input" id="expense-date-input" type="date">
+        </div>
+        <div class="form-field" id="qa-freq-field" style="display:none">
+          <div class="form-label">Frequency</div>
+          <div class="chips" id="qa-freq-chips">
+            <div class="chip sel" onclick="selectChip(this,'qa-freq-chips')">One-time</div>
+            <div class="chip" onclick="selectChip(this,'qa-freq-chips')">Weekly</div>
+            <div class="chip" onclick="selectChip(this,'qa-freq-chips')">Monthly</div>
+          </div>
         </div>
       </div>
       <div class="sheet-footer">
@@ -2963,7 +3115,7 @@ function renderBudgetScreen() {
     };
     const icon = `<span style="display:flex;align-items:center;justify-content:center;width:32px;height:32px;background:var(--cream);border-radius:10px;color:${colour}">${budSvgs[cat.category] || budSvgs['Misc']}</span>`;
     return `
-      <div class="budget-cat-row">
+      <div class="budget-cat-row" onclick="openBudgetCatView('${cat.category}')" style="cursor:pointer">
         <div class="budget-cat-emoji" style="width:10px;height:10px;border-radius:50%;background:${colour};flex-shrink:0;margin-top:2px"></div>
         <div class="budget-cat-info">
           <div class="budget-cat-name">${cat.category}</div>
@@ -2971,7 +3123,7 @@ function renderBudgetScreen() {
         </div>
         <div class="budget-cat-right">
           <div class="budget-cat-spent">$${spent.toFixed(0)}</div>
-          <div class="budget-cat-limit">${limit > 0 ? `of $${limit}` : 'no limit'}</div>
+          <div class="budget-cat-limit">${limit > 0 ? `of $${limit}` : 'no limit'} ›</div>
         </div>
       </div>`;
   }).join('');
