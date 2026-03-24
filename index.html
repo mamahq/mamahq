@@ -468,6 +468,33 @@
   .expense-amount { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--dark); }
   .expense-delete { background: none; border: none; color: var(--stone); font-size: 0.7rem; cursor: pointer; padding: 4px; transition: color 0.15s; }
   .expense-delete:active { color: var(--terracotta); }
+
+  /* GROCERY SCREEN */
+  .shop-body { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 0 0 calc(var(--safe-bottom) + 70px); background: var(--cream); }
+  .shop-progress-bar { background: white; padding: 14px 20px 0; }
+  .shop-progress-wrap { height: 4px; background: var(--stone); border-radius: 4px; overflow: hidden; margin-bottom: 4px; }
+  .shop-progress-fill { height: 100%; background: linear-gradient(90deg, var(--sage), #A8BA9A); border-radius: 4px; transition: width 0.5s ease; }
+  .shop-progress-label { font-size: 0.6rem; color: var(--taupe); letter-spacing: 0.06em; padding-bottom: 12px; border-bottom: 1px solid var(--stone); }
+  .shop-clear-btn { font-size: 0.6rem; color: var(--terracotta); letter-spacing: 0.06em; background: none; border: none; cursor: pointer; float: right; }
+  .shop-cat-group { background: white; margin-bottom: 8px; }
+  .shop-cat-label { font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--brown); font-weight: 500; padding: 12px 20px 6px; }
+  .shop-item-row { display: flex; align-items: center; gap: 12px; padding: 11px 20px; border-bottom: 1px solid var(--stone); cursor: pointer; transition: opacity 0.2s; }
+  .shop-item-row:last-child { border-bottom: none; }
+  .shop-item-row.ticked { opacity: 0.38; }
+  .shop-check { width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--stone); flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+  .shop-check.ticked { background: var(--sage); border-color: var(--sage); }
+  .shop-check.ticked::after { content: '✓'; color: white; font-size: 0.6rem; font-weight: 700; }
+  .shop-item-name { flex: 1; font-size: 0.78rem; color: var(--dark); }
+  .shop-item-name.struck { text-decoration: line-through; color: var(--taupe); }
+  .shop-item-qty { font-size: 0.65rem; color: var(--taupe); flex-shrink: 0; }
+  .shop-item-delete { background: none; border: none; color: var(--stone); font-size: 0.7rem; cursor: pointer; padding: 4px; flex-shrink: 0; }
+  .shop-item-delete:active { color: var(--terracotta); }
+  .shop-meal-chips { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 4px; }
+  .shop-meal-chip { padding: 6px 12px; border-radius: 20px; background: var(--cream); border: 1.5px solid var(--stone); font-size: 0.7rem; color: var(--dark); cursor: pointer; transition: all 0.15s; }
+  .shop-meal-chip:active { background: var(--dark); color: var(--cream); border-color: var(--dark); }
+  .common-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+  .common-chip { padding: 6px 12px; border-radius: 20px; background: var(--cream); border: 1.5px solid var(--stone); font-size: 0.7rem; color: var(--dark); cursor: pointer; transition: all 0.15s; }
+  .common-chip:active { background: var(--dark); color: var(--cream); }
 </style>
 </head>
 <body>
@@ -812,6 +839,105 @@
     </div>
   </div>
 
+  <!-- ── SHOP SCREEN ── -->
+  <div class="screen" id="shop-screen" style="display:none">
+    <div class="std-header">
+      <div class="std-title">Shop</div>
+      <div class="std-sub" id="shop-sub">This week's list</div>
+    </div>
+    <div class="shop-body" id="shop-body">
+      <div class="shop-progress-bar">
+        <div class="shop-progress-wrap">
+          <div class="shop-progress-fill" id="shop-progress" style="width:0%"></div>
+        </div>
+        <div class="shop-progress-label">
+          <span id="shop-done-label">0 of 0 items done</span>
+          <button class="shop-clear-btn" onclick="clearTicked()">Clear ticked</button>
+        </div>
+      </div>
+      <div id="shop-groups"></div>
+    </div>
+    <button class="fab" onclick="openAddItem()">+</button>
+    <nav class="nav-bar">
+      <a class="nav-item" onclick="showScreen('home')"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></a>
+      <a class="nav-item" onclick="showScreen('meals')"><span class="nav-icon">🍽</span><span class="nav-label">Meals</span></a>
+      <a class="nav-item" onclick="showScreen('tasks')"><span class="nav-icon">📋</span><span class="nav-label">Tasks</span></a>
+      <a class="nav-item" onclick="showScreen('budget')"><span class="nav-icon">💰</span><span class="nav-label">Budget</span></a>
+      <a class="nav-item active"><span class="nav-icon">🛒</span><span class="nav-label">Shop</span></a>
+    </nav>
+  </div>
+
+  <!-- ── ADD ITEM SHEET ── -->
+  <div id="add-item-overlay" class="overlay" style="display:none" onclick="closeAddItem(event)">
+    <div class="bottom-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <div class="sheet-eyebrow">🛒 Grocery list</div>
+        <div class="sheet-title">Add items</div>
+      </div>
+      <div class="sheet-body">
+
+        <!-- FROM MEAL PLAN -->
+        <div>
+          <div class="add-section-label">From this week's meals</div>
+          <div class="shop-meal-chips" id="meal-plan-chips"></div>
+        </div>
+
+        <div class="add-divider">or add individually</div>
+
+        <!-- COMMON ITEMS -->
+        <div>
+          <div class="add-section-label">Common items</div>
+          <div class="common-chips">
+            <div class="common-chip" onclick="quickAddItem(this,'Milk')">🥛 Milk</div>
+            <div class="common-chip" onclick="quickAddItem(this,'Bread')">🍞 Bread</div>
+            <div class="common-chip" onclick="quickAddItem(this,'Eggs')">🥚 Eggs</div>
+            <div class="common-chip" onclick="quickAddItem(this,'Butter')">🧈 Butter</div>
+            <div class="common-chip" onclick="quickAddItem(this,'Chicken')">🍗 Chicken</div>
+            <div class="common-chip" onclick="quickAddItem(this,'Pasta')">🍝 Pasta</div>
+            <div class="common-chip" onclick="quickAddItem(this,'Rice')">🍚 Rice</div>
+            <div class="common-chip" onclick="quickAddItem(this,'Cheese')">🧀 Cheese</div>
+            <div class="common-chip" onclick="quickAddItem(this,'Yoghurt')">🥣 Yoghurt</div>
+            <div class="common-chip" onclick="quickAddItem(this,'Bananas')">🍌 Bananas</div>
+            <div class="common-chip" onclick="quickAddItem(this,'Apples')">🍎 Apples</div>
+            <div class="common-chip" onclick="quickAddItem(this,'Tomatoes')">🍅 Tomatoes</div>
+            <div class="common-chip" onclick="quickAddItem(this,'Onions')">🧅 Onions</div>
+            <div class="common-chip" onclick="quickAddItem(this,'Carrots')">🥕 Carrots</div>
+            <div class="common-chip" onclick="quickAddItem(this,'Spinach')">🥬 Spinach</div>
+            <div class="common-chip" onclick="quickAddItem(this,'Olive Oil')">🫒 Olive Oil</div>
+          </div>
+        </div>
+
+        <div class="add-divider">or type your own</div>
+
+        <!-- CUSTOM ITEM -->
+        <div class="form-field">
+          <div class="form-label">Item name</div>
+          <input class="form-input" id="item-name-input" type="text" placeholder="e.g. Coconut milk">
+        </div>
+        <div class="form-field">
+          <div class="form-label">Category</div>
+          <div class="chips" id="item-cat-chips">
+            <div class="chip sel" onclick="selectChip(this,'item-cat-chips')">Produce</div>
+            <div class="chip" onclick="selectChip(this,'item-cat-chips')">Dairy</div>
+            <div class="chip" onclick="selectChip(this,'item-cat-chips')">Meat</div>
+            <div class="chip" onclick="selectChip(this,'item-cat-chips')">Pantry</div>
+            <div class="chip" onclick="selectChip(this,'item-cat-chips')">Bakery</div>
+            <div class="chip" onclick="selectChip(this,'item-cat-chips')">Frozen</div>
+            <div class="chip" onclick="selectChip(this,'item-cat-chips')">Other</div>
+          </div>
+        </div>
+        <div class="form-field">
+          <div class="form-label">Quantity (optional)</div>
+          <input class="form-input" id="item-qty-input" type="text" placeholder="e.g. 2, 500g">
+        </div>
+      </div>
+      <div class="sheet-footer">
+        <button class="save-btn" id="save-item-btn" onclick="saveItem()">✓ Add to list</button>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <script>
@@ -1078,6 +1204,7 @@ function showScreen(name) {
   if (name === 'meals')  renderMealsScreen();
   if (name === 'tasks')  { tasksFilter = 'all'; filterTasks('all'); }
   if (name === 'budget') renderBudgetScreen();
+  if (name === 'shop')   renderShopScreen();
 }
 
 // ── MEALS SCREEN ─────────────────────────────────────────────
@@ -1494,6 +1621,160 @@ async function saveMeal() {
   }
 }
 
+// ── SHOP / GROCERY SCREEN ────────────────────────────────────
+const ITEM_CAT_ORDER = ['Produce','Dairy','Meat','Bakery','Frozen','Pantry','Other'];
+const ITEM_CAT_EMOJI = { 'Produce':'🥦', 'Dairy':'🥛', 'Meat':'🍗', 'Bakery':'🍞', 'Frozen':'🧊', 'Pantry':'🫙', 'Other':'🛒' };
+let allGrocery = [];
+
+function renderShopScreen() {
+  const items = allGrocery;
+  const total = items.length;
+  const done  = items.filter(i => i.ticked).length;
+  const pct   = total > 0 ? Math.round((done/total)*100) : 0;
+
+  document.getElementById('shop-progress').style.width = pct + '%';
+  document.getElementById('shop-done-label').textContent = `${done} of ${total} items done`;
+  document.getElementById('shop-sub').textContent = `${total - done} remaining`;
+
+  // Group by category — unticked first, then ticked
+  const unticked = items.filter(i => !i.ticked);
+  const ticked   = items.filter(i => i.ticked);
+  const ordered  = [...unticked, ...ticked];
+
+  const groups = {};
+  ordered.forEach(i => {
+    const cat = i.category || 'Other';
+    if (!groups[cat]) groups[cat] = [];
+    groups[cat].push(i);
+  });
+
+  const groupsEl = document.getElementById('shop-groups');
+  if (items.length === 0) {
+    groupsEl.innerHTML = `<div style="padding:32px 20px;text-align:center"><div class="empty-state">Nothing on the list yet — tap + to add</div></div>`;
+    return;
+  }
+
+  // Sort groups by category order
+  const sortedCats = [...new Set([
+    ...ITEM_CAT_ORDER.filter(c => groups[c]),
+    ...Object.keys(groups).filter(c => !ITEM_CAT_ORDER.includes(c))
+  ])];
+
+  groupsEl.innerHTML = sortedCats.map(cat => `
+    <div class="shop-cat-group">
+      <div class="shop-cat-label">${ITEM_CAT_EMOJI[cat] || '🛒'} ${cat}</div>
+      ${groups[cat].map(item => `
+        <div class="shop-item-row ${item.ticked ? 'ticked' : ''}" onclick="toggleItem('${item.id}', ${item.ticked})">
+          <div class="shop-check ${item.ticked ? 'ticked' : ''}"></div>
+          <div class="shop-item-name ${item.ticked ? 'struck' : ''}">${item.item || ''}</div>
+          ${item.quantity ? `<div class="shop-item-qty">${item.quantity}</div>` : ''}
+          <button class="shop-item-delete" onclick="deleteItem(event,'${item.id}')">✕</button>
+        </div>`).join('')}
+    </div>`).join('');
+
+  // Populate meal plan chips in add sheet
+  const mealChips = document.getElementById('meal-plan-chips');
+  if (mealChips) {
+    const thisWeekMeals = [...new Set(allMealPlan
+      .filter(m => (m.date||'') >= todayStr)
+      .map(m => m.meal_name).filter(Boolean))];
+    mealChips.innerHTML = thisWeekMeals.length
+      ? thisWeekMeals.map(name => `<div class="shop-meal-chip" onclick="addMealItems('${name.replace(/'/g,"\'")}',this)">${name}</div>`).join('')
+      : `<div class="empty-state" style="font-size:0.7rem">Plan your meals first to auto-populate</div>`;
+  }
+}
+
+async function toggleItem(id, currentTicked) {
+  const newTicked = !currentTicked;
+  try {
+    await sbPatch('grocery', id, { ticked: newTicked });
+    const item = allGrocery.find(i => i.id === id);
+    if (item) item.ticked = newTicked;
+    renderShopScreen();
+  } catch(e) { console.error(e); }
+}
+
+async function deleteItem(e, id) {
+  e.stopPropagation();
+  try {
+    await sbDelete('grocery', id);
+    allGrocery = allGrocery.filter(i => i.id !== id);
+    renderShopScreen();
+    showToast('Removed');
+  } catch(e) { console.error(e); }
+}
+
+async function clearTicked() {
+  const tickedIds = allGrocery.filter(i => i.ticked).map(i => i.id);
+  if (!tickedIds.length) return;
+  try {
+    await Promise.all(tickedIds.map(id => sbDelete('grocery', id)));
+    allGrocery = allGrocery.filter(i => !i.ticked);
+    renderShopScreen();
+    showToast(`${tickedIds.length} items cleared`);
+  } catch(e) { console.error(e); }
+}
+
+function openAddItem() {
+  document.getElementById('item-name-input').value = '';
+  document.getElementById('item-qty-input').value = '';
+  renderShopScreen(); // refresh meal chips
+  document.getElementById('add-item-overlay').style.display = 'flex';
+  setTimeout(() => document.getElementById('item-name-input').focus(), 100);
+}
+
+function closeAddItem(e) {
+  if (e.target.id === 'add-item-overlay')
+    document.getElementById('add-item-overlay').style.display = 'none';
+}
+
+async function saveItem() {
+  const name = document.getElementById('item-name-input').value.trim();
+  if (!name) {
+    document.getElementById('item-name-input').style.borderColor = 'var(--terracotta)';
+    return;
+  }
+  const category = document.querySelector('#item-cat-chips .chip.sel')?.textContent.trim() || 'Other';
+  const quantity  = document.getElementById('item-qty-input').value.trim();
+  await addGroceryItem(name, category, quantity);
+  document.getElementById('item-name-input').value = '';
+  document.getElementById('item-qty-input').value = '';
+  showToast('Added!');
+}
+
+async function quickAddItem(el, name) {
+  el.style.opacity = '0.4';
+  el.style.pointerEvents = 'none';
+  const catMap = {
+    'Milk':'Dairy','Butter':'Dairy','Cheese':'Dairy','Yoghurt':'Dairy',
+    'Bread':'Bakery',
+    'Eggs':'Dairy','Chicken':'Meat',
+    'Pasta':'Pantry','Rice':'Pantry','Olive Oil':'Pantry',
+    'Bananas':'Produce','Apples':'Produce','Tomatoes':'Produce',
+    'Onions':'Produce','Carrots':'Produce','Spinach':'Produce'
+  };
+  await addGroceryItem(name, catMap[name] || 'Other', '');
+  showToast(`${name} added!`);
+}
+
+async function addMealItems(mealName, el) {
+  el.style.opacity = '0.4'; el.style.pointerEvents = 'none';
+  // Add meal name as a generic item under Pantry (user can adjust)
+  await addGroceryItem(`Ingredients for ${mealName}`, 'Other', '');
+  showToast('Added!');
+}
+
+async function addGroceryItem(item, category, quantity) {
+  try {
+    const inserted = await sbPost('grocery', {
+      item, category, quantity: quantity || null, ticked: false,
+      week_of: todayStr
+    });
+    if (inserted && inserted[0]) allGrocery.push(inserted[0]);
+    renderShopScreen();
+  } catch(e) { console.error('Add item failed:', e); }
+}
+
 // ── BUDGET SCREEN ────────────────────────────────────────────
 const CAT_COLOURS = {
   'Groceries': '#7A8C6E', 'Kids': '#C4714F', 'Misc': '#C4B5A5',
@@ -1635,7 +1916,7 @@ async function init() {
   document.getElementById('greeting-date').textContent  = formatDate(today);
 
   try {
-    const [meals, mealPlan, tasks, events, grocery, nudges, budgetCats, expenses] = await Promise.all([
+    const [meals, mealPlan, tasks, events, groceryInit, nudges, budgetCats, expenses, groceryItems] = await Promise.all([
       sb('meals', '?order=meal_name'),
       sb('meal_plan', `?date=gte.${todayStr}&order=date`),
       sb('tasks', `?order=due_date`),
@@ -1643,7 +1924,8 @@ async function init() {
       sb('grocery', `?order=created_at`),
       sb('fill_your_cup', `?order=date.desc&limit=5`),
       sb('budget', '?order=category'),
-      sb('expenses', '?order=date.desc')
+      sb('expenses', '?order=date.desc'),
+      sb('grocery', '?order=created_at.asc')
     ]);
 
     allMeals       = meals    || [];
@@ -1651,11 +1933,12 @@ async function init() {
     allTasksCache  = tasks    || [];
     allBudgetCats  = budgetCats || [];
     allExpenses    = expenses || [];
+    allGrocery     = groceryItems || [];
 
     renderDinner(allMealPlan, allMeals);
     renderTasks(allTasksCache);
     renderUpcoming(events || []);
-    renderGrocery(grocery || []);
+    renderGrocery(groceryInit || []);
     renderCup(nudges || []);
 
   } catch(err) {
