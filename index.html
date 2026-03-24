@@ -495,6 +495,40 @@
   .common-chips { display: flex; flex-wrap: wrap; gap: 7px; }
   .common-chip { padding: 6px 12px; border-radius: 20px; background: var(--cream); border: 1.5px solid var(--stone); font-size: 0.7rem; color: var(--dark); cursor: pointer; transition: all 0.15s; }
   .common-chip:active { background: var(--dark); color: var(--cream); }
+
+  /* CALENDAR SCREEN */
+  .cal-body { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 0 0 calc(var(--safe-bottom) + 70px); background: var(--cream); display: flex; flex-direction: column; }
+  .cal-month-nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px 10px; background: white; }
+  .cal-month-label { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 400; color: var(--dark); }
+  .cal-nav-btn { background: none; border: none; font-size: 1.2rem; color: var(--taupe); cursor: pointer; padding: 4px 8px; transition: color 0.15s; }
+  .cal-nav-btn:active { color: var(--dark); }
+  .cal-grid { background: white; padding: 0 12px 12px; }
+  .cal-dow-row { display: grid; grid-template-columns: repeat(7,1fr); margin-bottom: 4px; }
+  .cal-dow { text-align: center; font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--taupe); padding: 4px 0; }
+  .cal-days { display: grid; grid-template-columns: repeat(7,1fr); gap: 2px; }
+  .cal-day { display: flex; flex-direction: column; align-items: center; padding: 6px 2px; border-radius: 10px; cursor: pointer; transition: background 0.15s; min-height: 44px; }
+  .cal-day:active { background: var(--stone); }
+  .cal-day.empty { cursor: default; }
+  .cal-day.today .cal-day-num { background: var(--terracotta); color: white; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; }
+  .cal-day.selected { background: var(--cream); }
+  .cal-day-num { font-size: 0.78rem; color: var(--dark); line-height: 1; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; }
+  .cal-day.other-month .cal-day-num { color: var(--stone); }
+  .cal-dots { display: flex; gap: 2px; margin-top: 3px; flex-wrap: wrap; justify-content: center; max-width: 28px; }
+  .cal-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+  .cal-day-detail { background: white; margin-top: 8px; padding: 16px 20px; flex: 1; }
+  .cal-detail-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+  .cal-detail-date { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--dark); }
+  .cal-detail-add { font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--terracotta); cursor: pointer; font-weight: 500; background: none; border: none; }
+  .cal-event-row { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--stone); }
+  .cal-event-row:last-child { border-bottom: none; }
+  .cal-event-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+  .cal-event-info { flex: 1; }
+  .cal-event-title { font-size: 0.78rem; color: var(--dark); font-weight: 400; }
+  .cal-event-meta { font-size: 0.62rem; color: var(--taupe); margin-top: 2px; }
+  .cal-event-delete { background: none; border: none; color: var(--stone); font-size: 0.7rem; cursor: pointer; padding: 4px; }
+  .cal-event-delete:active { color: var(--terracotta); }
+  .cal-empty { font-size: 0.72rem; color: var(--taupe); font-style: italic; opacity: 0.7; padding: 8px 0; }
+  .cal-add-hint { font-size: 0.65rem; color: var(--taupe); opacity: 0.6; margin-top: 8px; }
 </style>
 </head>
 <body>
@@ -594,6 +628,7 @@
       <a class="nav-item" id="nav-meals" onclick="showScreen('meals')"><span class="nav-icon">🍽</span><span class="nav-label">Meals</span></a>
       <a class="nav-item" id="nav-tasks" onclick="showScreen('tasks')"><span class="nav-icon">📋</span><span class="nav-label">Tasks</span></a>
       <a class="nav-item" id="nav-budget" onclick="showScreen('budget')"><span class="nav-icon">💰</span><span class="nav-label">Budget</span></a>
+      <a class="nav-item" id="nav-cal" onclick="showScreen('cal')"><span class="nav-icon">📅</span><span class="nav-label">Calendar</span></a>
       <a class="nav-item" id="nav-shop" onclick="showScreen('shop')"><span class="nav-icon">🛒</span><span class="nav-label">Shop</span></a>
     </nav>
   </div>
@@ -937,6 +972,85 @@
       </div>
     </div>
   </div>
+  <!-- ── CALENDAR SCREEN ── -->
+  <div class="screen" id="cal-screen" style="display:none">
+    <div class="std-header">
+      <div class="std-title">Calendar</div>
+      <div class="std-sub" id="cal-header-sub">Family events</div>
+    </div>
+    <div class="cal-body" id="cal-body">
+      <!-- MONTH NAV -->
+      <div class="cal-month-nav">
+        <button class="cal-nav-btn" onclick="calPrevMonth()">‹</button>
+        <div class="cal-month-label" id="cal-month-label">March 2026</div>
+        <button class="cal-nav-btn" onclick="calNextMonth()">›</button>
+      </div>
+      <!-- GRID -->
+      <div class="cal-grid">
+        <div class="cal-dow-row">
+          <div class="cal-dow">Sun</div><div class="cal-dow">Mon</div><div class="cal-dow">Tue</div>
+          <div class="cal-dow">Wed</div><div class="cal-dow">Thu</div><div class="cal-dow">Fri</div><div class="cal-dow">Sat</div>
+        </div>
+        <div class="cal-days" id="cal-days"></div>
+      </div>
+      <!-- SELECTED DAY DETAIL -->
+      <div class="cal-day-detail" id="cal-day-detail">
+        <div class="cal-detail-header">
+          <div class="cal-detail-date" id="cal-detail-date">Select a day</div>
+          <button class="cal-detail-add" id="cal-detail-add-btn" style="display:none" onclick="openAddEvent()">+ Add event</button>
+        </div>
+        <div id="cal-day-events"></div>
+      </div>
+    </div>
+    <nav class="nav-bar">
+      <a class="nav-item" onclick="showScreen('home')"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></a>
+      <a class="nav-item" onclick="showScreen('meals')"><span class="nav-icon">🍽</span><span class="nav-label">Meals</span></a>
+      <a class="nav-item" onclick="showScreen('tasks')"><span class="nav-icon">📋</span><span class="nav-label">Tasks</span></a>
+      <a class="nav-item" onclick="showScreen('budget')"><span class="nav-icon">💰</span><span class="nav-label">Budget</span></a>
+      <a class="nav-item" onclick="showScreen('shop')"><span class="nav-icon">🛒</span><span class="nav-label">Shop</span></a>
+    </nav>
+  </div>
+
+  <!-- ── ADD EVENT SHEET ── -->
+  <div id="add-event-overlay" class="overlay" style="display:none" onclick="closeAddEvent(event)">
+    <div class="bottom-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <div class="sheet-eyebrow">📅 Calendar</div>
+        <div class="sheet-title" id="add-event-title">New event</div>
+      </div>
+      <div class="sheet-body">
+        <div class="form-field">
+          <div class="form-label">Event name</div>
+          <input class="form-input" id="event-title-input" type="text" placeholder="e.g. Luka's swimming lesson">
+        </div>
+        <div class="form-field">
+          <div class="form-label">Date</div>
+          <input class="form-input" id="event-date-input" type="date">
+        </div>
+        <div class="form-field">
+          <div class="form-label">Time (optional)</div>
+          <input class="form-input" id="event-time-input" type="time">
+        </div>
+        <div class="form-field">
+          <div class="form-label">Who</div>
+          <div class="chips" id="event-who-chips">
+            <div class="chip sel" onclick="selectChip(this,'event-who-chips')">Whole family</div>
+            <div class="chip" onclick="selectChip(this,'event-who-chips')">Luka</div>
+            <div class="chip" onclick="selectChip(this,'event-who-chips')">Emma</div>
+            <div class="chip" onclick="selectChip(this,'event-who-chips')">Me</div>
+          </div>
+        </div>
+        <div class="form-field">
+          <div class="form-label">Location (optional)</div>
+          <input class="form-input" id="event-location-input" type="text" placeholder="e.g. Royal Children's Hospital">
+        </div>
+      </div>
+      <div class="sheet-footer">
+        <button class="save-btn" id="save-event-btn" onclick="saveEvent()">✓ Add event</button>
+      </div>
+    </div>
+  </div>
 
 </div>
 
@@ -1188,13 +1302,13 @@ function renderCup(nudges) {
 
 // ── SCREEN SWITCHING ─────────────────────────────────────────
 function showScreen(name) {
-  ['home','meals','tasks','budget','shop'].forEach(s => {
+  ['home','meals','tasks','budget','shop','cal'].forEach(s => {
     const el = document.getElementById(`${s}-screen`);
     if (el) el.style.display = s === name ? 'flex' : 'none';
   });
   currentScreen = name;
 
-  ['home','meals','tasks','budget','shop'].forEach(s => {
+  ['home','meals','tasks','budget','shop','cal'].forEach(s => {
     const el  = document.getElementById(`nav-${s}`);
     const mel = document.getElementById(`mnav-${s}`);
     if (el)  el.className  = `nav-item${s === name ? ' active' : ''}`;
@@ -1205,6 +1319,7 @@ function showScreen(name) {
   if (name === 'tasks')  { tasksFilter = 'all'; filterTasks('all'); }
   if (name === 'budget') renderBudgetScreen();
   if (name === 'shop')   renderShopScreen();
+  if (name === 'cal')    { renderCalScreen(); }
 }
 
 // ── MEALS SCREEN ─────────────────────────────────────────────
@@ -1621,6 +1736,158 @@ async function saveMeal() {
   }
 }
 
+// ── CALENDAR SCREEN ──────────────────────────────────────────
+const WHO_COLOURS = {
+  'Whole family': '#7A8C6E', 'Luka': '#6B8CAE', 'Emma': '#C9A96E', 'Me': '#C4714F'
+};
+let allEvents    = [];
+let calYear      = new Date().getFullYear();
+let calMonth     = new Date().getMonth();
+let calSelected  = todayStr;
+
+function renderCalScreen() {
+  const monthLabel = new Date(calYear, calMonth, 1)
+    .toLocaleDateString('en-AU', { month: 'long', year: 'numeric' });
+  document.getElementById('cal-month-label').textContent = monthLabel;
+
+  const firstDay = new Date(calYear, calMonth, 1).getDay();
+  const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+  const daysInPrev  = new Date(calYear, calMonth, 0).getDate();
+
+  const cells = [];
+  // Prev month padding
+  for (let i = firstDay - 1; i >= 0; i--)
+    cells.push({ day: daysInPrev - i, month: calMonth - 1, other: true });
+  // This month
+  for (let d = 1; d <= daysInMonth; d++)
+    cells.push({ day: d, month: calMonth, other: false });
+  // Next month padding
+  let next = 1;
+  while (cells.length % 7 !== 0) cells.push({ day: next++, month: calMonth + 1, other: true });
+
+  const daysEl = document.getElementById('cal-days');
+  daysEl.innerHTML = cells.map(cell => {
+    if (cell.other) return `<div class="cal-day other-month empty"><div class="cal-day-num">${cell.day}</div></div>`;
+    const dateStr = `${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(cell.day).padStart(2,'0')}`;
+    const isToday    = dateStr === todayStr;
+    const isSelected = dateStr === calSelected;
+    const dayEvents  = allEvents.filter(e => (e.date||'').slice(0,10) === dateStr);
+    const dots = dayEvents.slice(0,3).map(e => {
+      const col = WHO_COLOURS[e.who] || '#C4B5A5';
+      return `<div class="cal-dot" style="background:${col}"></div>`;
+    }).join('');
+    return `
+      <div class="cal-day${isToday ? ' today' : ''}${isSelected ? ' selected' : ''}" onclick="calSelectDay('${dateStr}')">
+        <div class="cal-day-num">${cell.day}</div>
+        ${dots ? `<div class="cal-dots">${dots}</div>` : ''}
+      </div>`;
+  }).join('');
+
+  renderCalDayDetail(calSelected);
+}
+
+function calSelectDay(dateStr) {
+  calSelected = dateStr;
+  renderCalScreen();
+}
+
+function renderCalDayDetail(dateStr) {
+  const d = new Date(dateStr + 'T00:00:00');
+  const label = d.toLocaleDateString('en-AU', { weekday: 'long', day: 'numeric', month: 'long' });
+  document.getElementById('cal-detail-date').textContent = label;
+  document.getElementById('cal-detail-add-btn').style.display = 'inline';
+  document.getElementById('event-date-input').value = dateStr;
+
+  const dayEvents = allEvents.filter(e => (e.date||'').slice(0,10) === dateStr);
+  const evEl = document.getElementById('cal-day-events');
+
+  if (dayEvents.length === 0) {
+    evEl.innerHTML = `<div class="cal-empty">No events — tap + Add event</div>`;
+    return;
+  }
+
+  evEl.innerHTML = dayEvents.map(e => {
+    const col = WHO_COLOURS[e.who] || '#C4B5A5';
+    const time = e.start_time ? `${e.start_time} · ` : '';
+    const loc  = e.location   ? ` · ${e.location}` : '';
+    return `
+      <div class="cal-event-row">
+        <div class="cal-event-dot" style="background:${col}"></div>
+        <div class="cal-event-info">
+          <div class="cal-event-title">${e.title || ''}</div>
+          <div class="cal-event-meta">${time}${e.who || ''}${loc}</div>
+        </div>
+        <button class="cal-event-delete" onclick="deleteEvent(event,'${e.id}')">✕</button>
+      </div>`;
+  }).join('');
+}
+
+function calPrevMonth() {
+  calMonth--;
+  if (calMonth < 0) { calMonth = 11; calYear--; }
+  renderCalScreen();
+}
+
+function calNextMonth() {
+  calMonth++;
+  if (calMonth > 11) { calMonth = 0; calYear++; }
+  renderCalScreen();
+}
+
+function openAddEvent() {
+  document.getElementById('event-title-input').value = '';
+  document.getElementById('event-time-input').value = '';
+  document.getElementById('event-location-input').value = '';
+  document.getElementById('event-date-input').value = calSelected;
+  document.getElementById('add-event-title').textContent =
+    new Date(calSelected + 'T00:00:00').toLocaleDateString('en-AU', { weekday: 'long', day: 'numeric', month: 'short' });
+  document.getElementById('add-event-overlay').style.display = 'flex';
+  setTimeout(() => document.getElementById('event-title-input').focus(), 100);
+}
+
+function closeAddEvent(e) {
+  if (e.target.id === 'add-event-overlay')
+    document.getElementById('add-event-overlay').style.display = 'none';
+}
+
+async function saveEvent() {
+  const title    = document.getElementById('event-title-input').value.trim();
+  const date     = document.getElementById('event-date-input').value || calSelected;
+  const who      = document.querySelector('#event-who-chips .chip.sel')?.textContent.trim() || 'Whole family';
+  const start_time = document.getElementById('event-time-input').value || null;
+  const location = document.getElementById('event-location-input').value.trim() || null;
+
+  if (!title) {
+    document.getElementById('event-title-input').style.borderColor = 'var(--terracotta)';
+    return;
+  }
+
+  const btn = document.getElementById('save-event-btn');
+  btn.textContent = 'Saving…'; btn.disabled = true;
+  try {
+    const inserted = await sbPost('calendar', { title, date, who, start_time, location });
+    if (inserted && inserted[0]) allEvents.push(inserted[0]);
+    document.getElementById('add-event-overlay').style.display = 'none';
+    renderCalScreen();
+    showToast('Event added!');
+  } catch(err) {
+    console.error(err);
+    alert('Could not save — try again');
+  } finally {
+    btn.textContent = '✓ Add event'; btn.disabled = false;
+  }
+}
+
+async function deleteEvent(e, id) {
+  e.stopPropagation();
+  try {
+    await sbDelete('calendar', id);
+    allEvents = allEvents.filter(ev => ev.id !== id);
+    renderCalScreen();
+    showToast('Event removed');
+  } catch(err) { console.error(err); }
+}
+
 // ── SHOP / GROCERY SCREEN ────────────────────────────────────
 const ITEM_CAT_ORDER = ['Produce','Dairy','Meat','Bakery','Frozen','Pantry','Other'];
 const ITEM_CAT_EMOJI = { 'Produce':'🥦', 'Dairy':'🥛', 'Meat':'🍗', 'Bakery':'🍞', 'Frozen':'🧊', 'Pantry':'🫙', 'Other':'🛒' };
@@ -1934,6 +2201,7 @@ async function init() {
     allBudgetCats  = budgetCats || [];
     allExpenses    = expenses || [];
     allGrocery     = groceryItems || [];
+    allEvents      = events || [];
 
     renderDinner(allMealPlan, allMeals);
     renderTasks(allTasksCache);
