@@ -1095,7 +1095,7 @@ const ICONS = {
 function icon(name, size = 20, color = 'currentColor') {
   const svg = ICONS[name.toLowerCase().replace(/\s+/g,'').replace(/[^a-z]/g,'')];
   if (!svg) return '';
-  return svg.replace('<svg ', \`<svg width="\${size}" height="\${size}" style="color:\${color};flex-shrink:0" \`);
+  return svg.replace('<svg ', `<svg width="${size}" height="${size}" style="color:${color};flex-shrink:0" `);
 }
 
 // ── SUPABASE CONFIG ─────────────────────────────────────────
