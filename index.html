@@ -437,38 +437,31 @@
   .task-delete-btn:active { color: var(--terracotta); }
 
   /* BUDGET SCREEN */
-  .budget-body { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 16px 16px calc(var(--safe-bottom) + 70px); display: flex; flex-direction: column; gap: 16px; }
-  .budget-month-label { font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--taupe); font-weight: 500; text-align: center; margin-bottom: -4px; }
-  .budget-total-card { background: var(--dark); border-radius: 18px; padding: 18px; display: flex; justify-content: space-between; align-items: center; position: relative; overflow: hidden; }
-  .budget-total-card::before { content: ''; position: absolute; top: -30px; right: -30px; width: 120px; height: 120px; background: radial-gradient(circle, rgba(201,169,110,0.15) 0%, transparent 70%); }
-  .budget-total-left {}
-  .budget-total-label { font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--taupe); margin-bottom: 4px; }
-  .budget-total-amount { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 400; color: var(--cream); line-height: 1; }
-  .budget-total-sub { font-size: 0.62rem; color: var(--taupe); margin-top: 4px; }
-  .budget-total-right { text-align: right; }
-  .budget-remaining { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--gold); }
-  .budget-remaining-label { font-size: 0.55rem; color: var(--taupe); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 2px; }
-  .budget-cats { display: flex; flex-direction: column; gap: 10px; }
-  .budget-cat-row { background: white; border-radius: 14px; padding: 13px 14px; box-shadow: 0 1px 6px rgba(44,36,32,0.05); cursor: pointer; transition: transform 0.15s; }
-  .budget-cat-row:active { transform: scale(0.99); }
-  .budget-cat-top { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-  .budget-cat-icon { font-size: 1.1rem; width: 32px; height: 32px; background: var(--cream); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .budget-body { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 0 0 calc(var(--safe-bottom) + 70px); display: flex; flex-direction: column; background: var(--cream); }
+  .budget-dial-wrap { display: flex; flex-direction: column; align-items: center; padding: 24px 20px 20px; background: white; }
+  .budget-dial-svg { width: 180px; height: 180px; }
+  .budget-dial-inner { position: relative; width: 180px; height: 180px; }
+  .budget-dial-inner svg { position: absolute; inset: 0; }
+  .budget-dial-text { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; }
+  .budget-dial-amount { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 400; color: var(--dark); line-height: 1; }
+  .budget-dial-label { font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--taupe); }
+  .budget-dial-sub { font-size: 0.65rem; color: var(--taupe); margin-top: 10px; }
+  .budget-cats { display: flex; flex-direction: column; padding: 0 20px; background: white; margin-top: 8px; }
+  .budget-cat-row { display: flex; align-items: center; gap: 12px; padding: 13px 0; border-bottom: 1px solid var(--stone); cursor: pointer; }
+  .budget-cat-row:last-child { border-bottom: none; }
+  .budget-cat-emoji { font-size: 1.25rem; width: 28px; text-align: center; flex-shrink: 0; }
   .budget-cat-info { flex: 1; }
-  .budget-cat-name { font-size: 0.78rem; color: var(--dark); font-weight: 500; }
-  .budget-cat-meta { font-size: 0.6rem; color: var(--taupe); margin-top: 1px; }
-  .budget-cat-amount { text-align: right; }
-  .budget-cat-spent { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--dark); }
-  .budget-cat-limit { font-size: 0.58rem; color: var(--taupe); }
-  .budget-bar { height: 4px; background: var(--stone); border-radius: 4px; overflow: hidden; }
-  .budget-bar-fill { height: 100%; border-radius: 4px; transition: width 0.6s ease; }
-  .bar-ok { background: linear-gradient(90deg, var(--sage), #A8BA9A); }
-  .bar-warn { background: linear-gradient(90deg, var(--gold), #E0C07A); }
-  .bar-over { background: linear-gradient(90deg, var(--terracotta), #D4856A); }
-  .expense-log { background: white; border-radius: 16px; padding: 14px; box-shadow: 0 1px 6px rgba(44,36,32,0.05); }
-  .expense-log-title { font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--brown); font-weight: 500; margin-bottom: 10px; }
-  .expense-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--stone); }
+  .budget-cat-name { font-size: 0.78rem; color: var(--dark); font-weight: 400; margin-bottom: 4px; }
+  .budget-cat-bar { height: 3px; background: var(--stone); border-radius: 3px; overflow: hidden; width: 100%; }
+  .budget-cat-bar-fill { height: 100%; border-radius: 3px; transition: width 0.6s ease; }
+  .budget-cat-right { text-align: right; flex-shrink: 0; }
+  .budget-cat-spent { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--dark); line-height: 1; }
+  .budget-cat-limit { font-size: 0.58rem; color: var(--taupe); margin-top: 1px; }
+  .expense-section { margin-top: 8px; background: white; padding: 16px 20px calc(var(--safe-bottom) + 16px); }
+  .expense-section-title { font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--brown); font-weight: 500; margin-bottom: 8px; }
+  .expense-row { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--stone); }
   .expense-row:last-child { border-bottom: none; }
-  .expense-cat-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .expense-cat-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
   .expense-info { flex: 1; }
   .expense-desc { font-size: 0.75rem; color: var(--dark); }
   .expense-meta { font-size: 0.6rem; color: var(--taupe); margin-top: 1px; }
@@ -742,26 +735,30 @@
   <div class="screen" id="budget-screen" style="display:none">
     <div class="std-header">
       <div class="std-title">Budget</div>
-      <div class="std-sub" id="budget-month-sub">This month</div>
+      <div class="std-sub" id="budget-month-sub">March 2026</div>
     </div>
     <div class="budget-body">
-      <div class="budget-total-card">
-        <div class="budget-total-left">
-          <div class="budget-total-label">Spent so far</div>
-          <div class="budget-total-amount" id="budget-spent-total">$0</div>
-          <div class="budget-total-sub" id="budget-of-total">of $0 budget</div>
+      <!-- DIAL -->
+      <div class="budget-dial-wrap">
+        <div class="budget-dial-inner">
+          <svg viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="90" cy="90" r="72" stroke="#E8E0D5" stroke-width="10" fill="none"/>
+            <circle id="budget-dial-arc" cx="90" cy="90" r="72" stroke="#7A8C6E" stroke-width="10" fill="none"
+              stroke-linecap="round" stroke-dasharray="452" stroke-dashoffset="452"
+              transform="rotate(-90 90 90)" style="transition: stroke-dashoffset 0.8s ease, stroke 0.4s ease"/>
+          </svg>
+          <div class="budget-dial-text">
+            <div class="budget-dial-amount" id="budget-dial-remaining">$0</div>
+            <div class="budget-dial-label">safe to spend</div>
+          </div>
         </div>
-        <div class="budget-total-right">
-          <div class="budget-remaining" id="budget-remaining">$0</div>
-          <div class="budget-remaining-label">remaining</div>
-        </div>
+        <div class="budget-dial-sub" id="budget-dial-sub">$0 spent of $0</div>
       </div>
-      <div>
-        <div class="section-title">By category</div>
-        <div class="budget-cats" id="budget-cats"></div>
-      </div>
-      <div class="expense-log">
-        <div class="expense-log-title">Recent expenses</div>
+      <!-- CATEGORIES -->
+      <div class="budget-cats" id="budget-cats"></div>
+      <!-- EXPENSE LOG -->
+      <div class="expense-section">
+        <div class="expense-section-title">Recent expenses</div>
         <div id="expense-list"></div>
       </div>
     </div>
@@ -1518,52 +1515,55 @@ function renderBudgetScreen() {
   const monthStart = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-01`;
   const monthExpenses = allExpenses.filter(e => (e.date||'') >= monthStart);
 
-  // Totals
-  const totalSpent = monthExpenses.reduce((sum, e) => sum + parseFloat(e.amount||0), 0);
-  const totalBudget = allBudgetCats.reduce((sum, c) => sum + parseFloat(c.monthly_limit||0), 0);
-  const remaining = totalBudget - totalSpent;
+  const totalSpent  = monthExpenses.reduce((sum, e) => sum + parseFloat(e.amount||0), 0);
+  const totalBudget = allBudgetCats.reduce((sum, cat) => sum + parseFloat(cat.monthly_limit||0), 0);
+  const remaining   = Math.max(0, totalBudget - totalSpent);
+  const pctUsed     = totalBudget > 0 ? Math.min(1, totalSpent / totalBudget) : 0;
 
-  document.getElementById('budget-spent-total').textContent = `$${totalSpent.toFixed(0)}`;
-  document.getElementById('budget-of-total').textContent = `of $${totalBudget.toFixed(0)} budget`;
-  document.getElementById('budget-remaining').textContent = `$${Math.max(0,remaining).toFixed(0)}`;
+  // Update dial
+  const circumference = 2 * Math.PI * 72; // 452.4
+  const arc = document.getElementById('budget-dial-arc');
+  if (arc) {
+    const offset = circumference * (1 - pctUsed);
+    arc.setAttribute('stroke-dashoffset', offset.toFixed(1));
+    arc.setAttribute('stroke', pctUsed >= 1 ? '#C4714F' : pctUsed >= 0.8 ? '#C9A96E' : '#7A8C6E');
+  }
+  document.getElementById('budget-dial-remaining').textContent = `$${remaining.toFixed(0)}`;
+  document.getElementById('budget-dial-sub').textContent = `$${totalSpent.toFixed(0)} spent of $${totalBudget.toFixed(0)}`;
 
-  // Categories
+  // Categories — clean rows, no cards
   const catsEl = document.getElementById('budget-cats');
   catsEl.innerHTML = allBudgetCats.map(cat => {
     const spent = monthExpenses
       .filter(e => e.category === cat.category)
       .reduce((sum, e) => sum + parseFloat(e.amount||0), 0);
     const limit = parseFloat(cat.monthly_limit||0);
-    const pct = limit > 0 ? Math.min(100, (spent/limit)*100) : 0;
-    const barClass = pct >= 100 ? 'bar-over' : pct >= 80 ? 'bar-warn' : 'bar-ok';
-    const colour = CAT_COLOURS[cat.category] || '#C4B5A5';
-    const icon = CAT_ICONS[cat.category] || '💸';
+    const pct   = limit > 0 ? Math.min(100, (spent/limit)*100) : 0;
+    const barColour = pct >= 100 ? '#C4714F' : pct >= 80 ? '#C9A96E' : (CAT_COLOURS[cat.category] || '#7A8C6E');
+    const icon  = CAT_ICONS[cat.category] || '💸';
     return `
       <div class="budget-cat-row">
-        <div class="budget-cat-top">
-          <div class="budget-cat-icon">${icon}</div>
-          <div class="budget-cat-info">
-            <div class="budget-cat-name">${cat.category}</div>
-            <div class="budget-cat-meta">${pct.toFixed(0)}% used${limit > 0 ? ` · $${(limit-spent).toFixed(0)} left` : ''}</div>
-          </div>
-          <div class="budget-cat-amount">
-            <div class="budget-cat-spent">$${spent.toFixed(0)}</div>
-            <div class="budget-cat-limit">${limit > 0 ? `of $${limit}` : 'no limit'}</div>
-          </div>
+        <div class="budget-cat-emoji">${icon}</div>
+        <div class="budget-cat-info">
+          <div class="budget-cat-name">${cat.category}</div>
+          <div class="budget-cat-bar"><div class="budget-cat-bar-fill" style="width:${pct}%;background:${barColour}"></div></div>
         </div>
-        <div class="budget-bar"><div class="budget-bar-fill ${barClass}" style="width:${pct}%;background:${barClass==='bar-ok'?colour:''};"></div></div>
+        <div class="budget-cat-right">
+          <div class="budget-cat-spent">$${spent.toFixed(0)}</div>
+          <div class="budget-cat-limit">${limit > 0 ? `of $${limit}` : 'no limit'}</div>
+        </div>
       </div>`;
   }).join('');
 
-  // Expense log — most recent 20
+  // Expense log
   const recent = [...monthExpenses].sort((a,b) => (b.date||'').localeCompare(a.date||'')).slice(0,20);
   const expEl = document.getElementById('expense-list');
   if (recent.length === 0) {
-    expEl.innerHTML = `<div class="empty-state" style="padding:8px 0">No expenses yet this month</div>`;
+    expEl.innerHTML = `<div class="empty-state" style="padding:8px 0">No expenses yet — tap + to add</div>`;
     return;
   }
   expEl.innerHTML = recent.map(e => {
-    const colour = CAT_COLOURS[e.category] || '#C4B5A5';
+    const colour    = CAT_COLOURS[e.category] || '#C4B5A5';
     const dateLabel = e.date ? formatShortDate(e.date) : '';
     return `
       <div class="expense-row">
