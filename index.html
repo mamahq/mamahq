@@ -809,6 +809,38 @@
   .edit-limit-no-limit { width: 100%; padding: 11px; border-radius: 12px; background: none; border: 1.5px solid #E2EAE2; font-size: 0.78rem; color: #8FA98F; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; margin-bottom: 10px; transition: all 0.15s; }
   .edit-limit-no-limit:active { background: #F5F8F5; }
   .edit-limit-save { width: 100%; padding: 15px; border-radius: 14px; background: #1A1A1A; color: white; border: none; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.06em; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+  /* REDESIGNED ADD MEAL SHEET */
+  .meal-mode-toggle { display: flex; background: #F0F5F0; border-radius: 14px; padding: 3px; margin-bottom: 16px; }
+  .meal-mode-tab { flex: 1; padding: 10px; border-radius: 11px; text-align: center; font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all 0.2s; color: #5A725A; border: none; background: none; font-family: 'Plus Jakarta Sans', sans-serif; }
+  .meal-mode-tab.active { background: white; color: #1A1A1A; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+  .meal-tab-panel { display: none; flex-direction: column; gap: 14px; }
+  .meal-tab-panel.active { display: flex; }
+  .recipe-url-box { background: #F5F8F5; border-radius: 16px; padding: 16px; border: 2px dashed #C8D8C8; transition: all 0.2s; }
+  .recipe-url-box.has-url { border-style: solid; border-color: #3D6B47; background: white; }
+  .recipe-url-label { font-size: 0.72rem; font-weight: 700; color: #3D6B47; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+  .recipe-url-input-row { display: flex; gap: 8px; }
+  .recipe-url-input { flex: 1; background: white; border: 1.5px solid #E2EAE2; border-radius: 10px; padding: 11px 12px; font-size: 16px; font-family: 'Plus Jakarta Sans', sans-serif; color: #1A1A1A; outline: none; min-width: 0; }
+  .recipe-url-input:focus { border-color: #3D6B47; }
+  .recipe-import-btn { background: #3D6B47; color: white; border: none; border-radius: 10px; padding: 11px 16px; font-size: 0.78rem; font-weight: 700; cursor: pointer; white-space: nowrap; font-family: 'Plus Jakarta Sans', sans-serif; flex-shrink: 0; transition: opacity 0.15s; }
+  .recipe-import-btn:active { opacity: 0.8; }
+  .recipe-import-btn:disabled { opacity: 0.5; }
+  .recipe-status { font-size: 0.75rem; color: #8FA98F; margin-top: 8px; line-height: 1.4; }
+  .recipe-status.success { color: #3D6B47; font-weight: 500; }
+  .recipe-status.error { color: #E05252; }
+  .recipe-result-card { background: #EAF2EA; border-radius: 12px; padding: 12px 14px; display: flex; align-items: center; gap: 10px; }
+  .recipe-result-name { font-size: 0.85rem; font-weight: 600; color: #1A1A1A; flex: 1; }
+  .recipe-result-check { color: #3D6B47; font-size: 1rem; }
+  .fav-chip-row { display: flex; flex-direction: column; gap: 8px; }
+  .fav-meal-row { display: flex; align-items: center; gap: 10px; background: #F5F8F5; border-radius: 12px; padding: 12px 14px; cursor: pointer; transition: all 0.15s; border: 1.5px solid transparent; }
+  .fav-meal-row:active { background: #EAF2EA; border-color: #3D6B47; }
+  .fav-meal-row.sel { background: #EAF2EA; border-color: #3D6B47; }
+  .fav-meal-row-name { flex: 1; font-size: 0.85rem; font-weight: 500; color: #1A1A1A; }
+  .fav-meal-row-meta { font-size: 0.7rem; color: #8FA98F; }
+  .leftover-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .leftover-pill { padding: 8px 14px; border-radius: 20px; background: white; border: 1.5px solid #E2EAE2; font-size: 0.78rem; color: #5A725A; cursor: pointer; transition: all 0.15s; }
+  .leftover-pill:active { background: #EAF2EA; border-color: #3D6B47; }
+  .leftover-pill.sel { background: #3D6B47; color: white; border-color: #3D6B47; }
 </style>
 </head>
 <body>
@@ -1023,59 +1055,91 @@
       <div class="sheet-header" style="position:relative">
         <div class="sheet-eyebrow">Meals</div>
         <button class="sheet-close" onclick="document.getElementById('add-meal-overlay').style.display='none'">✕</button>
-        <div class="sheet-title" id="add-meal-title">Plan a meal</div>
-        <div class="sheet-sub" id="add-meal-sub">Choose from favourites or add new</div>
+        <div class="sheet-title" id="add-meal-title">Add a meal</div>
+        <div class="sheet-sub" id="add-meal-sub" style="display:none"></div>
       </div>
       <div class="sheet-body">
-        <div>
-          <div class="add-section-label">Leftovers</div>
-          <div class="add-fav-chip leftover-chip" style="font-weight:500;margin-bottom:10px;display:inline-block" onclick="selectQuickLeftover(this)">Leftovers</div>
-          <div style="font-size:0.65rem;color:var(--taupe);margin-bottom:8px">Or leftovers from a specific meal?</div>
-          <div class="add-fav-chips" id="add-meal-leftovers"></div>
+
+        <!-- MODE TOGGLE -->
+        <div class="meal-mode-toggle">
+          <button class="meal-mode-tab active" id="meal-tab-recipe" onclick="switchMealTab('recipe')">Add recipe</button>
+          <button class="meal-mode-tab" id="meal-tab-favourites" onclick="switchMealTab('favourites')">Favourites</button>
+          <button class="meal-mode-tab" id="meal-tab-leftovers" onclick="switchMealTab('leftovers')">Leftovers</button>
         </div>
-        <div class="add-divider">or plan a meal</div>
-        <div class="add-section-label">Pick from favourites</div>
-        <div id="add-meal-favs" class="add-fav-chips"></div>
-        <div class="add-divider">or add new</div>
-        <div class="form-field">
-          <div class="form-label">Meal name</div>
-          <input class="form-input" id="new-meal-name" type="text" placeholder="e.g. Pasta bake">
-        </div>
-        <div class="form-field">
-          <div class="form-label">Recipe link (optional)</div>
-          <div style="display:flex;gap:8px;align-items:center">
-            <input class="form-input" id="new-meal-url" type="url" placeholder="Paste a recipe URL…" style="flex:1" oninput="onRecipeUrlInput(this.value)">
-            <button type="button" id="recipe-fetch-btn" onclick="fetchRecipeFromUrl()" style="background:#3D6B47;color:white;border:none;border-radius:12px;padding:12px 14px;font-size:0.75rem;font-weight:600;cursor:pointer;white-space:nowrap;font-family:'Plus Jakarta Sans',sans-serif;flex-shrink:0">Import</button>
+
+        <!-- RECIPE TAB -->
+        <div class="meal-tab-panel active" id="meal-panel-recipe">
+          <!-- URL IMPORT -->
+          <div class="recipe-url-box" id="recipe-url-box">
+            <div class="recipe-url-label">Paste a recipe link</div>
+            <div class="recipe-url-input-row">
+              <input class="recipe-url-input" id="new-meal-url" type="url" placeholder="https://..." oninput="onRecipeUrlChange(this.value)">
+              <button class="recipe-import-btn" id="recipe-fetch-btn" onclick="fetchRecipeFromUrl()">Import</button>
+            </div>
+            <div class="recipe-status" id="recipe-fetch-status" style="display:none"></div>
           </div>
-          <div id="recipe-fetch-status" style="font-size:0.72rem;color:#8FA98F;margin-top:4px;display:none">Fetching recipe…</div>
-        </div>
-        <div class="form-field">
-          <div class="form-label">Meal type</div>
-          <div class="chips" id="meal-type-chips">
-            <div class="chip" onclick="selectChip(this,'meal-type-chips')">Breakfast</div>
-            <div class="chip" onclick="selectChip(this,'meal-type-chips')">Lunch</div>
-            <div class="chip sel" onclick="selectChip(this,'meal-type-chips')">Dinner</div>
-            <div class="chip" onclick="selectChip(this,'meal-type-chips')">Snack</div>
+
+          <!-- RESULT AFTER IMPORT -->
+          <div id="recipe-result-card" style="display:none" class="recipe-result-card">
+            <div class="recipe-result-name" id="recipe-result-name"></div>
+            <div class="recipe-result-check">✓</div>
+          </div>
+
+          <!-- MEAL NAME (always visible) -->
+          <div class="form-field">
+            <div class="form-label">Meal name</div>
+            <input class="form-input" id="new-meal-name" type="text" placeholder="e.g. Pasta bake">
+          </div>
+
+          <!-- MEAL TYPE -->
+          <div class="form-field">
+            <div class="form-label">Meal type</div>
+            <div class="chips" id="meal-type-chips">
+              <div class="chip" onclick="selectChip(this,'meal-type-chips')">Breakfast</div>
+              <div class="chip" onclick="selectChip(this,'meal-type-chips')">Lunch</div>
+              <div class="chip sel" onclick="selectChip(this,'meal-type-chips')">Dinner</div>
+              <div class="chip" onclick="selectChip(this,'meal-type-chips')">Snack</div>
+            </div>
+          </div>
+
+          <!-- PREP TIME -->
+          <div class="form-field">
+            <div class="form-label">Prep time</div>
+            <div class="chips" id="prep-chips">
+              <div class="chip" onclick="selectChip(this,'prep-chips')">Under 15 min</div>
+              <div class="chip sel" onclick="selectChip(this,'prep-chips')">15–30 min</div>
+              <div class="chip" onclick="selectChip(this,'prep-chips')">30–60 min</div>
+            </div>
+          </div>
+
+          <!-- KID RATING -->
+          <div class="form-field">
+            <div class="form-label">Kid-friendly rating</div>
+            <div class="star-row" id="star-row">
+              <span class="star lit" onclick="setStars(1)"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+              <span class="star lit" onclick="setStars(2)"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+              <span class="star lit" onclick="setStars(3)"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+              <span class="star" onclick="setStars(4)"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+              <span class="star" onclick="setStars(5)"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+            </div>
           </div>
         </div>
-        <div class="form-field">
-          <div class="form-label">Prep time</div>
-          <div class="chips" id="prep-chips">
-            <div class="chip" onclick="selectChip(this,'prep-chips')">Under 15 min</div>
-            <div class="chip sel" onclick="selectChip(this,'prep-chips')">15–30 min</div>
-            <div class="chip" onclick="selectChip(this,'prep-chips')">30–60 min</div>
-          </div>
+
+        <!-- FAVOURITES TAB -->
+        <div class="meal-tab-panel" id="meal-panel-favourites">
+          <input class="form-input" type="text" placeholder="Search favourites…" oninput="filterAddMealFavs(this.value)" style="margin-bottom:4px">
+          <div class="fav-chip-row" id="add-meal-favs"></div>
         </div>
-        <div class="form-field">
-          <div class="form-label">Kid-friendly rating</div>
-          <div class="star-row" id="star-row">
-            <span class="star lit" onclick="setStars(1)"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
-            <span class="star lit" onclick="setStars(2)"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
-            <span class="star lit" onclick="setStars(3)"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
-            <span class="star" onclick="setStars(4)"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
-            <span class="star" onclick="setStars(5)"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+
+        <!-- LEFTOVERS TAB -->
+        <div class="meal-tab-panel" id="meal-panel-leftovers">
+          <div class="leftover-row">
+            <div class="leftover-pill" onclick="selectLeftoverPill(this,'Leftovers')">Leftovers</div>
           </div>
+          <div style="font-size:0.78rem;color:#8FA98F;margin:10px 0 6px">From a specific meal:</div>
+          <div class="fav-chip-row" id="add-meal-leftovers"></div>
         </div>
+
       </div>
       <div class="sheet-footer">
         <button class="save-btn" id="save-meal-btn" onclick="saveMeal()">✓ Save to planner</button>
@@ -1979,6 +2043,146 @@ function selectQuickLeftover(el) { document.querySelectorAll('.add-fav-chip').fo
 function selectLeftover(el,name) { document.querySelectorAll('.add-fav-chip').forEach(c=>c.classList.remove('sel')); el.classList.add('sel'); selectedFavMeal=`Leftovers from ${name}`; document.getElementById('new-meal-name').value=`Leftovers from ${name}`; }
 function selectFavMeal(el,name) { document.querySelectorAll('.add-fav-chip').forEach(c=>c.classList.remove('sel')); el.classList.add('sel'); selectedFavMeal=name; document.getElementById('new-meal-name').value=name; }
 function closeAddMeal(e) { if(e.target.id==='add-meal-overlay') document.getElementById('add-meal-overlay').style.display='none'; }
+
+// ── MEAL SHEET FUNCTIONS ─────────────────────────────────────
+function switchMealTab(tab) {
+  ['recipe','favourites','leftovers'].forEach(t => {
+    const tabEl = document.getElementById('meal-tab-'+t);
+    const panelEl = document.getElementById('meal-panel-'+t);
+    if (tabEl) tabEl.classList.toggle('active', t===tab);
+    if (panelEl) panelEl.classList.toggle('active', t===tab);
+  });
+  if (tab==='favourites') populateAddMealFavsNew();
+  if (tab==='leftovers') populateAddMealLeftovers();
+}
+
+function populateAddMealFavsNew(filter='') {
+  const container = document.getElementById('add-meal-favs');
+  if (!container) return;
+  const filtered = allMeals.filter(m => !filter || (m.meal_name||'').toLowerCase().includes(filter.toLowerCase()));
+  if (filtered.length===0) { container.innerHTML=`<div class="empty-state">No meals found</div>`; return; }
+  container.innerHTML = filtered.map(m => `
+    <div class="fav-meal-row" onclick="selectFavMealRow(this,'${(m.meal_name||'').replace(/'/g,"\\'")}')">
+      <div class="fav-meal-row-name">${m.meal_name||''}</div>
+      <div class="fav-meal-row-meta">${m.prep_time||''}${m.kid_rating?' · '+m.kid_rating:''}</div>
+    </div>`).join('');
+}
+
+function filterAddMealFavs(val) { populateAddMealFavsNew(val); }
+
+function populateAddMealLeftovers() {
+  const container = document.getElementById('add-meal-leftovers');
+  if (!container) return;
+  const recent = [...new Set(allMealPlan.map(m=>m.meal_name).filter(Boolean))].slice(0,8);
+  if (recent.length===0) { container.innerHTML=`<div class="empty-state" style="font-size:0.75rem">No recent meals yet</div>`; return; }
+  container.innerHTML = recent.map(name => `
+    <div class="fav-meal-row" onclick="selectLeftoverPill(this,'Leftovers from ${name.replace(/'/g,"\\'")}')">
+      <div class="fav-meal-row-name">${name}</div>
+    </div>`).join('');
+}
+
+function selectFavMealRow(el, name) {
+  document.querySelectorAll('#add-meal-favs .fav-meal-row').forEach(r => r.classList.remove('sel'));
+  el.classList.add('sel');
+  selectedFavMeal = name;
+  document.getElementById('new-meal-name').value = name;
+}
+
+function selectLeftoverPill(el, val) {
+  document.querySelectorAll('#meal-panel-leftovers .fav-meal-row, .leftover-pill').forEach(r => r.classList.remove('sel'));
+  el.classList.add('sel');
+  selectedFavMeal = val;
+  document.getElementById('new-meal-name').value = val;
+}
+
+function onRecipeUrlChange(val) {
+  const box = document.getElementById('recipe-url-box');
+  if (box) box.classList.toggle('has-url', val.length > 10);
+}
+
+async function fetchRecipeFromUrl() {
+  const urlEl = document.getElementById('new-meal-url');
+  const url = urlEl ? urlEl.value.trim() : '';
+  if (!url || !url.startsWith('http')) { showToast('Paste a valid recipe URL first'); return; }
+
+  const btn = document.getElementById('recipe-fetch-btn');
+  const status = document.getElementById('recipe-fetch-status');
+  if (btn) { btn.textContent = '…'; btn.disabled = true; }
+  if (status) { status.style.display = 'block'; status.textContent = 'Reading recipe…'; status.className = 'recipe-status'; }
+
+  try {
+    // Strategy 1: Try recipe-scrapers-web (free, no key needed)
+    // Uses structured data (JSON-LD / schema.org/Recipe) that most recipe sites embed
+    const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(url)}`;
+    const res = await fetch(proxyUrl, { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+    if (!res.ok) throw new Error('Could not fetch page');
+    const html = await res.text();
+
+    // Parse recipe from JSON-LD structured data (used by BBC Good Food, Taste, AllRecipes etc)
+    let recipe = null;
+    const jsonLdMatches = html.matchAll(/<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi);
+    for (const match of jsonLdMatches) {
+      try {
+        const parsed = JSON.parse(match[1]);
+        const items = Array.isArray(parsed) ? parsed : (parsed['@graph'] || [parsed]);
+        for (const item of items) {
+          if (item['@type'] === 'Recipe' || (Array.isArray(item['@type']) && item['@type'].includes('Recipe'))) {
+            recipe = item;
+            break;
+          }
+        }
+      } catch(e) {}
+      if (recipe) break;
+    }
+
+    if (!recipe) {
+      // Fallback: extract from og:title and meta
+      const ogTitle = html.match(/<meta[^>]*property=["']og:title["'][^>]*content=["']([^"']{3,80})["']/i);
+      const titleTag = html.match(/<title[^>]*>([^<]{3,80})<\/title>/i);
+      const name = (ogTitle?.[1] || titleTag?.[1] || '').split(/\s*[-|·—]\s*/)[0].trim();
+      if (name) recipe = { name };
+    }
+
+    if (!recipe || !recipe.name) throw new Error('No recipe found on this page');
+
+    // Extract name
+    const mealName = (recipe.name || '').replace(/<[^>]+>/g,'').trim();
+    document.getElementById('new-meal-name').value = mealName;
+    const resultCard = document.getElementById('recipe-result-card');
+    const resultName = document.getElementById('recipe-result-name');
+    if (resultCard) resultCard.style.display = 'flex';
+    if (resultName) resultName.textContent = mealName;
+
+    // Extract ingredients
+    const rawIngredients = recipe.recipeIngredient || recipe.ingredients || [];
+    const ingredients = rawIngredients
+      .map(i => (typeof i === 'string' ? i : i.name || '').replace(/<[^>]+>/g,'').trim())
+      .filter(i => i.length > 1 && i.length < 120);
+
+    if (ingredients.length > 0) {
+      window._recipeIngredients = ingredients;
+      window._recipeName = mealName;
+      if (status) {
+        status.textContent = `✓ ${mealName} — ${ingredients.length} ingredients ready to add to shop`;
+        status.className = 'recipe-status success';
+      }
+    } else {
+      if (status) {
+        status.textContent = `✓ ${mealName} — name filled in. No ingredients found on this page.`;
+        status.className = 'recipe-status success';
+      }
+    }
+
+  } catch(e) {
+    console.error('Recipe fetch:', e);
+    if (status) {
+      status.textContent = 'Could not read this recipe. Check the URL is correct, or paste the meal name below.';
+      status.className = 'recipe-status error';
+    }
+  } finally {
+    if (btn) { btn.textContent = 'Import'; btn.disabled = false; }
+  }
+}
 
 async function saveMeal() {
   const mealName = selectedFavMeal || document.getElementById('new-meal-name').value.trim();
