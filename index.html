@@ -6,31 +6,31 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Mama HQ">
-<meta name="theme-color" content="#2C2420">
+<meta name="theme-color" content="#4A6E49">
 <title>Mama HQ</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
   :root {
-    --cream:      #FAF7F2;
-    --warm-white: #FDF9F5;
-    --stone:      #E8E0D5;
-    --taupe:      #C4B5A5;
-    --brown:      #8B7355;
-    --dark:       #2C2420;
-    --terracotta: #C4714F;
-    --sage:       #7A8C6E;
-    --gold:       #C9A96E;
-    --blush:      #E8C4B8;
+    --cream:      #F5F8F5;
+    --warm-white: #FFFFFF;
+    --stone:      #E2EAE2;
+    --taupe:      #8FA98F;
+    --brown:      #5A725A;
+    --dark:       #1A1A1A;
+    --terracotta: #3D6B47;
+    --sage:       #3D6B47;
+    --gold:       #5A9B6A;
+    --blush:      #EAF2EA;
     --safe-top:   env(safe-area-inset-top, 44px);
     --safe-bottom:env(safe-area-inset-bottom, 20px);
   }
 
   html, body {
     height: 100%;
-    background: var(--dark);
-    font-family: 'DM Sans', sans-serif;
+    background: #FFFFFF;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     -webkit-font-smoothing: antialiased;
     overflow: hidden;
   }
@@ -50,7 +50,7 @@
   #loading {
     position: absolute;
     inset: 0;
-    background: var(--dark);
+    background: #FFFFFF;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -61,10 +61,10 @@
   }
   #loading.hidden { opacity: 0; pointer-events: none; }
   .loading-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2rem;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.6rem;
     font-weight: 300;
-    color: var(--cream);
+    color: #FFFFFF;
     letter-spacing: 0.2em;
     text-transform: uppercase;
   }
@@ -88,8 +88,8 @@
 
   /* HEADER */
   .home-header {
-    background: var(--dark);
-    padding: calc(var(--safe-top) + 16px) 22px 22px;
+    background: #FFFFFF;
+    padding: calc(var(--safe-top) + 20px) 22px 24px;
     position: relative;
     overflow: hidden;
     flex-shrink: 0;
@@ -111,27 +111,25 @@
     border-radius: 50%;
   }
   .greeting-label {
-    font-size: 0.68rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--taupe);
-    margin-bottom: 3px;
+    font-size: 1.5rem;
+    color: #1A1A1A;
+    margin-bottom: 4px;
     position: relative; z-index: 1;
+    font-weight: 400;
+    letter-spacing: -0.01em;
   }
   .greeting-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2.4rem;
-    font-weight: 300;
-    color: var(--cream);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #1A1A1A;
     line-height: 1;
     position: relative; z-index: 1;
   }
   .greeting-date {
-    font-size: 0.65rem;
+    font-size: 0.82rem;
     color: var(--taupe);
-    margin-top: 6px;
-    letter-spacing: 0.06em;
-    opacity: 0.8;
+    margin-top: 10px;
     position: relative; z-index: 1;
   }
 
@@ -147,12 +145,11 @@
   }
 
   .section-title {
-    font-size: 0.6rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--brown);
-    font-weight: 500;
-    margin-bottom: 8px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1A1A1A;
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
   }
 
   /* GLANCE */
@@ -173,7 +170,7 @@
   .glance-pill:active { transform: scale(0.97); }
   .glance-icon { font-size: 1.1rem; }
   .glance-val {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 1.35rem;
     font-weight: 500;
     color: var(--dark);
@@ -186,27 +183,27 @@
     color: var(--taupe);
   }
   .glance-pill.nudge-pill {
-    background: linear-gradient(135deg, #2C2420 0%, #3D2F28 100%);
+    background: #3D6B47;
     border: 1px solid rgba(201,169,110,0.2);
   }
   .nudge-pill .glance-val {
-    font-style: italic;
+    font-style: normal;
     font-size: 0.82rem;
-    color: var(--cream);
+    color: #FFFFFF;
     font-weight: 300;
     line-height: 1.2;
   }
-  .nudge-pill .glance-sub { color: var(--gold); }
+  .nudge-pill .glance-sub { color: rgba(255,255,255,0.7); }
 
   /* FILL YOUR CUP */
   .cup-card {
-    background: linear-gradient(135deg, #1E1A17 0%, #2E2520 60%, #1A1E18 100%);
+    background: #FFFFFF;
     border-radius: 18px;
     padding: 16px;
     display: flex;
     gap: 12px;
     align-items: flex-start;
-    border: 1px solid rgba(122,140,110,0.22);
+    border: 1.5px solid #E2EAE2; box-shadow: 0 2px 12px rgba(0,0,0,0.05);
     position: relative;
     overflow: hidden;
   }
@@ -215,7 +212,9 @@
     position: absolute;
     top: -20px; right: -20px;
     width: 90px; height: 90px;
-    background: radial-gradient(circle, rgba(122,140,110,0.18) 0%, transparent 70%);
+  }
+  .cup-card::before { display: none; }
+  .cup-x {
   }
   .cup-orb { font-size: 1.5rem; flex-shrink: 0; margin-top: 2px; }
   .cup-body { flex: 1; position: relative; z-index: 1; }
@@ -223,16 +222,16 @@
     font-size: 0.58rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--sage);
+    color: #5A725A;
     font-weight: 500;
     margin-bottom: 5px;
   }
   .cup-text {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 0.95rem;
-    font-style: italic;
-    font-weight: 300;
-    color: var(--cream);
+    font-style: normal;
+    font-weight: 400;
+    color: #1A1A1A;
     line-height: 1.55;
   }
   .cup-attr {
@@ -245,7 +244,7 @@
 
   /* DINNER */
   .dinner-card {
-    background: var(--dark);
+    background: #FFFFFF;
     border-radius: 16px;
     padding: 15px;
     display: flex;
@@ -255,21 +254,21 @@
     cursor: pointer;
   }
   .dinner-card:active { transform: scale(0.99); }
-  .dinner-tag { font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--terracotta); margin-bottom: 3px; }
-  .dinner-name { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 400; color: var(--cream); line-height: 1.2; }
+  .dinner-tag { font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: 3px; }
+    color: #FFFFFF;
   .dinner-meta { font-size: 0.62rem; color: var(--taupe); margin-top: 3px; }
-  .dinner-badge { background: var(--terracotta); color: white; border-radius: 10px; padding: 7px 12px; font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500; flex-shrink: 0; }
-  .dinner-empty { font-size: 0.75rem; color: var(--taupe); font-style: italic; }
+  .dinner-badge { background: rgba(255,255,255,0.15); color: white; border-radius: 10px; padding: 7px 12px; font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500; flex-shrink: 0; }
+  .dinner-empty { font-size: 0.75rem; color: #8FA98F; font-style: normal; }
 
   /* TASKS */
-  .tasks-card { background: white; border-radius: 16px; padding: 15px; box-shadow: 0 2px 12px rgba(44,36,32,0.06); }
+  .tasks-card { background: #FFFFFF; border-radius: 16px; padding: 15px; box-shadow: 0 2px 12px rgba(44,36,32,0.06); }
   .tasks-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-  .tasks-count { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--dark); }
+  .tasks-count { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.1rem; color: var(--dark); }
   .tasks-pct { font-size: 0.65rem; color: var(--sage); font-weight: 500; letter-spacing: 0.06em; }
   .progress-bar { height: 4px; background: var(--stone); border-radius: 6px; overflow: hidden; margin-bottom: 11px; }
-  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--sage), #A8BA9A); border-radius: 6px; transition: width 0.6s ease; }
+  .progress-fill { height: 100%; background: #3D6B47; border-radius: 6px; transition: width 0.6s ease; }
   .task-items { display: flex; flex-direction: column; gap: 7px; }
-  .task-row { display: flex; align-items: center; gap: 9px; font-size: 0.75rem; color: var(--dark); cursor: pointer; }
+  .task-row { display: flex; align-items: center; gap: 9px; font-size: 0.82rem; color: var(--dark); cursor: pointer; }
   .task-row.done { opacity: 0.4; }
   .task-check {
     width: 18px; height: 18px;
@@ -279,7 +278,7 @@
     display: flex; align-items: center; justify-content: center;
     transition: all 0.2s ease;
   }
-  .task-check.ticked { background: var(--sage); border-color: var(--sage); }
+  .task-check.ticked { background: #5B8C5A; border-color: #5B8C5A; }
   .task-check.ticked::after { content: '✓'; color: white; font-size: 0.55rem; font-weight: 700; }
   .task-text.struck { text-decoration: line-through; color: var(--taupe); }
   .task-cat { font-size: 0.58rem; letter-spacing: 0.06em; text-transform: uppercase; margin-left: auto; flex-shrink: 0; }
@@ -290,7 +289,7 @@
   .cat-self { color: var(--gold); }
   .tasks-more { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--stone); }
   .tasks-more-count { font-size: 0.65rem; color: var(--taupe); letter-spacing: 0.04em; }
-  .tasks-more-link { font-size: 0.62rem; color: var(--terracotta); letter-spacing: 0.04em; }
+  .tasks-more-link { font-size: 0.62rem; color: #5B8C5A; letter-spacing: 0.04em; }
 
   /* UPCOMING */
   .upcoming-list { display: flex; flex-direction: column; }
@@ -298,17 +297,17 @@
   .upcoming-row:last-child { border-bottom: none; }
   .upcoming-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
   .upcoming-info { flex: 1; }
-  .upcoming-title { font-size: 0.74rem; color: var(--dark); font-weight: 400; }
+  .upcoming-title { font-size: 0.82rem; color: var(--dark); font-weight: 400; }
   .upcoming-who { font-size: 0.62rem; color: var(--taupe); margin-top: 1px; }
   .upcoming-time { font-size: 0.6rem; color: var(--taupe); text-align: right; white-space: nowrap; line-height: 1.4; }
 
   /* GROCERY */
-  .grocery-card { background: white; border-radius: 16px; padding: 14px; box-shadow: 0 2px 12px rgba(44,36,32,0.06); border-left: 3px solid var(--sage); }
+  .grocery-card { background: #E8F0E8; border-radius: 16px; padding: 14px; box-shadow: none; border-left: 3px solid #5B8C5A; }
   .grocery-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
   .grocery-label { font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sage); font-weight: 500; }
   .grocery-count { font-size: 0.62rem; color: var(--taupe); }
   .grocery-preview { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; }
-  .grocery-preview-item { display: flex; align-items: center; gap: 7px; font-size: 0.72rem; color: var(--dark); }
+  .grocery-preview-item { display: flex; align-items: center; gap: 7px; font-size: 0.82rem; color: var(--dark); }
   .grocery-preview-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
   .grocery-more { font-size: 0.64rem; color: var(--taupe); opacity: 0.6; }
   .grocery-actions { display: flex; gap: 8px; }
@@ -318,18 +317,18 @@
   .grocery-btn-view:active { opacity: 0.6; }
 
   /* NAV */
-  .nav-bar { background: white; border-top: 1px solid var(--stone); padding: 10px 8px calc(var(--safe-bottom) + 8px); display: flex; justify-content: space-around; flex-shrink: 0; position: relative; z-index: 10; }
+  .nav-bar { background: #FFFFFF; border-top: 1px solid #E2EAE2; padding: 10px 8px calc(var(--safe-bottom) + 8px); display: flex; justify-content: space-around; flex-shrink: 0; position: relative; z-index: 10; }
   .nav-item { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 4px 12px; cursor: pointer; transition: opacity 0.15s; text-decoration: none; }
   .nav-item:active { opacity: 0.6; }
   .nav-icon { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; }
   .nav-label { font-size: 0.55rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--taupe); }
-  .nav-item.active .nav-label { color: var(--terracotta); }
+  .nav-item.active .nav-label { color: #3D6B47; }
 
   /* FAB */
-  .fab { position: absolute; bottom: calc(var(--safe-bottom) + 76px); right: 18px; width: 48px; height: 48px; background: var(--terracotta); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.4rem; box-shadow: 0 4px 20px rgba(196,113,79,0.45); cursor: pointer; z-index: 20; transition: transform 0.15s ease, box-shadow 0.15s ease; border: none; }
-  .fab:active { transform: scale(0.93); box-shadow: 0 2px 10px rgba(196,113,79,0.3); }
+  .fab { position: absolute; bottom: calc(var(--safe-bottom) + 76px); right: 18px; width: 48px; height: 48px; background: #1A1A1A; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.4rem; box-shadow: 0 4px 20px rgba(26,26,26,0.25); cursor: pointer; z-index: 20; transition: transform 0.15s ease, box-shadow 0.15s ease; border: none; }
+  .fab:active { transform: scale(0.93); box-shadow: 0 2px 10px rgba(26,26,26,0.15); }
 
-  .empty-state { font-size: 0.72rem; color: var(--taupe); font-style: italic; opacity: 0.7; padding: 8px 0; }
+  .empty-state { font-size: 0.72rem; color: var(--taupe); font-style: normal; opacity: 0.7; padding: 8px 0; }
 
   .fade-in { animation: fadeIn 0.4s ease forwards; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
@@ -341,10 +340,10 @@
   .fade-in:nth-child(6) { animation-delay: 0.3s; }
 
   /* STD HEADER (non-home screens) */
-  .std-header { background: var(--dark); padding: calc(var(--safe-top) + 16px) 22px 18px; flex-shrink: 0; position: relative; overflow: hidden; }
+  .std-header { background: #FFFFFF; padding: calc(var(--safe-top) + 16px) 22px 18px; flex-shrink: 0; position: relative; overflow: hidden; }
   .std-header::after { content: ''; position: absolute; bottom: -30px; right: -20px; width: 120px; height: 120px; background: radial-gradient(circle, rgba(196,113,79,0.12) 0%, transparent 70%); }
-  .std-title { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; color: var(--cream); line-height: 1; position: relative; z-index: 1; }
-  .std-sub { font-size: 0.62rem; color: var(--taupe); margin-top: 4px; letter-spacing: 0.06em; position: relative; z-index: 1; }
+  .std-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.6rem; font-weight: 600; color: #1A1A1A; line-height: 1; position: relative; z-index: 1; }
+  .std-sub { font-size: 0.72rem; color: #6B7B6A; margin-top: 4px; letter-spacing: 0.06em; position: relative; z-index: 1; }
   .mode-tabs { display: flex; background: white; border-bottom: 1px solid var(--stone); flex-shrink: 0; }
   .mode-tab { flex: 1; padding: 13px; text-align: center; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--taupe); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.15s; }
   .mode-tab.active { color: var(--terracotta); border-bottom-color: var(--terracotta); }
@@ -355,7 +354,7 @@
   .plan-day-header { display: flex; justify-content: space-between; align-items: center; padding: 11px 14px; background: var(--cream); border-bottom: 1px solid var(--stone); }
   .plan-day-name { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dark); font-weight: 500; }
   .plan-day-date { font-size: 0.62rem; color: var(--taupe); }
-  .plan-day-today .plan-day-header { background: var(--dark); }
+  .plan-day-today .plan-day-header { background: #FFFFFF; }
   .plan-day-today .plan-day-name { color: var(--terracotta); }
   .plan-day-today .plan-day-date { color: var(--taupe); }
   .plan-slots { display: flex; flex-direction: column; }
@@ -367,20 +366,20 @@
   .slot-lunch { background: var(--stone); color: var(--brown); }
   .slot-dinner { background: #F5EDE8; color: var(--terracotta); }
   .slot-info { flex: 1; }
-  .slot-meal-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--dark); }
+  .slot-meal-name { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1rem; color: var(--dark); }
   .slot-meal-meta { font-size: 0.62rem; color: var(--taupe); margin-top: 1px; }
-  .slot-empty { font-size: 0.72rem; color: var(--taupe); font-style: italic; opacity: 0.7; }
+  .slot-empty { font-size: 0.72rem; color: var(--taupe); font-style: normal; opacity: 0.7; }
   .slot-add { font-size: 0.85rem; color: var(--stone); }
 
   .fav-search-wrap { position: relative; }
-  .fav-search { width: 100%; background: white; border: 1.5px solid var(--stone); border-radius: 12px; padding: 11px 14px; font-size: 0.82rem; font-family: 'DM Sans', sans-serif; color: var(--dark); outline: none; }
+  .fav-search { width: 100%; background: white; border: 1.5px solid var(--stone); border-radius: 12px; padding: 11px 14px; font-size: 0.82rem; font-family: 'Plus Jakarta Sans', sans-serif; color: var(--dark); outline: none; }
   .fav-search:focus { border-color: var(--terracotta); box-shadow: 0 0 0 3px rgba(196,113,79,0.08); }
   .fav-card { background: white; border-radius: 14px; padding: 13px 14px; box-shadow: 0 1px 8px rgba(44,36,32,0.05); display: flex; align-items: center; gap: 12px; cursor: pointer; transition: transform 0.15s; }
   .fav-card:active { transform: scale(0.98); }
   .fav-emoji { width: 40px; height: 40px; border-radius: 12px; background: var(--cream); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
   .fav-info { flex: 1; }
-  .fav-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--dark); }
-  .fav-meta { font-size: 0.62rem; color: var(--taupe); margin-top: 2px; }
+  .fav-name { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1rem; color: var(--dark); }
+  .fav-meta { font-size: 0.78rem; color: var(--taupe); margin-top: 2px; }
   .fav-stars { font-size: 0.65rem; margin-top: 2px; }
   .fav-plan-btn { font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--terracotta); font-weight: 500; flex-shrink: 0; }
   .meals-fab { bottom: calc(var(--safe-bottom) + 76px); right: 18px; }
@@ -390,15 +389,15 @@
   .bottom-sheet { background: white; border-radius: 24px 24px 0 0; max-height: 88vh; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-bottom: calc(var(--safe-bottom) + 8px); }
   .sheet-handle { width: 36px; height: 4px; background: var(--stone); border-radius: 4px; margin: 12px auto 0; }
   .sheet-header { padding: 14px 20px 10px; border-bottom: 1px solid var(--stone); }
-  .sheet-eyebrow { font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--terracotta); margin-bottom: 3px; font-weight: 500; }
-  .sheet-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 300; color: var(--dark); }
+  .sheet-eyebrow { font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: #5B8C5A; margin-bottom: 3px; font-weight: 500; }
+  .sheet-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.5rem; font-weight: 300; color: var(--dark); }
   .sheet-sub { font-size: 0.62rem; color: var(--taupe); margin-top: 2px; }
   .sheet-body { padding: 14px 20px; display: flex; flex-direction: column; gap: 14px; }
   .sheet-footer { padding: 8px 20px 4px; }
-  .add-section-label { font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brown); font-weight: 500; margin-bottom: 8px; }
+  .add-section-label { font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: #5A725A; font-weight: 600; margin-bottom: 8px; }
   .add-fav-chips { display: flex; flex-wrap: wrap; gap: 7px; }
   .add-fav-chip { padding: 7px 13px; border-radius: 20px; background: var(--cream); border: 1.5px solid var(--stone); font-size: 0.72rem; color: var(--dark); cursor: pointer; transition: all 0.15s; }
-  .add-fav-chip.sel { background: var(--dark); color: var(--cream); border-color: var(--dark); }
+  .add-fav-chip.sel { background: #1A1A1A; color: #FFFFFF; border-color: var(--dark); }
   .leftover-chip { background: #EEF2EB; border-color: var(--sage); color: var(--sage); }
   .leftover-chip.sel { background: var(--sage); color: white; border-color: var(--sage); }
   .add-divider { text-align: center; font-size: 0.62rem; color: var(--taupe); letter-spacing: 0.08em; position: relative; }
@@ -406,31 +405,31 @@
   .add-divider::before { left: 0; }
   .add-divider::after { right: 0; }
   .form-field { display: flex; flex-direction: column; gap: 6px; }
-  .form-label { font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brown); font-weight: 500; }
-  .form-input { background: var(--warm-white); border: 1.5px solid var(--stone); border-radius: 12px; padding: 11px 14px; font-size: 0.82rem; font-family: 'DM Sans', sans-serif; color: var(--dark); outline: none; }
+  .form-label { font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: #5A725A; font-weight: 600; }
+  .form-input { background: var(--warm-white); border: 1.5px solid var(--stone); border-radius: 12px; padding: 11px 14px; font-size: 0.82rem; font-family: 'Plus Jakarta Sans', sans-serif; color: var(--dark); outline: none; }
   .form-input:focus { border-color: var(--terracotta); box-shadow: 0 0 0 3px rgba(196,113,79,0.08); }
   .chips { display: flex; flex-wrap: wrap; gap: 7px; }
   .chip { padding: 6px 13px; border-radius: 20px; font-size: 0.68rem; border: 1.5px solid var(--stone); color: var(--taupe); background: white; cursor: pointer; transition: all 0.15s; }
-  .chip.sel { background: var(--dark); color: var(--cream); border-color: var(--dark); }
+  .chip.sel { background: #1A1A1A; color: #FFFFFF; border-color: var(--dark); }
   .star-row { display: flex; gap: 6px; }
   .star { cursor: pointer; opacity: 0.2; transition: opacity 0.15s; color: var(--gold); }
   .star.lit { opacity: 1; color: var(--gold); }
-  .save-btn { width: 100%; background: var(--dark); color: var(--cream); border: none; border-radius: 14px; padding: 15px; font-family: 'DM Sans', sans-serif; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; cursor: pointer; transition: opacity 0.15s; }
+  .save-btn { width: 100%; background: #1A1A1A; color: #FFFFFF; border: none; border-radius: 14px; padding: 15px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; cursor: pointer; transition: opacity 0.15s; }
   .save-btn:active { opacity: 0.8; }
   .save-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
   /* TOAST */
-  .toast { position: absolute; bottom: calc(var(--safe-bottom) + 90px); left: 50%; transform: translateX(-50%) translateY(20px); background: var(--dark); color: var(--cream); padding: 10px 20px; border-radius: 20px; font-size: 0.72rem; letter-spacing: 0.06em; white-space: nowrap; opacity: 0; transition: all 0.3s ease; z-index: 200; pointer-events: none; }
+  .toast { position: absolute; bottom: calc(var(--safe-bottom) + 90px); left: 50%; transform: translateX(-50%) translateY(20px); background: #1A1A1A; color: #FFFFFF; padding: 10px 20px; border-radius: 20px; font-size: 0.72rem; letter-spacing: 0.06em; white-space: nowrap; opacity: 0; transition: all 0.3s ease; z-index: 200; pointer-events: none; }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
   /* TASKS SCREEN */
   .task-group { margin-bottom: 4px; }
-  .task-group-label { font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--brown); font-weight: 500; padding: 12px 0 6px; }
+  .task-group-label { font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; color: #5A725A; font-weight: 600; padding: 12px 0 6px; }
   .task-full-row { display: flex; align-items: center; gap: 12px; background: white; border-radius: 14px; padding: 13px 14px; margin-bottom: 7px; box-shadow: 0 1px 6px rgba(44,36,32,0.05); cursor: pointer; transition: transform 0.15s; }
   .task-full-row:active { transform: scale(0.99); }
   .task-full-row.done { opacity: 0.45; }
   .task-full-body { flex: 1; }
-  .task-full-text { font-size: 0.82rem; color: var(--dark); line-height: 1.3; }
+  .task-full-text { font-size: 0.82rem; color: var(--dark); line-height: 1.4; }
   .task-full-text.struck { text-decoration: line-through; color: var(--taupe); }
   .task-full-meta { font-size: 0.6rem; color: var(--taupe); margin-top: 3px; letter-spacing: 0.04em; }
   .task-delete-btn { background: none; border: none; color: var(--stone); font-size: 0.75rem; cursor: pointer; padding: 4px 6px; flex-shrink: 0; transition: color 0.15s; }
@@ -443,7 +442,7 @@
   .budget-dial-inner { position: relative; width: 180px; height: 180px; }
   .budget-dial-inner svg { position: absolute; inset: 0; }
   .budget-dial-text { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; }
-  .budget-dial-amount { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 400; color: var(--dark); line-height: 1; }
+  .budget-dial-amount { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.6rem; font-weight: 400; color: var(--dark); line-height: 1; }
   .budget-dial-label { font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--taupe); }
   .budget-dial-sub { font-size: 0.65rem; color: var(--taupe); margin-top: 10px; }
   .budget-cats { display: flex; flex-direction: column; padding: 0 20px; background: white; margin-top: 8px; }
@@ -455,17 +454,17 @@
   .budget-cat-bar { height: 3px; background: var(--stone); border-radius: 3px; overflow: hidden; width: 100%; }
   .budget-cat-bar-fill { height: 100%; border-radius: 3px; transition: width 0.6s ease; }
   .budget-cat-right { text-align: right; flex-shrink: 0; }
-  .budget-cat-spent { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--dark); line-height: 1; }
+  .budget-cat-spent { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.05rem; color: var(--dark); line-height: 1; }
   .budget-cat-limit { font-size: 0.58rem; color: var(--taupe); margin-top: 1px; }
   .expense-section { margin-top: 8px; background: white; padding: 16px 20px calc(var(--safe-bottom) + 16px); }
-  .expense-section-title { font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--brown); font-weight: 500; margin-bottom: 8px; }
+  .expense-section-title { font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: #5A725A; font-weight: 600; margin-bottom: 8px; }
   .expense-row { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--stone); }
   .expense-row:last-child { border-bottom: none; }
   .expense-cat-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
   .expense-info { flex: 1; }
   .expense-desc { font-size: 0.75rem; color: var(--dark); }
   .expense-meta { font-size: 0.6rem; color: var(--taupe); margin-top: 1px; }
-  .expense-amount { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--dark); }
+  .expense-amount { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1rem; color: var(--dark); }
   .expense-delete { background: none; border: none; color: var(--stone); font-size: 0.7rem; cursor: pointer; padding: 4px; transition: color 0.15s; }
   .expense-delete:active { color: var(--terracotta); }
 
@@ -477,14 +476,14 @@
   .shop-summary-fill { height: 100%; background: var(--sage); border-radius: 3px; transition: width 0.5s ease; }
   .shop-clear-btn { font-size: 0.62rem; color: var(--terracotta); background: none; border: none; cursor: pointer; font-weight: 500; white-space: nowrap; }
   .shop-cat-section { margin-top: 10px; }
-  .shop-cat-label { font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--brown); font-weight: 600; padding: 10px 16px 6px; }
+  .shop-cat-label { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--brown); font-weight: 600; padding: 10px 16px 6px; }
   .shop-cat-label svg { opacity: 0.7; }
   .shop-items-list { display: flex; flex-direction: column; gap: 6px; padding: 0 16px 8px; }
   .shop-item-row { display: flex; align-items: center; gap: 14px; padding: 13px 14px; background: white; border-radius: 14px; cursor: pointer; transition: opacity 0.2s; box-shadow: 0 1px 4px rgba(44,36,32,0.05); }
   .shop-item-row:active { opacity: 0.7; }
   .shop-item-row.ticked { opacity: 0.4; }
   .shop-check { width: 22px; height: 22px; border-radius: 6px; border: 1.5px solid var(--stone); flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
-  .shop-check.ticked { background: var(--sage); border-color: var(--sage); }
+  .shop-check.ticked { background: #5B8C5A; border-color: #5B8C5A; }
   .shop-check-mark { display: none; }
   .shop-check.ticked .shop-check-mark { display: flex; }
   .shop-item-name { flex: 1; font-size: 0.82rem; color: var(--dark); font-weight: 400; }
@@ -494,15 +493,15 @@
   .shop-item-delete:active { color: var(--terracotta); }
   .shop-meal-chips { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 4px; }
   .shop-meal-chip { padding: 7px 14px; border-radius: 20px; background: var(--cream); border: 1.5px solid var(--stone); font-size: 0.72rem; color: var(--dark); cursor: pointer; transition: all 0.15s; }
-  .shop-meal-chip:active { background: var(--dark); color: var(--cream); border-color: var(--dark); }
+  .shop-meal-chip:active { background: #FFFFFF; color: #FFFFFF; border-color: #1A1A1A; }
   .common-chips { display: flex; flex-wrap: wrap; gap: 7px; }
   .common-chip { padding: 7px 14px; border-radius: 20px; background: var(--cream); border: 1.5px solid var(--stone); font-size: 0.72rem; color: var(--dark); cursor: pointer; transition: all 0.15s; }
-  .common-chip:active { background: var(--dark); color: var(--cream); }
+  .common-chip:active { background: #1A1A1A; color: #FFFFFF; }
 
   /* CALENDAR SCREEN */
   .cal-body { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 0 0 calc(var(--safe-bottom) + 70px); background: var(--cream); display: flex; flex-direction: column; }
   .cal-month-nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px 10px; background: white; }
-  .cal-month-label { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 400; color: var(--dark); }
+  .cal-month-label { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.3rem; font-weight: 400; color: var(--dark); }
   .cal-nav-btn { background: none; border: none; font-size: 1.2rem; color: var(--taupe); cursor: pointer; padding: 4px 8px; transition: color 0.15s; }
   .cal-nav-btn:active { color: var(--dark); }
   .cal-grid { background: white; padding: 0 12px 12px; }
@@ -512,7 +511,7 @@
   .cal-day { display: flex; flex-direction: column; align-items: center; padding: 6px 2px; border-radius: 10px; cursor: pointer; transition: background 0.15s; min-height: 44px; }
   .cal-day:active { background: var(--stone); }
   .cal-day.empty { cursor: default; }
-  .cal-day.today .cal-day-num { background: var(--terracotta); color: white; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; }
+  .cal-day.today .cal-day-num { background: #4A6E49; color: white; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; }
   .cal-day.selected { background: var(--cream); }
   .cal-day-num { font-size: 0.78rem; color: var(--dark); line-height: 1; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; }
   .cal-day.other-month .cal-day-num { color: var(--stone); }
@@ -520,8 +519,8 @@
   .cal-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
   .cal-day-detail { background: white; margin-top: 8px; padding: 16px 20px; flex: 1; }
   .cal-detail-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-  .cal-detail-date { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--dark); }
-  .cal-detail-add { font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--terracotta); cursor: pointer; font-weight: 500; background: none; border: none; }
+  .cal-detail-date { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.2rem; color: var(--dark); }
+  .cal-detail-add { font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: #5B8C5A; cursor: pointer; font-weight: 500; background: none; border: none; }
   .cal-event-row { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--stone); }
   .cal-event-row:last-child { border-bottom: none; }
   .cal-event-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
@@ -530,12 +529,179 @@
   .cal-event-meta { font-size: 0.62rem; color: var(--taupe); margin-top: 2px; }
   .cal-event-delete { background: none; border: none; color: var(--stone); font-size: 0.7rem; cursor: pointer; padding: 4px; }
   .cal-event-delete:active { color: var(--terracotta); }
-  .cal-empty { font-size: 0.72rem; color: var(--taupe); font-style: italic; opacity: 0.7; padding: 8px 0; }
+  .cal-empty { font-size: 0.72rem; color: var(--taupe); font-style: normal; opacity: 0.7; padding: 8px 0; }
   .cal-add-hint { font-size: 0.65rem; color: var(--taupe); opacity: 0.6; margin-top: 8px; }
 
   .sheet-close { position: absolute; top: 14px; right: 16px; background: var(--stone); border: none; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: var(--brown); cursor: pointer; flex-shrink: 0; }
   .sheet-close:active { background: var(--taupe); }
   .sheet-header { position: relative; }
+
+  /* MEALS WEEK STRIP */
+  .meals-header { background: #FFFFFF; border-bottom: 1px solid #DDE8DC; padding: calc(var(--safe-top) + 14px) 20px 0; flex-shrink: 0; }
+  .meals-header-top { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; }
+  .meals-header-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.6rem; font-weight: 300; color: var(--dark); }
+  .meals-header-sub { font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--taupe); }
+  .week-strip { display: flex; gap: 4px; margin-bottom: 0; }
+  .week-day { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 8px 4px; border-radius: 12px; cursor: pointer; transition: background 0.15s; gap: 2px; }
+  .week-day:active { opacity: 0.7; }
+  .week-day.active { background: #FFFFFF; }
+  .week-day-name { font-size: 0.55rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--taupe); }
+  .week-day.active .week-day-name { color: rgba(255,255,255,0.7); }
+  .week-day-num { font-size: 0.95rem; font-weight: 500; color: var(--dark); line-height: 1; }
+  .week-day.active .week-day-num { color: #FFFFFF; }
+  .week-day-today-label { font-size: 0.48rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--terracotta); font-weight: 600; }
+  .week-day.active .week-day-today-label { color: var(--gold); }
+  .week-day-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--sage); margin-top: 1px; }
+  .week-day.active .week-day-dot { background: var(--gold); }
+  .meals-actions { display: flex; gap: 8px; padding: 10px 20px; background: var(--cream); border-bottom: 1px solid var(--stone); }
+  .meals-action-btn { flex: 1; padding: 9px 12px; border-radius: 12px; border: 1.5px solid var(--stone); background: white; font-size: 0.65rem; letter-spacing: 0.06em; color: var(--dark); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.15s; font-family: 'Plus Jakarta Sans', sans-serif; }
+  .meals-action-btn:active { background: #FFFFFF; color: #FFFFFF; border-color: #1A1A1A; }
+  .meals-action-btn svg { flex-shrink: 0; }
+  /* Day section in planner */
+  .plan-day-section { margin-bottom: 4px; }
+  .plan-day-section-header { padding: 14px 0 8px; display: flex; align-items: baseline; gap: 8px; }
+  .plan-day-section-name { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.2rem; font-weight: 400; color: var(--dark); }
+  .plan-day-section-date { font-size: 0.62rem; color: var(--taupe); }
+  .plan-day-section-today { display: inline-block; background: var(--terracotta); color: white; font-size: 0.5rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 2px 7px; border-radius: 10px; font-weight: 600; margin-left: 4px; vertical-align: middle; }
+
+  /* ── FILL MY CUP ── */
+  .cup-overlay { position: fixed; inset: 0; z-index: 200; display: flex; flex-direction: column; }
+  .cup-overlay.hidden { display: none; }
+
+  /* Choice screen */
+  .cup-choice { background: #F5F8F5; flex: 1; display: flex; flex-direction: column; padding: calc(var(--safe-top) + 20px) 24px calc(var(--safe-bottom) + 24px); }
+  .cup-choice-close { align-self: flex-end; background: none; border: none; font-size: 1.2rem; color: #5A725A; cursor: pointer; padding: 4px; margin-bottom: 24px; }
+  .cup-choice-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.6rem; font-weight: 600; color: #1A1A1A; line-height: 1.25; margin-bottom: 8px; }
+  .cup-choice-sub { font-size: 0.82rem; color: #5A725A; margin-bottom: 36px; }
+  .cup-options { display: flex; flex-direction: column; gap: 12px; flex: 1; }
+  .cup-option { background: #FFFFFF; border: 1.5px solid #E2EAE2; border-radius: 18px; padding: 18px 20px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 14px; }
+  .cup-option:active { background: #E8F2E8; border-color: #3D6B47; transform: scale(0.98); }
+  .cup-option-icon { width: 40px; height: 40px; border-radius: 12px; background: #EAF2EA; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .cup-option-icon svg { color: #3D6B47; }
+  .cup-option-text { flex: 1; }
+  .cup-option-label { font-size: 0.88rem; font-weight: 600; color: #1A1A1A; margin-bottom: 2px; }
+  .cup-option-desc { font-size: 0.72rem; color: #8FA98F; }
+  .cup-option-arrow { color: #C2D4C2; font-size: 1rem; }
+
+  /* Mode screens */
+  .cup-mode { flex: 1; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+  .cup-mode-close { position: absolute; top: calc(var(--safe-top) + 16px); right: 20px; z-index: 10; background: rgba(255,255,255,0.15); border: none; border-radius: 50%; width: 34px; height: 34px; color: white; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .cup-mode-close.dark { color: #1A1A1A; background: rgba(0,0,0,0.08); }
+
+  /* OVERSTIMULATED — dark sensory */
+  .mode-sensory { background: #1A2420; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 24px; }
+  .sensory-canvas { position: absolute; inset: 0; }
+  .sensory-text { position: relative; z-index: 2; text-align: center; }
+  .sensory-title { font-size: 1rem; font-weight: 400; color: rgba(255,255,255,0.5); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; }
+  .sensory-sub { font-size: 0.78rem; color: rgba(255,255,255,0.3); line-height: 1.6; }
+  .sensory-noise-btn { margin-top: 32px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); border-radius: 30px; padding: 10px 24px; color: rgba(255,255,255,0.6); font-size: 0.72rem; letter-spacing: 0.08em; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; }
+  .sensory-noise-btn.playing { background: rgba(61,107,71,0.4); border-color: rgba(61,107,71,0.6); color: rgba(255,255,255,0.8); }
+
+  /* BRAIN FULL — box breathing */
+  .mode-breathing { background: #EAF2EA; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 24px; gap: 24px; }
+  .breath-circle-wrap { position: relative; width: 200px; height: 200px; display: flex; align-items: center; justify-content: center; }
+  .breath-circle-outer { position: absolute; border-radius: 50%; background: rgba(61,107,71,0.12); transition: all 4s ease-in-out; }
+  .breath-circle-inner { width: 80px; height: 80px; border-radius: 50%; background: #3D6B47; display: flex; align-items: center; justify-content: center; }
+  .breath-phase { font-size: 0.72rem; font-weight: 600; color: white; letter-spacing: 0.1em; text-transform: uppercase; text-align: center; }
+  .breath-instruction { font-size: 1.4rem; font-weight: 600; color: #1A1A1A; text-align: center; }
+  .breath-count { font-size: 3rem; font-weight: 300; color: #3D6B47; line-height: 1; }
+  .breath-hint { font-size: 0.78rem; color: #5A725A; text-align: center; line-height: 1.5; }
+  .breath-start-btn { background: #1A1A1A; color: white; border: none; border-radius: 14px; padding: 14px 40px; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.06em; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+  /* FIND ME — joy prompts */
+  .mode-joy { background: #F5F8F5; flex: 1; display: flex; flex-direction: column; padding: calc(var(--safe-top) + 56px) 24px calc(var(--safe-bottom) + 24px); overflow-y: auto; -webkit-overflow-scrolling: touch; }
+  .joy-prompt-card { background: #3D6B47; border-radius: 20px; padding: 28px 24px; margin-bottom: 20px; }
+  .joy-prompt-label { font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 10px; }
+  .joy-prompt-text { font-size: 1.2rem; font-weight: 500; color: white; line-height: 1.45; }
+  .joy-prompt-new { background: none; border: 1.5px solid rgba(255,255,255,0.3); border-radius: 10px; padding: 8px 16px; color: rgba(255,255,255,0.8); font-size: 0.7rem; letter-spacing: 0.06em; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; margin-top: 14px; }
+  .joy-list-title { font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: #5A725A; font-weight: 600; margin-bottom: 12px; }
+  .joy-list { display: flex; flex-direction: column; gap: 8px; }
+  .joy-list-item { background: white; border-radius: 14px; padding: 14px 16px; font-size: 0.82rem; color: #1A1A1A; line-height: 1.4; border: 1px solid #E2EAE2; cursor: pointer; transition: background 0.15s; }
+  .joy-list-item:active { background: #EAF2EA; }
+
+  /* RUNNING EMPTY — stretches */
+  .mode-movement { background: #F5F8F5; flex: 1; display: flex; flex-direction: column; padding: calc(var(--safe-top) + 56px) 24px calc(var(--safe-bottom) + 24px); overflow-y: auto; -webkit-overflow-scrolling: touch; gap: 12px; }
+  .movement-header { margin-bottom: 8px; }
+  .movement-title { font-size: 1.3rem; font-weight: 700; color: #1A1A1A; margin-bottom: 4px; }
+  .movement-sub { font-size: 0.8rem; color: #5A725A; }
+  .stretch-card { background: white; border-radius: 16px; padding: 16px 18px; display: flex; align-items: center; gap: 14px; border: 1px solid #E2EAE2; }
+  .stretch-num { width: 32px; height: 32px; border-radius: 50%; background: #EAF2EA; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: #3D6B47; flex-shrink: 0; }
+  .stretch-info { flex: 1; }
+  .stretch-name { font-size: 0.85rem; font-weight: 600; color: #1A1A1A; margin-bottom: 2px; }
+  .stretch-desc { font-size: 0.72rem; color: #5A725A; line-height: 1.4; }
+  .stretch-time { font-size: 0.65rem; color: #8FA98F; font-weight: 500; flex-shrink: 0; }
+
+
+  /* FILL MY CUP OVERLAY */
+  .fmc-overlay { position: absolute; inset: 0; z-index: 200; display: flex; flex-direction: column; transition: opacity 0.4s ease; }
+  .fmc-overlay.hidden { opacity: 0; pointer-events: none; }
+
+  /* CHOICE SCREEN */
+  .fmc-choice { background: #FFFFFF; flex: 1; display: flex; flex-direction: column; padding: calc(var(--safe-top) + 20px) 24px calc(var(--safe-bottom) + 24px); }
+  .fmc-close { align-self: flex-end; background: none; border: none; font-size: 1.2rem; color: #8FA98F; cursor: pointer; padding: 4px; margin-bottom: 8px; }
+  .fmc-question { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.6rem; font-weight: 600; color: #1A1A1A; line-height: 1.25; margin-bottom: 8px; }
+  .fmc-question-sub { font-size: 0.8rem; color: #8FA98F; margin-bottom: 32px; }
+  .fmc-options { display: flex; flex-direction: column; gap: 12px; flex: 1; }
+  .fmc-option { background: #F5F8F5; border: 1.5px solid #E2EAE2; border-radius: 16px; padding: 18px 20px; cursor: pointer; transition: all 0.2s ease; text-align: left; }
+  .fmc-option:active { background: #2D4A35; border-color: #2D4A35; }
+  .fmc-option:active .fmc-option-title { color: white; }
+  .fmc-option:active .fmc-option-sub { color: rgba(255,255,255,0.7); }
+  .fmc-option-title { font-size: 0.9rem; font-weight: 600; color: #1A1A1A; margin-bottom: 3px; }
+  .fmc-option-sub { font-size: 0.72rem; color: #8FA98F; }
+
+  /* SHARED MODE CHROME */
+  .fmc-mode { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+  .fmc-back { position: absolute; top: calc(var(--safe-top) + 16px); left: 20px; background: rgba(255,255,255,0.15); border: none; border-radius: 20px; padding: 8px 16px; font-size: 0.72rem; color: white; cursor: pointer; z-index: 10; font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.04em; }
+  .fmc-back-dark { background: rgba(0,0,0,0.06); color: #1A1A1A; }
+
+  /* MODE 1: SENSORY REST */
+  .fmc-sensory { background: #1A2E1E; flex: 1; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+  .fmc-sensory-canvas { position: absolute; inset: 0; }
+  .fmc-sensory-text { position: relative; z-index: 2; text-align: center; color: rgba(255,255,255,0.5); font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; }
+  .fmc-sensory-title { color: rgba(255,255,255,0.9); font-size: 1.1rem; font-weight: 500; margin-bottom: 8px; }
+  .fmc-noise-btn { margin-top: 24px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 24px; padding: 10px 24px; color: rgba(255,255,255,0.8); font-size: 0.75rem; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+  /* MODE 2: BOX BREATHING */
+  .fmc-breathing { background: #F5F8F5; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px; padding: 40px 24px calc(var(--safe-bottom) + 40px); }
+  .fmc-breath-ring-wrap { position: relative; width: 200px; height: 200px; }
+  .fmc-breath-label { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .fmc-breath-action { font-size: 1.2rem; font-weight: 600; color: #1A1A1A; }
+  .fmc-breath-count { font-size: 2.5rem; font-weight: 700; color: #2D4A35; line-height: 1; }
+  .fmc-breath-phase { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: #8FA98F; margin-top: 4px; }
+  .fmc-breath-guide { font-size: 0.82rem; color: #5A725A; text-align: center; max-width: 240px; line-height: 1.5; }
+
+  /* MODE 3: JOY */
+  .fmc-joy { background: #FFFFFF; flex: 1; display: flex; flex-direction: column; padding: calc(var(--safe-top) + 60px) 24px calc(var(--safe-bottom) + 24px); overflow-y: auto; }
+  .fmc-joy-prompt-card { background: #2D4A35; border-radius: 20px; padding: 28px 24px; margin-bottom: 24px; }
+  .fmc-joy-prompt-label { font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 12px; }
+  .fmc-joy-prompt-text { font-size: 1.15rem; font-weight: 500; color: #FFFFFF; line-height: 1.45; }
+  .fmc-joy-prompt-btn { margin-top: 16px; background: none; border: 1px solid rgba(255,255,255,0.25); border-radius: 20px; padding: 8px 18px; color: rgba(255,255,255,0.7); font-size: 0.7rem; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; }
+  .fmc-joy-list-title { font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: #8FA98F; margin-bottom: 12px; font-weight: 600; }
+  .fmc-joy-items { display: flex; flex-direction: column; gap: 10px; }
+  .fmc-joy-item { background: #F5F8F5; border-radius: 14px; padding: 14px 16px; font-size: 0.82rem; color: #1A1A1A; line-height: 1.4; }
+
+  /* MODE 4: MOVEMENT */
+  .fmc-move { background: #FFFFFF; flex: 1; display: flex; flex-direction: column; padding: calc(var(--safe-top) + 60px) 24px calc(var(--safe-bottom) + 24px); overflow-y: auto; gap: 12px; }
+  .fmc-move-intro { font-size: 0.82rem; color: #5A725A; margin-bottom: 4px; line-height: 1.5; }
+  .fmc-stretch-card { background: #F5F8F5; border-radius: 16px; padding: 16px 18px; display: flex; gap: 14px; align-items: flex-start; }
+  .fmc-stretch-num { width: 28px; height: 28px; border-radius: 50%; background: #2D4A35; color: white; font-size: 0.72rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .fmc-stretch-body { flex: 1; }
+  .fmc-stretch-name { font-size: 0.85rem; font-weight: 600; color: #1A1A1A; margin-bottom: 3px; }
+  .fmc-stretch-desc { font-size: 0.75rem; color: #5A725A; line-height: 1.4; }
+  .fmc-stretch-duration { font-size: 0.65rem; color: #8FA98F; margin-top: 4px; font-weight: 500; }
+
+  /* TODAY MEAL PLAN GRID */
+  .today-meal-wrap { background: white; border-radius: 0; padding: 0; }
+  .today-meal-date-header { display: none; }
+  .today-meal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .meal-grid-slot { background: white; border-radius: 12px; padding: 14px 14px 12px; border: 1.5px dashed #C8D8C8; cursor: pointer; transition: all 0.15s; min-height: 100px; display: flex; flex-direction: column; justify-content: space-between; }
+  .meal-grid-slot.filled { border-style: solid; border-color: #C8D8C8; }
+  .meal-grid-slot:active { background: #F0F7F0; }
+  .meal-grid-type { font-size: 0.82rem; font-weight: 600; color: #1A1A1A; margin-bottom: 0; }
+  .meal-grid-name { font-size: 0.82rem; color: #3D6B47; font-weight: 500; line-height: 1.3; margin-top: 6px; }
+  .meal-grid-bottom { display: flex; align-items: center; justify-content: space-between; margin-top: 16px; }
+  .meal-grid-empty { font-size: 0.82rem; color: #B0BFB0; }
+  .meal-grid-arrow { font-size: 0.9rem; color: #C0CFC0; }
 </style>
 </head>
 <body>
@@ -561,37 +727,28 @@
       <div class="fade-in">
         <div class="section-title">Today at a glance</div>
         <div class="glance-strip">
-          <div class="glance-pill">
+          <div class="glance-pill" onclick="showScreen('cal')" style="cursor:pointer">
             
             <span class="glance-val" id="events-count">—</span>
             <span class="glance-sub">Events</span>
           </div>
-          <div class="glance-pill">
+          <div class="glance-pill" onclick="showScreen('tasks')" style="cursor:pointer">
             
             <span class="glance-val" id="tasks-count">—</span>
-            <span class="glance-sub">Tasks</span>
+            <span class="glance-sub">Due today</span>
           </div>
-          <div class="glance-pill nudge-pill">
-            
-            <span class="glance-val" id="nudge-preview">For you</span>
-            <span class="glance-sub">Today's nudge</span>
-          </div>
-        </div>
-      </div>
-      <div class="fade-in">
-        <div class="section-title">Fill your cup</div>
-        <div class="cup-card">
-          
-          <div class="cup-body">
-            <div class="cup-tag">For you · from Mama HQ</div>
-            <div class="cup-text" id="cup-text">Loading your morning nudge...</div>
-            <div class="cup-attr">Refreshes daily · just for you</div>
+          <div class="glance-pill nudge-pill" onclick="openFillCup()" style="cursor:pointer">
+            <span class="glance-val" style="font-size:0.85rem;font-weight:600">Fill my cup</span>
+            <span class="glance-sub">How are you feeling?</span>
           </div>
         </div>
       </div>
       <div class="fade-in">
-        <div class="section-title">Tonight's dinner</div>
-        <div id="dinner-container"></div>
+        <div class="today-meal-date-header" id="today-meal-date-header">
+          <span class="today-meal-date-label">Today</span>
+          <span class="today-meal-date-sub"></span>
+        </div>
+        <div class="today-meal-grid" id="today-meal-grid"></div>
       </div>
       <div class="fade-in">
         <div class="section-title">Tasks today</div>
@@ -629,7 +786,6 @@
         </div>
       </div>
     </div>
-    <button class="fab" id="fab">+</button>
     <nav class="nav-bar">
       <a class="nav-item active" id="nav-home" onclick="showScreen('home')"><span class="nav-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg></span><span class="nav-label">Home</span></a>
       <a class="nav-item" id="nav-meals" onclick="showScreen('meals')"><span class="nav-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="2" x2="8" y2="22"/><path d="M5 2v6a3 3 0 006 0V2"/><path d="M19 2v22M19 12h-2a2 2 0 000 4h2"/></svg></span><span class="nav-label">Meals</span></a>
@@ -642,17 +798,30 @@
 
   <!-- ── MEALS SCREEN ── -->
   <div class="screen" id="meals-screen" style="display:none">
-    <div class="std-header">
-      <div class="std-title">Meals</div>
-      <div class="std-sub" id="meals-week-label">This week</div>
+    <!-- WEEK STRIP HEADER -->
+    <div class="meals-header">
+      <div class="meals-header-top">
+        <div class="meals-header-title">Meal Plan</div>
+        <div class="meals-header-sub" id="meals-week-label">This week</div>
+      </div>
+      <div class="week-strip" id="week-strip"></div>
     </div>
-    <div class="mode-tabs">
-      <div class="mode-tab active" id="tab-planner" onclick="switchMealsTab('planner')">Weekly plan</div>
-      <div class="mode-tab" id="tab-favourites" onclick="switchMealsTab('favourites')">Favourites</div>
+    <!-- ACTION BUTTONS -->
+    <div class="meals-actions">
+      <button class="meals-action-btn" onclick="copyLastWeek()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        Copy last week
+      </button>
+      <button class="meals-action-btn" id="tab-favourites-btn" onclick="switchMealsTab('favourites')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        Favourites
+      </button>
     </div>
+    <!-- PLANNER VIEW -->
     <div id="meals-planner" class="meals-body">
       <div id="planner-days"></div>
     </div>
+    <!-- FAVOURITES VIEW -->
     <div id="meals-favourites" class="meals-body" style="display:none">
       <div class="fav-search-wrap">
         <input class="fav-search" id="fav-search" type="text" placeholder="Search meals…" oninput="filterFavourites(this.value)">
@@ -1057,6 +1226,278 @@
       </div>
     </div>
   </div>
+  <!-- ── FILL MY CUP OVERLAY ── -->
+  <div class="cup-overlay hidden" id="cup-overlay">
+
+    <!-- CHOICE SCREEN -->
+    <div class="cup-choice" id="cup-choice-screen">
+      <button class="cup-choice-close" onclick="closeFillCup()">✕</button>
+      <div class="cup-choice-title">How does your cup feel right now?</div>
+      <div class="cup-choice-sub">Choose what you need in this moment.</div>
+      <div class="cup-options">
+
+        <div class="cup-option" onclick="startCupMode('sensory')">
+          <div class="cup-option-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8M12 8v8"/></svg>
+          </div>
+          <div class="cup-option-text">
+            <div class="cup-option-label">I'm overstimulated</div>
+            <div class="cup-option-desc">Everything is too much right now</div>
+          </div>
+          <div class="cup-option-arrow">›</div>
+        </div>
+
+        <div class="cup-option" onclick="startCupMode('breathing')">
+          <div class="cup-option-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 2a10 10 0 0 1 0 20"/><path d="M12 6a6 6 0 0 1 0 12"/><path d="M12 10a2 2 0 0 1 0 4"/></svg>
+          </div>
+          <div class="cup-option-text">
+            <div class="cup-option-label">My brain is full</div>
+            <div class="cup-option-desc">I can't think anymore</div>
+          </div>
+          <div class="cup-option-arrow">›</div>
+        </div>
+
+        <div class="cup-option" onclick="startCupMode('joy')">
+          <div class="cup-option-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="cup-option-text">
+            <div class="cup-option-label">I need to find me</div>
+            <div class="cup-option-desc">A micro-dose of joy</div>
+          </div>
+          <div class="cup-option-arrow">›</div>
+        </div>
+
+        <div class="cup-option" onclick="startCupMode('movement')">
+          <div class="cup-option-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="5" r="2"/><path d="M12 7v8m-4-5l4 3 4-3M8 20l4-5 4 5"/></svg>
+          </div>
+          <div class="cup-option-text">
+            <div class="cup-option-label">I'm running on empty</div>
+            <div class="cup-option-desc">I need a gentle lift</div>
+          </div>
+          <div class="cup-option-arrow">›</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SENSORY DEPRIVATION MODE -->
+    <div class="cup-mode hidden" id="cup-mode-sensory">
+      <div class="mode-sensory">
+        <canvas class="sensory-canvas" id="sensory-canvas"></canvas>
+        <div class="sensory-text">
+          <div class="sensory-title">You are safe here</div>
+          <div class="sensory-sub">Let your body slow down.<br>You don't have to do anything right now.</div>
+          <button class="sensory-noise-btn" id="noise-btn" onclick="toggleNoise()">Play brown noise</button>
+        </div>
+        <button class="cup-mode-close" onclick="closeCupMode('sensory')" style="color:rgba(255,255,255,0.5)">✕</button>
+      </div>
+    </div>
+
+    <!-- BOX BREATHING MODE -->
+    <div class="cup-mode hidden" id="cup-mode-breathing">
+      <div class="mode-breathing">
+        <button class="cup-mode-close dark" onclick="closeCupMode('breathing')">✕</button>
+        <div class="breath-instruction" id="breath-instruction">Box Breathing</div>
+        <div class="breath-circle-wrap" id="breath-wrap">
+          <div class="breath-circle-outer" id="breath-outer" style="width:200px;height:200px;opacity:0.3"></div>
+          <div class="breath-circle-inner">
+            <div class="breath-phase" id="breath-phase">Ready</div>
+          </div>
+        </div>
+        <div class="breath-count" id="breath-count">—</div>
+        <div class="breath-hint">Inhale · Hold · Exhale · Hold<br>4 seconds each. Repeat 4 times.</div>
+        <button class="breath-start-btn" id="breath-btn" onclick="startBreathing()">Begin</button>
+      </div>
+    </div>
+
+    <!-- JOY MODE -->
+    <div class="cup-mode hidden" id="cup-mode-joy">
+      <div class="mode-joy">
+        <button class="cup-mode-close dark" onclick="closeCupMode('joy')" style="color:#1A1A1A;background:rgba(0,0,0,0.08)">✕</button>
+        <div class="joy-prompt-card">
+          <div class="joy-prompt-label">Your moment of joy</div>
+          <div class="joy-prompt-text" id="joy-prompt-text">Loading...</div>
+          <button class="joy-prompt-new" onclick="newJoyPrompt()">New prompt</button>
+        </div>
+        <div class="joy-list-title">More micro-doses</div>
+        <div class="joy-list" id="joy-list"></div>
+      </div>
+    </div>
+
+    <!-- MOVEMENT MODE -->
+    <div class="cup-mode hidden" id="cup-mode-movement">
+      <div class="mode-movement">
+        <button class="cup-mode-close dark" onclick="closeCupMode('movement')" style="color:#1A1A1A;background:rgba(0,0,0,0.08)">✕</button>
+        <div class="movement-header">
+          <div class="movement-title">One-minute reset</div>
+          <div class="movement-sub">Move through these gently — no rush.</div>
+        </div>
+        <div class="stretch-card">
+          <div class="stretch-num">1</div>
+          <div class="stretch-info">
+            <div class="stretch-name">Roll your shoulders back</div>
+            <div class="stretch-desc">Slowly lift, roll back, and drop. Feel each shoulder blade meet in the middle.</div>
+          </div>
+          <div class="stretch-time">10s</div>
+        </div>
+        <div class="stretch-card">
+          <div class="stretch-num">2</div>
+          <div class="stretch-info">
+            <div class="stretch-name">Drop your chin to your chest</div>
+            <div class="stretch-desc">Let the weight of your head gently stretch the back of your neck. Breathe.</div>
+          </div>
+          <div class="stretch-time">10s</div>
+        </div>
+        <div class="stretch-card">
+          <div class="stretch-num">3</div>
+          <div class="stretch-info">
+            <div class="stretch-name">Shake out your hands</div>
+            <div class="stretch-desc">Loose wrists, let everything go. Imagine stress falling off your fingertips.</div>
+          </div>
+          <div class="stretch-time">10s</div>
+        </div>
+        <div class="stretch-card">
+          <div class="stretch-num">4</div>
+          <div class="stretch-info">
+            <div class="stretch-name">Three deep breaths</div>
+            <div class="stretch-desc">In through the nose, slow out through the mouth. Feel your chest soften.</div>
+          </div>
+          <div class="stretch-time">15s</div>
+        </div>
+        <div class="stretch-card">
+          <div class="stretch-num">5</div>
+          <div class="stretch-info">
+            <div class="stretch-name">Stand up and stretch tall</div>
+            <div class="stretch-desc">Arms overhead, fingertips to the sky. Hold for a moment. You're still here.</div>
+          </div>
+          <div class="stretch-time">15s</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- ── FILL MY CUP OVERLAY ── -->
+  <div id="fmc-overlay" class="fmc-overlay hidden">
+
+    <!-- CHOICE SCREEN -->
+    <div class="fmc-choice" id="fmc-choice">
+      <button class="fmc-close" onclick="closeFillCup()">✕</button>
+      <div class="fmc-question">How does your cup feel right now?</div>
+      <div class="fmc-question-sub">This moment is just for you.</div>
+      <div class="fmc-options">
+        <button class="fmc-option" onclick="startFmcMode('sensory')">
+          <div class="fmc-option-title">I'm overstimulated</div>
+          <div class="fmc-option-sub">Everything is too much right now</div>
+        </button>
+        <button class="fmc-option" onclick="startFmcMode('breathing')">
+          <div class="fmc-option-title">My brain is full</div>
+          <div class="fmc-option-sub">I can't think anymore</div>
+        </button>
+        <button class="fmc-option" onclick="startFmcMode('joy')">
+          <div class="fmc-option-title">I need to find me</div>
+          <div class="fmc-option-sub">A moment to reconnect</div>
+        </button>
+        <button class="fmc-option" onclick="startFmcMode('move')">
+          <div class="fmc-option-title">I'm running on empty</div>
+          <div class="fmc-option-sub">I need a gentle lift</div>
+        </button>
+      </div>
+    </div>
+
+    <!-- MODE 1: SENSORY REST -->
+    <div class="fmc-mode fmc-sensory" id="fmc-sensory" style="display:none">
+      <canvas class="fmc-sensory-canvas" id="fmc-canvas"></canvas>
+      <button class="fmc-back" onclick="backToFmcChoice()">← Back</button>
+      <div class="fmc-sensory-text">
+        <div class="fmc-sensory-title">You're safe to rest here.</div>
+        <div>Let everything go quiet.</div>
+        <button class="fmc-noise-btn" id="noise-btn" onclick="toggleNoise()">Play brown noise</button>
+      </div>
+    </div>
+
+    <!-- MODE 2: BOX BREATHING -->
+    <div class="fmc-mode fmc-breathing" id="fmc-breathing" style="display:none">
+      <button class="fmc-back fmc-back-dark" onclick="backToFmcChoice()">← Back</button>
+      <div class="fmc-breath-ring-wrap">
+        <svg width="200" height="200" viewBox="0 0 200 200">
+          <circle cx="100" cy="100" r="80" fill="none" stroke="#E2EAE2" stroke-width="8"/>
+          <circle id="breath-arc" cx="100" cy="100" r="80" fill="none" stroke="#2D4A35" stroke-width="8"
+            stroke-linecap="round" stroke-dasharray="502" stroke-dashoffset="502"
+            transform="rotate(-90 100 100)" style="transition: stroke-dashoffset 0.1s linear"/>
+        </svg>
+        <div class="fmc-breath-label">
+          <div class="fmc-breath-action" id="breath-action">Ready</div>
+          <div class="fmc-breath-count" id="breath-count">4</div>
+          <div class="fmc-breath-phase" id="breath-phase">tap to begin</div>
+        </div>
+      </div>
+      <div class="fmc-breath-guide" id="breath-guide">Box breathing helps reset your nervous system. 4 counts each — in, hold, out, hold.</div>
+      <button class="save-btn" id="breath-start-btn" onclick="startBreathing()" style="max-width:280px">Begin</button>
+    </div>
+
+    <!-- MODE 3: JOY -->
+    <div class="fmc-mode fmc-joy" id="fmc-joy" style="display:none">
+      <button class="fmc-back fmc-back-dark" onclick="backToFmcChoice()">← Back</button>
+      <div class="fmc-joy-prompt-card">
+        <div class="fmc-joy-prompt-label">Your moment</div>
+        <div class="fmc-joy-prompt-text" id="joy-prompt">Loading...</div>
+        <button class="fmc-joy-prompt-btn" onclick="nextJoyPrompt()">Try another →</button>
+      </div>
+      <div class="fmc-joy-list-title">More micro-doses of joy</div>
+      <div class="fmc-joy-items" id="joy-list"></div>
+    </div>
+
+    <!-- MODE 4: MOVEMENT -->
+    <div class="fmc-mode fmc-move" id="fmc-move" style="display:none">
+      <button class="fmc-back fmc-back-dark" onclick="backToFmcChoice()">← Back</button>
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:1.3rem;font-weight:700;color:#1A1A1A;margin-bottom:4px">60-second reset</div>
+      <div class="fmc-move-intro">You don't need to change clothes. Just move a little — your body will thank you.</div>
+      <div class="fmc-stretch-card">
+        <div class="fmc-stretch-num">1</div>
+        <div class="fmc-stretch-body">
+          <div class="fmc-stretch-name">Shoulder rolls</div>
+          <div class="fmc-stretch-desc">Roll both shoulders slowly backwards, then forwards. Feel the tension melt.</div>
+          <div class="fmc-stretch-duration">10 seconds</div>
+        </div>
+      </div>
+      <div class="fmc-stretch-card">
+        <div class="fmc-stretch-num">2</div>
+        <div class="fmc-stretch-body">
+          <div class="fmc-stretch-name">Neck release</div>
+          <div class="fmc-stretch-desc">Drop your right ear toward your shoulder. Hold. Breathe. Switch sides.</div>
+          <div class="fmc-stretch-duration">10 seconds each side</div>
+        </div>
+      </div>
+      <div class="fmc-stretch-card">
+        <div class="fmc-stretch-num">3</div>
+        <div class="fmc-stretch-body">
+          <div class="fmc-stretch-name">Shake it out</div>
+          <div class="fmc-stretch-desc">Shake your hands, wrists, then arms. Let them go completely loose and floppy.</div>
+          <div class="fmc-stretch-duration">10 seconds</div>
+        </div>
+      </div>
+      <div class="fmc-stretch-card">
+        <div class="fmc-stretch-num">4</div>
+        <div class="fmc-stretch-body">
+          <div class="fmc-stretch-name">Standing forward fold</div>
+          <div class="fmc-stretch-desc">Stand, exhale, and let your upper body hang heavy toward the floor. Nod your head yes and no.</div>
+          <div class="fmc-stretch-duration">15 seconds</div>
+        </div>
+      </div>
+      <div class="fmc-stretch-card">
+        <div class="fmc-stretch-num">5</div>
+        <div class="fmc-stretch-body">
+          <div class="fmc-stretch-name">Three deep breaths</div>
+          <div class="fmc-stretch-desc">Inhale slowly through your nose. Sigh it out through your mouth. You're back.</div>
+          <div class="fmc-stretch-duration">15 seconds</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
 
 </div>
 
@@ -1217,6 +1658,35 @@ let starRating = 3;
 let currentScreen = 'home';
 
 // ── RENDER: HOME ─────────────────────────────────────────────
+
+function renderTodayMeals(mealPlan, meals) {
+  const container = document.getElementById('today-meal-grid');
+  if (!container) return;
+
+  // Date header: "Today  Mar 24"
+  const todayD = new Date(todayStr + 'T00:00:00');
+  const dayLabel = todayD.toLocaleDateString('en-AU', { day: 'numeric', month: 'short' });
+  // date header removed — date shown in greeting
+
+  const types = ['Breakfast', 'Lunch', 'Dinner', 'Other'];
+  container.innerHTML = types.map(type => {
+    // 'Other' maps to 'Snacks' in DB
+    const dbType = type === 'Other' ? 'Snacks' : type;
+    const planned = mealPlan.find(m => (m.date||'').slice(0,10) === todayStr && m.meal_type === dbType);
+    const name = planned?.meal_name || '';
+    return `
+      <div class="meal-grid-slot${name ? ' filled' : ''}" onclick="showScreen('meals')">
+        <div class="meal-grid-type">${type}</div>
+        <div class="meal-grid-bottom">
+          ${name
+            ? `<div class="meal-grid-name">${name}</div>`
+            : `<span class="meal-grid-empty">Add a dish</span>`
+          }
+          <span class="meal-grid-arrow">→</span>
+        </div>
+      </div>`;
+  }).join('');
+}
 function renderDinner(mealPlan, meals) {
   const container = document.getElementById('dinner-container');
   const tonightPlan = mealPlan.find(m => m.date === todayStr && m.meal_type === 'Dinner');
@@ -1246,7 +1716,7 @@ function renderTasks(tasks) {
   document.getElementById('tasks-summary').textContent  = total === 0 ? 'No tasks today' : `${done} of ${total} done`;
   document.getElementById('tasks-pct').textContent      = total > 0 ? `${pct}%` : '';
   document.getElementById('tasks-progress').style.width = `${pct}%`;
-  document.getElementById('tasks-count').textContent    = total === 0 ? '0' : `${done}/${total}`;
+  document.getElementById('tasks-count').textContent    = todayTasks.length;
 
   const allToday = [...doneTasks, ...todayTasks];
   const show = allToday.slice(0, 4);
@@ -1367,10 +1837,13 @@ function showScreen(name) {
 
 // ── MEALS SCREEN ─────────────────────────────────────────────
 function switchMealsTab(tab) {
-  document.getElementById('tab-planner').className   = `mode-tab${tab === 'planner' ? ' active' : ''}`;
-  document.getElementById('tab-favourites').className= `mode-tab${tab === 'favourites' ? ' active' : ''}`;
   document.getElementById('meals-planner').style.display    = tab === 'planner' ? 'flex' : 'none';
   document.getElementById('meals-favourites').style.display = tab === 'favourites' ? 'flex' : 'none';
+  const favBtn = document.getElementById('tab-favourites-btn');
+  if (favBtn) favBtn.style.background = tab === 'favourites' ? 'var(--dark)' : '';
+  if (favBtn) favBtn.style.color = tab === 'favourites' ? 'var(--cream)' : '';
+  if (tab === 'favourites') renderFavourites();
+  if (tab === 'planner') { renderWeekStrip(); renderWeekPlanner(); }
 }
 
 function getMealEmoji(type) { return ''; }
@@ -1382,61 +1855,141 @@ function getSlotClass(type) {
   return 'slot-dinner';
 }
 
+let selectedWeekDay = todayStr;
+
 function renderMealsScreen() {
+  renderWeekStrip();
   renderWeekPlanner();
   renderFavourites();
 }
 
-function renderWeekPlanner() {
-  const container = document.getElementById('planner-days');
-  const mealTypes = ['Breakfast', 'Lunch', 'Dinner'];
+function renderWeekStrip() {
+  const strip = document.getElementById('week-strip');
+  if (!strip) return;
   const days = [];
+  // Show Mon-Sun of current week containing today
+  const dayOfWeek = today.getDay(); // 0=Sun
+  const monday = new Date(today);
+  monday.setDate(today.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1));
 
   for (let i = 0; i < 7; i++) {
-    const d = new Date(today);
-    d.setDate(today.getDate() + i);
-    const dateStr = [
-      d.getFullYear(),
-      String(d.getMonth()+1).padStart(2,'0'),
-      String(d.getDate()).padStart(2,'0')
-    ].join('-');
+    const d = new Date(monday);
+    d.setDate(monday.getDate() + i);
+    const dateStr = [d.getFullYear(), String(d.getMonth()+1).padStart(2,'0'), String(d.getDate()).padStart(2,'0')].join('-');
+    const dayName = d.toLocaleDateString('en-AU', { weekday: 'short' }).slice(0,3).toUpperCase();
+    const dayNum  = d.getDate();
+    const isToday = dateStr === todayStr;
+    const isSelected = dateStr === selectedWeekDay;
+    const hasMeals = allMealPlan.some(m => m.date === dateStr);
+    days.push({ dateStr, dayName, dayNum, isToday, isSelected, hasMeals });
+  }
+
+  strip.innerHTML = days.map(d => `
+    <div class="week-day${d.isSelected ? ' active' : ''}" onclick="selectWeekDay('${d.dateStr}')">
+      <div class="week-day-name">${d.dayName}</div>
+      <div class="week-day-num">${d.dayNum}</div>
+      ${d.isToday ? '<div class="week-day-today-label">Today</div>' : '<div style="height:12px"></div>'}
+      ${d.hasMeals ? '<div class="week-day-dot"></div>' : '<div style="height:4px"></div>'}
+    </div>`).join('');
+}
+
+function selectWeekDay(dateStr) {
+  selectedWeekDay = dateStr;
+  renderWeekStrip();
+  // Scroll planner to that day
+  const el = document.getElementById('day-' + dateStr);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function renderWeekPlanner() {
+  const container = document.getElementById('planner-days');
+  const mealTypes = ['Breakfast', 'Lunch', 'Dinner', 'Snacks'];
+  const days = [];
+
+  // Show 7 days from Monday of this week
+  const dayOfWeek = today.getDay();
+  const monday = new Date(today);
+  monday.setDate(today.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1));
+
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(monday);
+    d.setDate(monday.getDate() + i);
+    const dateStr = [d.getFullYear(), String(d.getMonth()+1).padStart(2,'0'), String(d.getDate()).padStart(2,'0')].join('-');
     days.push({
       date: dateStr,
-      label: i === 0 ? 'Today' : d.toLocaleDateString('en-AU', { weekday: 'long' }),
-      dateLabel: d.toLocaleDateString('en-AU', { day: 'numeric', month: 'short' })
+      label: d.toLocaleDateString('en-AU', { weekday: 'long' }),
+      dateLabel: d.toLocaleDateString('en-AU', { day: 'numeric', month: 'short' }),
+      isToday: dateStr === todayStr
     });
   }
 
   container.innerHTML = days.map(day => {
-    const isToday = day.date === todayStr;
     const dayMeals = allMealPlan.filter(m => m.date === day.date);
-
     const slots = mealTypes.map(type => {
       const planned = dayMeals.find(m => m.meal_type === type);
       const mealName = planned?.meal_name || '';
-      const meal = mealName ? allMeals.find(m => m.meal_name === mealName) : null;
-      const meta = meal ? `${meal.prep_time || ''} ${meal.kid_rating ? '· ' + meal.kid_rating : ''}`.trim() : '';
-
       return `<div class="plan-slot" onclick="openAddMealForSlot('${day.date}','${type}')">
         <div class="slot-type-badge ${getSlotClass(type)}">${type}</div>
         <div class="slot-info">
           ${mealName
-            ? `<div class="slot-meal-name">${mealName}</div>${meta ? `<div class="slot-meal-meta">${meta}</div>` : ''}`
-            : `<div class="slot-empty">Tap to plan</div>`
-          }
+            ? `<div class="slot-meal-name">${mealName}</div>`
+            : `<div class="slot-empty">Tap to plan</div>`}
         </div>
-        <div class="slot-add">${mealName ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>' : '+'}</div>
+        <div class="slot-add">${mealName ? '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>' : '+'}</div>
       </div>`;
     }).join('');
 
-    return `<div class="plan-day ${isToday ? 'plan-day-today' : ''}">
-      <div class="plan-day-header">
-        <div class="plan-day-name">${day.label}</div>
-        <div class="plan-day-date">${day.dateLabel}</div>
+    return `<div class="plan-day-section" id="day-${day.date}">
+      <div class="plan-day-section-header">
+        <div class="plan-day-section-name">${day.label}</div>
+        <div class="plan-day-section-date">${day.dateLabel}</div>
+        ${day.isToday ? '<span class="plan-day-section-today">Today</span>' : ''}
       </div>
-      <div class="plan-slots">${slots}</div>
+      <div class="plan-day ${day.isToday ? 'plan-day-today' : ''}">
+        <div class="plan-slots">${slots}</div>
+      </div>
     </div>`;
   }).join('');
+}
+
+async function copyLastWeek() {
+  const btn = document.querySelector('.meals-action-btn');
+  if (btn) { btn.textContent = 'Copying…'; btn.disabled = true; }
+  try {
+    // Get last week's meals
+    const lastWeekStart = new Date(today);
+    lastWeekStart.setDate(today.getDate() - 7);
+    const lwStr = [lastWeekStart.getFullYear(), String(lastWeekStart.getMonth()+1).padStart(2,'0'), String(lastWeekStart.getDate()).padStart(2,'0')].join('-');
+
+    const lastWeekMeals = allMealPlan.filter(m => {
+      const d = m.date?.slice(0,10) || '';
+      return d >= lwStr && d < todayStr;
+    });
+
+    if (lastWeekMeals.length === 0) {
+      showToast('No meals found from last week');
+      return;
+    }
+
+    // Insert shifted by +7 days
+    const inserts = lastWeekMeals.map(m => {
+      const d = new Date(m.date + 'T00:00:00');
+      d.setDate(d.getDate() + 7);
+      const newDate = [d.getFullYear(), String(d.getMonth()+1).padStart(2,'0'), String(d.getDate()).padStart(2,'0')].join('-');
+      return sbPost('meal_plan', { date: newDate, day: d.toLocaleDateString('en-AU',{weekday:'long'}), meal_type: m.meal_type, meal_name: m.meal_name, planned: true });
+    });
+
+    const results = await Promise.all(inserts);
+    results.forEach(r => { if (r && r[0]) allMealPlan.push(r[0]); });
+    renderMealsScreen();
+    showToast(`${results.length} meals copied!`);
+  } catch(e) {
+    console.error(e);
+    showToast('Could not copy — try again');
+  } finally {
+    const btn = document.querySelector('.meals-action-btn');
+    if (btn) { btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copy last week'; btn.disabled = false; }
+  }
 }
 
 function renderFavourites(filter = '') {
@@ -1761,6 +2314,7 @@ async function saveMeal() {
     showToast('✓ Meal saved!');
 
     // Also refresh tonight's dinner on home
+    renderTodayMeals(allMealPlan, allMeals);
     renderDinner(allMealPlan, allMeals);
 
   } catch(e) {
@@ -2095,6 +2649,266 @@ async function addGroceryItem(item, category, quantity) {
   } catch(e) { console.error('Add item failed:', e); }
 }
 
+
+// ── FILL MY CUP ──────────────────────────────────────────────
+let noiseNode = null, noiseGain = null, audioCtx = null;
+let breathInterval = null, breathRunning = false;
+let sensoryAnim = null;
+let currentJoyIdx = 0;
+
+const JOY_PROMPTS = [
+  "Name one thing you saw today that was genuinely beautiful.",
+  "What is one small thing that made you smile this week?",
+  "Think of someone who loves you. What would they say to you right now?",
+  "What is one thing your body did today that you are grateful for?",
+  "Name a sound you love. Close your eyes and imagine it.",
+  "What is something you are quietly proud of that no one else knows about?",
+  "If today was a colour, what would it be — and is that okay?",
+  "What is one tiny pleasure you had today, even a small one?",
+  "Name something in the room you are in right now that you find comforting.",
+  "What would you tell your past self from one year ago?",
+];
+
+const JOY_LIST = [
+  "Step outside for 60 seconds. Feel the air on your face.",
+  "Text someone you love a single sentence — just that you are thinking of them.",
+  "Make yourself a hot drink. Hold the cup with both hands.",
+  "Put on one song you loved at age 16. Just one.",
+  "Write down three words for how you want to feel tonight.",
+  "Look up from your phone and notice what is directly in front of you.",
+  "Stretch your arms above your head. Hold for 5 seconds. Let go.",
+  "Say out loud: I am doing enough. Even if it feels untrue.",
+];
+
+function openFillCup() {
+  document.getElementById('fmc-choice').style.display = 'flex';
+  ['fmc-sensory','fmc-breathing','fmc-joy','fmc-move'].forEach(id => {
+    document.getElementById(id).style.display = 'none';
+  });
+  const overlay = document.getElementById('fmc-overlay');
+  overlay.style.display = 'flex';
+  requestAnimationFrame(() => overlay.classList.remove('hidden'));
+}
+
+function closeFillCup() {
+  stopNoise();
+  stopBreathing();
+  stopSensoryAnim();
+  const overlay = document.getElementById('fmc-overlay');
+  overlay.classList.add('hidden');
+  setTimeout(() => overlay.style.display = 'none', 400);
+}
+
+function backToFmcChoice() {
+  stopNoise();
+  stopBreathing();
+  stopSensoryAnim();
+  ['fmc-sensory','fmc-breathing','fmc-joy','fmc-move'].forEach(id => {
+    document.getElementById(id).style.display = 'none';
+  });
+  document.getElementById('fmc-choice').style.display = 'flex';
+}
+
+function startFmcMode(mode) {
+  document.getElementById('fmc-choice').style.display = 'none';
+  const el = document.getElementById('fmc-' + mode);
+  el.style.display = 'flex';
+
+  if (mode === 'sensory') startSensoryAnim();
+  if (mode === 'breathing') resetBreathing();
+  if (mode === 'joy') {
+    shuffleJoy();
+    const list = document.getElementById('joy-list');
+    list.innerHTML = JOY_LIST.map(item =>
+      `<div class="fmc-joy-item">${item}</div>`
+    ).join('');
+  }
+}
+
+// ── SENSORY MODE ─────────────────────────────────────────────
+function startSensoryAnim() {
+  const canvas = document.getElementById('fmc-canvas');
+  const ctx = canvas.getContext('2d');
+  let shapes = [];
+
+  function resize() {
+    canvas.width  = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  }
+  resize();
+
+  // Spawn slow drifting shapes
+  for (let i = 0; i < 6; i++) {
+    shapes.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: 40 + Math.random() * 80,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
+      opacity: 0.04 + Math.random() * 0.08,
+      type: Math.random() > 0.5 ? 'circle' : 'rect',
+      rotation: Math.random() * Math.PI * 2,
+      rotSpeed: (Math.random() - 0.5) * 0.003,
+    });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    shapes.forEach(s => {
+      ctx.save();
+      ctx.globalAlpha = s.opacity;
+      ctx.translate(s.x, s.y);
+      ctx.rotate(s.rotation);
+      ctx.fillStyle = '#5A8C5A';
+      if (s.type === 'circle') {
+        ctx.beginPath();
+        ctx.arc(0, 0, s.r, 0, Math.PI * 2);
+        ctx.fill();
+      } else {
+        ctx.fillRect(-s.r, -s.r * 0.6, s.r * 2, s.r * 1.2);
+      }
+      ctx.restore();
+
+      s.x += s.vx; s.y += s.vy; s.rotation += s.rotSpeed;
+      if (s.x < -s.r) s.x = canvas.width + s.r;
+      if (s.x > canvas.width + s.r) s.x = -s.r;
+      if (s.y < -s.r) s.y = canvas.height + s.r;
+      if (s.y > canvas.height + s.r) s.y = -s.r;
+    });
+    sensoryAnim = requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+function stopSensoryAnim() {
+  if (sensoryAnim) { cancelAnimationFrame(sensoryAnim); sensoryAnim = null; }
+}
+
+// ── BROWN NOISE ───────────────────────────────────────────────
+function toggleNoise() {
+  const btn = document.getElementById('noise-btn');
+  if (noiseNode) {
+    stopNoise();
+    btn.textContent = 'Play brown noise';
+  } else {
+    startNoise();
+    btn.textContent = 'Stop brown noise';
+  }
+}
+
+function startNoise() {
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  const bufferSize = 4096;
+  noiseNode = audioCtx.createScriptProcessor(bufferSize, 1, 1);
+  let lastOut = 0;
+  noiseNode.onaudioprocess = function(e) {
+    const output = e.outputBuffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      const white = Math.random() * 2 - 1;
+      output[i] = (lastOut + (0.02 * white)) / 1.02;
+      lastOut = output[i];
+      output[i] *= 3.5;
+    }
+  };
+  noiseGain = audioCtx.createGain();
+  noiseGain.gain.setValueAtTime(0, audioCtx.currentTime);
+  noiseGain.gain.linearRampToValueAtTime(0.35, audioCtx.currentTime + 2);
+  noiseNode.connect(noiseGain);
+  noiseGain.connect(audioCtx.destination);
+}
+
+function stopNoise() {
+  if (noiseNode) { noiseNode.disconnect(); noiseNode = null; }
+  if (noiseGain) { noiseGain.disconnect(); noiseGain = null; }
+  if (audioCtx)  { audioCtx.close(); audioCtx = null; }
+  const btn = document.getElementById('noise-btn');
+  if (btn) btn.textContent = 'Play brown noise';
+}
+
+// ── BOX BREATHING ─────────────────────────────────────────────
+const BREATH_PHASES = [
+  { label: 'Inhale',  action: 'Breathe in',  count: 4, fill: true  },
+  { label: 'Hold',    action: 'Hold',         count: 4, fill: false },
+  { label: 'Exhale',  action: 'Breathe out',  count: 4, fill: true  },
+  { label: 'Hold',    action: 'Hold',         count: 4, fill: false },
+];
+let breathPhaseIdx = 0, breathCount = 4, breathCycles = 0;
+const BREATH_CIRC = 502;
+
+function resetBreathing() {
+  breathRunning = false; breathPhaseIdx = 0; breathCount = 4; breathCycles = 0;
+  document.getElementById('breath-action').textContent = 'Ready';
+  document.getElementById('breath-count').textContent  = '4';
+  document.getElementById('breath-phase').textContent  = 'tap to begin';
+  document.getElementById('breath-arc').style.strokeDashoffset = BREATH_CIRC;
+  document.getElementById('breath-start-btn').textContent = 'Begin';
+  document.getElementById('breath-guide').textContent = 'Box breathing helps reset your nervous system. 4 counts each — in, hold, out, hold.';
+}
+
+function startBreathing() {
+  if (breathRunning) { stopBreathing(); resetBreathing(); return; }
+  breathRunning = true;
+  document.getElementById('breath-start-btn').textContent = 'Stop';
+  runBreathPhase();
+}
+
+function runBreathPhase() {
+  if (!breathRunning) return;
+  const phase = BREATH_PHASES[breathPhaseIdx];
+  breathCount = phase.count;
+  document.getElementById('breath-action').textContent = phase.action;
+  document.getElementById('breath-phase').textContent  = phase.label;
+  updateBreathArc(phase);
+  breathInterval = setInterval(() => {
+    breathCount--;
+    document.getElementById('breath-count').textContent = breathCount;
+    updateBreathArc(phase);
+    if (breathCount <= 0) {
+      clearInterval(breathInterval);
+      breathPhaseIdx = (breathPhaseIdx + 1) % 4;
+      if (breathPhaseIdx === 0) {
+        breathCycles++;
+        if (breathCycles >= 4) {
+          stopBreathing();
+          document.getElementById('breath-action').textContent = 'Done';
+          document.getElementById('breath-count').textContent  = '';
+          document.getElementById('breath-phase').textContent  = 'You did it';
+          document.getElementById('breath-guide').textContent  = 'Notice how you feel. You just gave your nervous system a reset.';
+          document.getElementById('breath-start-btn').textContent = 'Again';
+          breathRunning = false;
+          return;
+        }
+      }
+      setTimeout(runBreathPhase, 200);
+    }
+  }, 1000);
+}
+
+function updateBreathArc(phase) {
+  const arc = document.getElementById('breath-arc');
+  const total = phase.count;
+  const pct   = (total - breathCount) / total;
+  const offset = BREATH_CIRC * (1 - pct);
+  arc.style.strokeDashoffset = offset;
+  arc.style.stroke = phase.fill ? '#2D4A35' : '#7DB87C';
+}
+
+function stopBreathing() {
+  if (breathInterval) { clearInterval(breathInterval); breathInterval = null; }
+  breathRunning = false;
+}
+
+// ── JOY ───────────────────────────────────────────────────────
+function shuffleJoy() {
+  currentJoyIdx = Math.floor(Math.random() * JOY_PROMPTS.length);
+  document.getElementById('joy-prompt').textContent = JOY_PROMPTS[currentJoyIdx];
+}
+
+function nextJoyPrompt() {
+  currentJoyIdx = (currentJoyIdx + 1) % JOY_PROMPTS.length;
+  document.getElementById('joy-prompt').textContent = JOY_PROMPTS[currentJoyIdx];
+}
+
 // ── BUDGET SCREEN ────────────────────────────────────────────
 const CAT_COLOURS = {
   'Groceries': '#7A8C6E', 'Kids': '#C4714F', 'Misc': '#C4B5A5',
@@ -2124,7 +2938,7 @@ function renderBudgetScreen() {
   if (arc) {
     const offset = circumference * (1 - pctUsed);
     arc.setAttribute('stroke-dashoffset', offset.toFixed(1));
-    arc.setAttribute('stroke', pctUsed >= 1 ? '#C4714F' : pctUsed >= 0.8 ? '#C9A96E' : '#7A8C6E');
+    arc.setAttribute('stroke', pctUsed >= 1 ? '#E05252' : pctUsed >= 0.8 ? '#C8A84A' : '#5B8C5A');
   }
   document.getElementById('budget-dial-remaining').textContent = `$${remaining.toFixed(0)}`;
   document.getElementById('budget-dial-sub').textContent = `$${totalSpent.toFixed(0)} spent of $${totalBudget.toFixed(0)}`;
@@ -2236,49 +3050,111 @@ async function deleteExpense(e, id) {
   } catch(e) { console.error(e); }
 }
 
+
+
+// ── SENSORY MODE ──────────────────────────────────────────────
+function initSensory() {
+  const canvas = document.getElementById('sensory-canvas');
+  const ctx = canvas.getContext('2d');
+
+  function resize() {
+    canvas.width  = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const shapes = Array.from({length: 6}, (_, i) => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    size: 60 + Math.random() * 120,
+    vx: (Math.random() - 0.5) * 0.3,
+    vy: (Math.random() - 0.5) * 0.3,
+    opacity: 0.04 + Math.random() * 0.06,
+    type: i % 3, // 0=circle, 1=triangle, 2=square
+    rotation: Math.random() * Math.PI * 2,
+    rotSpeed: (Math.random() - 0.5) * 0.002,
+  }));
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    shapes.forEach(s => {
+      s.x += s.vx; s.y += s.vy; s.rotation += s.rotSpeed;
+      if (s.x < -s.size) s.x = canvas.width + s.size;
+      if (s.x > canvas.width + s.size) s.x = -s.size;
+      if (s.y < -s.size) s.y = canvas.height + s.size;
+      if (s.y > canvas.height + s.size) s.y = -s.size;
+
+      ctx.save();
+      ctx.translate(s.x, s.y);
+      ctx.rotate(s.rotation);
+      ctx.globalAlpha = s.opacity;
+      ctx.strokeStyle = '#7DB87C';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      if (s.type === 0) {
+        ctx.arc(0, 0, s.size / 2, 0, Math.PI * 2);
+      } else if (s.type === 1) {
+        const h = s.size * 0.866;
+        ctx.moveTo(0, -s.size/2); ctx.lineTo(s.size/2, h/2); ctx.lineTo(-s.size/2, h/2); ctx.closePath();
+      } else {
+        ctx.rect(-s.size/2, -s.size/2, s.size, s.size);
+      }
+      ctx.stroke();
+      ctx.restore();
+    });
+    sensoryAnimFrame = requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+
 // ── INIT ─────────────────────────────────────────────────────
 async function init() {
   document.getElementById('greeting-label').textContent = getGreeting();
   document.getElementById('greeting-date').textContent  = formatDate(today);
 
-  // Always hide loader after max 3 seconds no matter what
+  // Render empty states immediately so UI never looks blank
+  renderTodayMeals([], []);
+  renderTasks([]);
+  renderUpcoming([]);
+  renderGrocery([]);
+
   const hideLoader = () => document.getElementById('loading').classList.add('hidden');
   const loaderTimeout = setTimeout(hideLoader, 3000);
 
-  try {
-    const [meals, mealPlan, tasks, events, groceryInit, nudges, budgetCats, expenses, groceryItems] = await Promise.all([
-      sb('meals', '?order=meal_name'),
-      sb('meal_plan', `?date=gte.${todayStr}&order=date`),
-      sb('tasks', `?order=due_date`),
-      sb('calendar', `?order=date`),
-      sb('grocery', `?order=created_at`),
-      sb('fill_your_cup', `?order=date.desc&limit=5`),
-      sb('budget', '?order=category'),
-      sb('expenses', '?order=date.desc'),
-      sb('grocery', '?order=created_at.asc')
-    ]);
+  // Safe fetch — one failure won't crash everything
+  const safe = (p) => p.catch(e => { console.warn('Fetch failed:', e.message); return []; });
 
-    allMeals       = meals    || [];
-    allMealPlan    = mealPlan || [];
-    allTasksCache  = tasks    || [];
-    allBudgetCats  = budgetCats || [];
-    allExpenses    = expenses || [];
-    allGrocery     = groceryItems || [];
-    allEvents      = events || [];
+  const [meals, mealPlan, tasks, events, grocery, nudges, budgetCats, expenses] = await Promise.all([
+    safe(sb('meals', '?order=meal_name')),
+    safe(sb('meal_plan', '?order=date.asc')),
+    safe(sb('tasks', '?order=due_date.asc')),
+    safe(sb('calendar', '?order=date.asc')),
+    safe(sb('grocery', '?ticked=eq.false&order=created_at.asc')),
+    safe(sb('fill_your_cup', '?order=date.desc&limit=5')),
+    safe(sb('budget', '?order=category.asc')),
+    safe(sb('expenses', '?order=date.desc'))
+  ]);
 
-    renderDinner(allMealPlan, allMeals);
-    renderTasks(allTasksCache);
-    renderUpcoming(events || []);
-    renderGrocery(groceryInit || []);
-    renderCup(nudges || []);
+  allMeals      = meals;
+  allMealPlan   = mealPlan;
+  allTasksCache = tasks;
+  allEvents     = events;
+  allGrocery    = grocery;
+  allBudgetCats = budgetCats;
+  allExpenses   = expenses;
 
-  } catch(err) {
-    console.error('Init error:', err);
-    document.getElementById('cup-text').textContent = 'Could not load data. Check your connection.';
-  } finally {
-    clearTimeout(loaderTimeout);
-    hideLoader();
-  }
+  console.log('Loaded:', { meals:meals.length, mealPlan:mealPlan.length, tasks:tasks.length, events:events.length, grocery:grocery.length });
+
+  renderTodayMeals(mealPlan, meals);
+  renderTasks(tasks);
+  renderUpcoming(events);
+  renderGrocery(grocery);
+  renderCup(nudges);
+
+  clearTimeout(loaderTimeout);
+  hideLoader();
 }
 
 init();
