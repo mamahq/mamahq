@@ -321,7 +321,7 @@
   .nav-bar { background: white; border-top: 1px solid var(--stone); padding: 10px 8px calc(var(--safe-bottom) + 8px); display: flex; justify-content: space-around; flex-shrink: 0; position: relative; z-index: 10; }
   .nav-item { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 4px 12px; cursor: pointer; transition: opacity 0.15s; text-decoration: none; }
   .nav-item:active { opacity: 0.6; }
-  .nav-icon { font-size: 1.15rem; }
+  .nav-icon { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; }
   .nav-label { font-size: 0.55rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--taupe); }
   .nav-item.active .nav-label { color: var(--terracotta); }
 
@@ -413,8 +413,8 @@
   .chip { padding: 6px 13px; border-radius: 20px; font-size: 0.68rem; border: 1.5px solid var(--stone); color: var(--taupe); background: white; cursor: pointer; transition: all 0.15s; }
   .chip.sel { background: var(--dark); color: var(--cream); border-color: var(--dark); }
   .star-row { display: flex; gap: 6px; }
-  .star { font-size: 1.3rem; cursor: pointer; opacity: 0.25; transition: opacity 0.15s; }
-  .star.lit { opacity: 1; }
+  .star { cursor: pointer; opacity: 0.2; transition: opacity 0.15s; color: var(--gold); }
+  .star.lit { opacity: 1; color: var(--gold); }
   .save-btn { width: 100%; background: var(--dark); color: var(--cream); border: none; border-radius: 14px; padding: 15px; font-family: 'DM Sans', sans-serif; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; cursor: pointer; transition: opacity 0.15s; }
   .save-btn:active { opacity: 0.8; }
   .save-btn:disabled { opacity: 0.5; cursor: not-allowed; }
@@ -471,29 +471,32 @@
 
   /* GROCERY SCREEN */
   .shop-body { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 0 0 calc(var(--safe-bottom) + 70px); background: var(--cream); }
-  .shop-progress-bar { background: white; padding: 14px 20px 0; }
-  .shop-progress-wrap { height: 4px; background: var(--stone); border-radius: 4px; overflow: hidden; margin-bottom: 4px; }
-  .shop-progress-fill { height: 100%; background: linear-gradient(90deg, var(--sage), #A8BA9A); border-radius: 4px; transition: width 0.5s ease; }
-  .shop-progress-label { font-size: 0.6rem; color: var(--taupe); letter-spacing: 0.06em; padding-bottom: 12px; border-bottom: 1px solid var(--stone); }
-  .shop-clear-btn { font-size: 0.6rem; color: var(--terracotta); letter-spacing: 0.06em; background: none; border: none; cursor: pointer; float: right; }
-  .shop-cat-group { background: white; margin-bottom: 8px; }
-  .shop-cat-label { font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--brown); font-weight: 500; padding: 12px 20px 6px; }
-  .shop-item-row { display: flex; align-items: center; gap: 12px; padding: 11px 20px; border-bottom: 1px solid var(--stone); cursor: pointer; transition: opacity 0.2s; }
-  .shop-item-row:last-child { border-bottom: none; }
-  .shop-item-row.ticked { opacity: 0.38; }
-  .shop-check { width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--stone); flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+  .shop-summary-bar { background: white; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--stone); }
+  .shop-summary-count { font-size: 0.72rem; color: var(--taupe); }
+  .shop-summary-progress { flex: 1; height: 3px; background: var(--stone); border-radius: 3px; overflow: hidden; margin: 0 14px; }
+  .shop-summary-fill { height: 100%; background: var(--sage); border-radius: 3px; transition: width 0.5s ease; }
+  .shop-clear-btn { font-size: 0.62rem; color: var(--terracotta); background: none; border: none; cursor: pointer; font-weight: 500; white-space: nowrap; }
+  .shop-cat-section { margin-top: 10px; }
+  .shop-cat-label { font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--brown); font-weight: 600; padding: 10px 16px 6px; }
+  .shop-cat-label svg { opacity: 0.7; }
+  .shop-items-list { display: flex; flex-direction: column; gap: 6px; padding: 0 16px 8px; }
+  .shop-item-row { display: flex; align-items: center; gap: 14px; padding: 13px 14px; background: white; border-radius: 14px; cursor: pointer; transition: opacity 0.2s; box-shadow: 0 1px 4px rgba(44,36,32,0.05); }
+  .shop-item-row:active { opacity: 0.7; }
+  .shop-item-row.ticked { opacity: 0.4; }
+  .shop-check { width: 22px; height: 22px; border-radius: 6px; border: 1.5px solid var(--stone); flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
   .shop-check.ticked { background: var(--sage); border-color: var(--sage); }
-  .shop-check.ticked::after { content: '✓'; color: white; font-size: 0.6rem; font-weight: 700; }
-  .shop-item-name { flex: 1; font-size: 0.78rem; color: var(--dark); }
+  .shop-check-mark { display: none; }
+  .shop-check.ticked .shop-check-mark { display: flex; }
+  .shop-item-name { flex: 1; font-size: 0.82rem; color: var(--dark); font-weight: 400; }
   .shop-item-name.struck { text-decoration: line-through; color: var(--taupe); }
-  .shop-item-qty { font-size: 0.65rem; color: var(--taupe); flex-shrink: 0; }
-  .shop-item-delete { background: none; border: none; color: var(--stone); font-size: 0.7rem; cursor: pointer; padding: 4px; flex-shrink: 0; }
+  .shop-item-qty { font-size: 0.65rem; color: var(--taupe); flex-shrink: 0; background: var(--stone); padding: 2px 8px; border-radius: 10px; }
+  .shop-item-delete { background: none; border: none; color: var(--stone); font-size: 0.75rem; cursor: pointer; padding: 4px 2px; flex-shrink: 0; }
   .shop-item-delete:active { color: var(--terracotta); }
   .shop-meal-chips { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 4px; }
-  .shop-meal-chip { padding: 6px 12px; border-radius: 20px; background: var(--cream); border: 1.5px solid var(--stone); font-size: 0.7rem; color: var(--dark); cursor: pointer; transition: all 0.15s; }
+  .shop-meal-chip { padding: 7px 14px; border-radius: 20px; background: var(--cream); border: 1.5px solid var(--stone); font-size: 0.72rem; color: var(--dark); cursor: pointer; transition: all 0.15s; }
   .shop-meal-chip:active { background: var(--dark); color: var(--cream); border-color: var(--dark); }
   .common-chips { display: flex; flex-wrap: wrap; gap: 7px; }
-  .common-chip { padding: 6px 12px; border-radius: 20px; background: var(--cream); border: 1.5px solid var(--stone); font-size: 0.7rem; color: var(--dark); cursor: pointer; transition: all 0.15s; }
+  .common-chip { padding: 7px 14px; border-radius: 20px; background: var(--cream); border: 1.5px solid var(--stone); font-size: 0.72rem; color: var(--dark); cursor: pointer; transition: all 0.15s; }
   .common-chip:active { background: var(--dark); color: var(--cream); }
 
   /* CALENDAR SCREEN */
@@ -529,6 +532,10 @@
   .cal-event-delete:active { color: var(--terracotta); }
   .cal-empty { font-size: 0.72rem; color: var(--taupe); font-style: italic; opacity: 0.7; padding: 8px 0; }
   .cal-add-hint { font-size: 0.65rem; color: var(--taupe); opacity: 0.6; margin-top: 8px; }
+
+  .sheet-close { position: absolute; top: 14px; right: 16px; background: var(--stone); border: none; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: var(--brown); cursor: pointer; flex-shrink: 0; }
+  .sheet-close:active { background: var(--taupe); }
+  .sheet-header { position: relative; }
 </style>
 </head>
 <body>
@@ -555,26 +562,26 @@
         <div class="section-title">Today at a glance</div>
         <div class="glance-strip">
           <div class="glance-pill">
-            <span class="glance-icon">📅</span>
+            
             <span class="glance-val" id="events-count">—</span>
             <span class="glance-sub">Events</span>
           </div>
           <div class="glance-pill">
-            <span class="glance-icon">✅</span>
+            
             <span class="glance-val" id="tasks-count">—</span>
             <span class="glance-sub">Tasks</span>
           </div>
           <div class="glance-pill nudge-pill">
-            <span class="glance-icon">🌿</span>
+            
             <span class="glance-val" id="nudge-preview">For you</span>
             <span class="glance-sub">Today's nudge</span>
           </div>
         </div>
       </div>
       <div class="fade-in">
-        <div class="section-title">Fill your cup ✦</div>
+        <div class="section-title">Fill your cup</div>
         <div class="cup-card">
-          <div class="cup-orb">🌿</div>
+          
           <div class="cup-body">
             <div class="cup-tag">For you · from Mama HQ</div>
             <div class="cup-text" id="cup-text">Loading your morning nudge...</div>
@@ -611,7 +618,7 @@
         <div class="section-title">This week's shop</div>
         <div class="grocery-card">
           <div class="grocery-top">
-            <div class="grocery-label">🛒 <span id="grocery-label-text">Loading...</span></div>
+            <div class="grocery-label"><span id="grocery-label-text">Loading...</span></div>
             <div class="grocery-count" id="grocery-done-count"></div>
           </div>
           <div class="grocery-preview" id="grocery-preview"></div>
@@ -624,12 +631,12 @@
     </div>
     <button class="fab" id="fab">+</button>
     <nav class="nav-bar">
-      <a class="nav-item active" id="nav-home" onclick="showScreen('home')"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></a>
-      <a class="nav-item" id="nav-meals" onclick="showScreen('meals')"><span class="nav-icon">🍽</span><span class="nav-label">Meals</span></a>
-      <a class="nav-item" id="nav-tasks" onclick="showScreen('tasks')"><span class="nav-icon">📋</span><span class="nav-label">Tasks</span></a>
-      <a class="nav-item" id="nav-budget" onclick="showScreen('budget')"><span class="nav-icon">💰</span><span class="nav-label">Budget</span></a>
-      <a class="nav-item" id="nav-cal" onclick="showScreen('cal')"><span class="nav-icon">📅</span><span class="nav-label">Calendar</span></a>
-      <a class="nav-item" id="nav-shop" onclick="showScreen('shop')"><span class="nav-icon">🛒</span><span class="nav-label">Shop</span></a>
+      <a class="nav-item active" id="nav-home" onclick="showScreen('home')"><span class="nav-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg></span><span class="nav-label">Home</span></a>
+      <a class="nav-item" id="nav-meals" onclick="showScreen('meals')"><span class="nav-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="2" x2="8" y2="22"/><path d="M5 2v6a3 3 0 006 0V2"/><path d="M19 2v22M19 12h-2a2 2 0 000 4h2"/></svg></span><span class="nav-label">Meals</span></a>
+      <a class="nav-item" id="nav-tasks" onclick="showScreen('tasks')"><span class="nav-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></span><span class="nav-label">Tasks</span></a>
+      <a class="nav-item" id="nav-budget" onclick="showScreen('budget')"><span class="nav-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v1m0 8v1m-3-4.5h4.5a1.5 1.5 0 000-3H11a1.5 1.5 0 000 3H13a1.5 1.5 0 010 3H9"/></svg></span><span class="nav-label">Budget</span></a>
+      <a class="nav-item" id="nav-cal" onclick="showScreen('cal')"><span class="nav-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span><span class="nav-label">Calendar</span></a>
+      <a class="nav-item" id="nav-shop" onclick="showScreen('shop')"><span class="nav-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></svg></span><span class="nav-label">Shop</span></a>
     </nav>
   </div>
 
@@ -654,11 +661,11 @@
     </div>
     <button class="fab meals-fab" id="meals-fab" onclick="openAddMeal()">+</button>
     <nav class="nav-bar">
-      <a class="nav-item" id="mnav-home" onclick="showScreen('home')"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></a>
-      <a class="nav-item active" id="mnav-meals" onclick="showScreen('meals')"><span class="nav-icon">🍽</span><span class="nav-label">Meals</span></a>
-      <a class="nav-item" id="mnav-tasks" onclick="showScreen('tasks')"><span class="nav-icon">📋</span><span class="nav-label">Tasks</span></a>
-      <a class="nav-item" id="mnav-budget" onclick="showScreen('budget')"><span class="nav-icon">💰</span><span class="nav-label">Budget</span></a>
-      <a class="nav-item" id="mnav-shop" onclick="showScreen('shop')"><span class="nav-icon">🛒</span><span class="nav-label">Shop</span></a>
+      <a class="nav-item" id="mnav-home" onclick="showScreen('home')"><span class="nav-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg></span><span class="nav-label">Home</span></a>
+      <a class="nav-item active" id="mnav-meals" onclick="showScreen('meals')"><span class="nav-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="2" x2="8" y2="22"/><path d="M5 2v6a3 3 0 006 0V2"/><path d="M19 2v22M19 12h-2a2 2 0 000 4h2"/></svg></span><span class="nav-label">Meals</span></a>
+      <a class="nav-item" id="mnav-tasks" onclick="showScreen('tasks')"><span class="nav-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></span><span class="nav-label">Tasks</span></a>
+      <a class="nav-item" id="mnav-budget" onclick="showScreen('budget')"><span class="nav-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v1m0 8v1m-3-4.5h4.5a1.5 1.5 0 000-3H11a1.5 1.5 0 000 3H13a1.5 1.5 0 010 3H9"/></svg></span><span class="nav-label">Budget</span></a>
+      <a class="nav-item" id="mnav-shop" onclick="showScreen('shop')"><span class="nav-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></svg></span><span class="nav-label">Shop</span></a>
     </nav>
   </div>
 
@@ -683,11 +690,11 @@
 
     <button class="fab" onclick="openAddTask()">+</button>
     <nav class="nav-bar">
-      <a class="nav-item" onclick="showScreen('home')"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></a>
-      <a class="nav-item" onclick="showScreen('meals')"><span class="nav-icon">🍽</span><span class="nav-label">Meals</span></a>
-      <a class="nav-item active"><span class="nav-icon">📋</span><span class="nav-label">Tasks</span></a>
-      <a class="nav-item" onclick="showScreen('budget')"><span class="nav-icon">💰</span><span class="nav-label">Budget</span></a>
-      <a class="nav-item" onclick="showScreen('shop')"><span class="nav-icon">🛒</span><span class="nav-label">Shop</span></a>
+      <a class="nav-item" onclick="showScreen('home')"><span class="nav-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg></span><span class="nav-label">Home</span></a>
+      <a class="nav-item" onclick="showScreen('meals')"><span class="nav-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="2" x2="8" y2="22"/><path d="M5 2v6a3 3 0 006 0V2"/><path d="M19 2v22M19 12h-2a2 2 0 000 4h2"/></svg></span><span class="nav-label">Meals</span></a>
+      <a class="nav-item active"><span class="nav-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></span><span class="nav-label">Tasks</span></a>
+      <a class="nav-item" onclick="showScreen('budget')"><span class="nav-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v1m0 8v1m-3-4.5h4.5a1.5 1.5 0 000-3H11a1.5 1.5 0 000 3H13a1.5 1.5 0 010 3H9"/></svg></span><span class="nav-label">Budget</span></a>
+      <a class="nav-item" onclick="showScreen('shop')"><span class="nav-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></svg></span><span class="nav-label">Shop</span></a>
     </nav>
   </div>
 
@@ -695,8 +702,9 @@
   <div id="add-task-overlay" class="overlay" style="display:none" onclick="closeAddTask(event)">
     <div class="bottom-sheet">
       <div class="sheet-handle"></div>
-      <div class="sheet-header">
-        <div class="sheet-eyebrow">📋 Tasks</div>
+      <div class="sheet-header" style="position:relative">
+        <div class="sheet-eyebrow">Tasks</div>
+        <button class="sheet-close" onclick="document.getElementById('add-task-overlay').style.display='none'">✕</button>
         <div class="sheet-title" id="add-task-title">New task</div>
       </div>
       <div class="sheet-body">
@@ -722,7 +730,7 @@
           <div class="form-label">Priority</div>
           <div class="chips" id="task-priority-chips">
             <div class="chip" onclick="selectChip(this,'task-priority-chips')">High</div>
-            <div class="chip sel" onclick="selectChip(this,'task-priority-chips')">Medium</div>
+            <div class="chip" onclick="selectChip(this,'task-priority-chips')">Medium</div>
             <div class="chip" onclick="selectChip(this,'task-priority-chips')">Low</div>
           </div>
         </div>
@@ -737,18 +745,17 @@
   <div id="add-meal-overlay" class="overlay" style="display:none" onclick="closeAddMeal(event)">
     <div class="bottom-sheet" id="add-meal-sheet">
       <div class="sheet-handle"></div>
-      <div class="sheet-header">
-        <div class="sheet-eyebrow">🍽 Meal planner</div>
+      <div class="sheet-header" style="position:relative">
+        <div class="sheet-eyebrow">Meals</div>
+        <button class="sheet-close" onclick="document.getElementById('add-meal-overlay').style.display='none'">✕</button>
         <div class="sheet-title" id="add-meal-title">Plan a meal</div>
         <div class="sheet-sub" id="add-meal-sub">Choose from favourites or add new</div>
       </div>
       <div class="sheet-body">
         <div>
           <div class="add-section-label">Leftovers</div>
-          <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:8px">
-            <div class="add-fav-chip leftover-chip" style="font-weight:500" onclick="selectQuickLeftover(this)">🍱 Leftovers</div>
-          </div>
-          <div class="add-section-label" style="margin-top:4px">Leftovers from...</div>
+          <div class="add-fav-chip leftover-chip" style="font-weight:500;margin-bottom:10px;display:inline-block" onclick="selectQuickLeftover(this)">Leftovers</div>
+          <div style="font-size:0.65rem;color:var(--taupe);margin-bottom:8px">Or leftovers from a specific meal?</div>
           <div class="add-fav-chips" id="add-meal-leftovers"></div>
         </div>
         <div class="add-divider">or plan a meal</div>
@@ -779,11 +786,11 @@
         <div class="form-field">
           <div class="form-label">Kid-friendly rating</div>
           <div class="star-row" id="star-row">
-            <span class="star lit" onclick="setStars(1)">⭐</span>
-            <span class="star lit" onclick="setStars(2)">⭐</span>
-            <span class="star lit" onclick="setStars(3)">⭐</span>
-            <span class="star" onclick="setStars(4)">⭐</span>
-            <span class="star" onclick="setStars(5)">⭐</span>
+            <span class="star lit" onclick="setStars(1)"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+            <span class="star lit" onclick="setStars(2)"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+            <span class="star lit" onclick="setStars(3)"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+            <span class="star" onclick="setStars(4)"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+            <span class="star" onclick="setStars(5)"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
           </div>
         </div>
       </div>
@@ -826,11 +833,11 @@
     </div>
     <button class="fab" onclick="openAddExpense()">+</button>
     <nav class="nav-bar">
-      <a class="nav-item" onclick="showScreen('home')"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></a>
-      <a class="nav-item" onclick="showScreen('meals')"><span class="nav-icon">🍽</span><span class="nav-label">Meals</span></a>
-      <a class="nav-item" onclick="showScreen('tasks')"><span class="nav-icon">📋</span><span class="nav-label">Tasks</span></a>
-      <a class="nav-item active"><span class="nav-icon">💰</span><span class="nav-label">Budget</span></a>
-      <a class="nav-item" onclick="showScreen('shop')"><span class="nav-icon">🛒</span><span class="nav-label">Shop</span></a>
+      <a class="nav-item" onclick="showScreen('home')"><span class="nav-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg></span><span class="nav-label">Home</span></a>
+      <a class="nav-item" onclick="showScreen('meals')"><span class="nav-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="2" x2="8" y2="22"/><path d="M5 2v6a3 3 0 006 0V2"/><path d="M19 2v22M19 12h-2a2 2 0 000 4h2"/></svg></span><span class="nav-label">Meals</span></a>
+      <a class="nav-item" onclick="showScreen('tasks')"><span class="nav-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></span><span class="nav-label">Tasks</span></a>
+      <a class="nav-item active"><span class="nav-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v1m0 8v1m-3-4.5h4.5a1.5 1.5 0 000-3H11a1.5 1.5 0 000 3H13a1.5 1.5 0 010 3H9"/></svg></span><span class="nav-label">Budget</span></a>
+      <a class="nav-item" onclick="showScreen('shop')"><span class="nav-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></svg></span><span class="nav-label">Shop</span></a>
     </nav>
   </div>
 
@@ -838,8 +845,9 @@
   <div id="add-expense-overlay" class="overlay" style="display:none" onclick="closeAddExpense(event)">
     <div class="bottom-sheet">
       <div class="sheet-handle"></div>
-      <div class="sheet-header">
-        <div class="sheet-eyebrow">💰 Budget</div>
+      <div class="sheet-header" style="position:relative">
+        <div class="sheet-eyebrow">Budget</div>
+        <button class="sheet-close" onclick="document.getElementById('add-expense-overlay').style.display='none'">✕</button>
         <div class="sheet-title">Add expense</div>
       </div>
       <div class="sheet-body">
@@ -881,24 +889,20 @@
       <div class="std-sub" id="shop-sub">This week's list</div>
     </div>
     <div class="shop-body" id="shop-body">
-      <div class="shop-progress-bar">
-        <div class="shop-progress-wrap">
-          <div class="shop-progress-fill" id="shop-progress" style="width:0%"></div>
-        </div>
-        <div class="shop-progress-label">
-          <span id="shop-done-label">0 of 0 items done</span>
-          <button class="shop-clear-btn" onclick="clearTicked()">Clear ticked</button>
-        </div>
+      <div class="shop-summary-bar">
+        <span class="shop-summary-count" id="shop-done-label">0 of 0 done</span>
+        <div class="shop-summary-progress"><div class="shop-summary-fill" id="shop-progress" style="width:0%"></div></div>
+        <button class="shop-clear-btn" onclick="clearTicked()">Clear ticked</button>
       </div>
       <div id="shop-groups"></div>
     </div>
     <button class="fab" onclick="openAddItem()">+</button>
     <nav class="nav-bar">
-      <a class="nav-item" onclick="showScreen('home')"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></a>
-      <a class="nav-item" onclick="showScreen('meals')"><span class="nav-icon">🍽</span><span class="nav-label">Meals</span></a>
-      <a class="nav-item" onclick="showScreen('tasks')"><span class="nav-icon">📋</span><span class="nav-label">Tasks</span></a>
-      <a class="nav-item" onclick="showScreen('budget')"><span class="nav-icon">💰</span><span class="nav-label">Budget</span></a>
-      <a class="nav-item active"><span class="nav-icon">🛒</span><span class="nav-label">Shop</span></a>
+      <a class="nav-item" onclick="showScreen('home')"><span class="nav-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg></span><span class="nav-label">Home</span></a>
+      <a class="nav-item" onclick="showScreen('meals')"><span class="nav-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="2" x2="8" y2="22"/><path d="M5 2v6a3 3 0 006 0V2"/><path d="M19 2v22M19 12h-2a2 2 0 000 4h2"/></svg></span><span class="nav-label">Meals</span></a>
+      <a class="nav-item" onclick="showScreen('tasks')"><span class="nav-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></span><span class="nav-label">Tasks</span></a>
+      <a class="nav-item" onclick="showScreen('budget')"><span class="nav-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v1m0 8v1m-3-4.5h4.5a1.5 1.5 0 000-3H11a1.5 1.5 0 000 3H13a1.5 1.5 0 010 3H9"/></svg></span><span class="nav-label">Budget</span></a>
+      <a class="nav-item active"><span class="nav-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></svg></span><span class="nav-label">Shop</span></a>
     </nav>
   </div>
 
@@ -906,8 +910,9 @@
   <div id="add-item-overlay" class="overlay" style="display:none" onclick="closeAddItem(event)">
     <div class="bottom-sheet">
       <div class="sheet-handle"></div>
-      <div class="sheet-header">
-        <div class="sheet-eyebrow">🛒 Grocery list</div>
+      <div class="sheet-header" style="position:relative">
+        <div class="sheet-eyebrow">Shop</div>
+        <button class="sheet-close" onclick="document.getElementById('add-item-overlay').style.display='none'">✕</button>
         <div class="sheet-title">Add items</div>
       </div>
       <div class="sheet-body">
@@ -924,22 +929,22 @@
         <div>
           <div class="add-section-label">Common items</div>
           <div class="common-chips">
-            <div class="common-chip" onclick="quickAddItem(this,'Milk')">🥛 Milk</div>
-            <div class="common-chip" onclick="quickAddItem(this,'Bread')">🍞 Bread</div>
-            <div class="common-chip" onclick="quickAddItem(this,'Eggs')">🥚 Eggs</div>
-            <div class="common-chip" onclick="quickAddItem(this,'Butter')">🧈 Butter</div>
-            <div class="common-chip" onclick="quickAddItem(this,'Chicken')">🍗 Chicken</div>
-            <div class="common-chip" onclick="quickAddItem(this,'Pasta')">🍝 Pasta</div>
-            <div class="common-chip" onclick="quickAddItem(this,'Rice')">🍚 Rice</div>
-            <div class="common-chip" onclick="quickAddItem(this,'Cheese')">🧀 Cheese</div>
-            <div class="common-chip" onclick="quickAddItem(this,'Yoghurt')">🥣 Yoghurt</div>
-            <div class="common-chip" onclick="quickAddItem(this,'Bananas')">🍌 Bananas</div>
-            <div class="common-chip" onclick="quickAddItem(this,'Apples')">🍎 Apples</div>
-            <div class="common-chip" onclick="quickAddItem(this,'Tomatoes')">🍅 Tomatoes</div>
-            <div class="common-chip" onclick="quickAddItem(this,'Onions')">🧅 Onions</div>
-            <div class="common-chip" onclick="quickAddItem(this,'Carrots')">🥕 Carrots</div>
-            <div class="common-chip" onclick="quickAddItem(this,'Spinach')">🥬 Spinach</div>
-            <div class="common-chip" onclick="quickAddItem(this,'Olive Oil')">🫒 Olive Oil</div>
+            <div class="common-chip" onclick="quickAddItem(this,'Milk')">Milk</div>
+            <div class="common-chip" onclick="quickAddItem(this,'Bread')">Bread</div>
+            <div class="common-chip" onclick="quickAddItem(this,'Eggs')">Eggs</div>
+            <div class="common-chip" onclick="quickAddItem(this,'Butter')">Butter</div>
+            <div class="common-chip" onclick="quickAddItem(this,'Chicken')">Chicken</div>
+            <div class="common-chip" onclick="quickAddItem(this,'Pasta')">Pasta</div>
+            <div class="common-chip" onclick="quickAddItem(this,'Rice')">Rice</div>
+            <div class="common-chip" onclick="quickAddItem(this,'Cheese')">Cheese</div>
+            <div class="common-chip" onclick="quickAddItem(this,'Yoghurt')">Yoghurt</div>
+            <div class="common-chip" onclick="quickAddItem(this,'Bananas')">Bananas</div>
+            <div class="common-chip" onclick="quickAddItem(this,'Apples')">Apples</div>
+            <div class="common-chip" onclick="quickAddItem(this,'Tomatoes')">Tomatoes</div>
+            <div class="common-chip" onclick="quickAddItem(this,'Onions')">Onions</div>
+            <div class="common-chip" onclick="quickAddItem(this,'Carrots')">Carrots</div>
+            <div class="common-chip" onclick="quickAddItem(this,'Spinach')">Spinach</div>
+            <div class="common-chip" onclick="quickAddItem(this,'Olive Oil')">Olive Oil</div>
           </div>
         </div>
 
@@ -981,9 +986,9 @@
     <div class="cal-body" id="cal-body">
       <!-- MONTH NAV -->
       <div class="cal-month-nav">
-        <button class="cal-nav-btn" onclick="calPrevMonth()">‹</button>
+        <button class="cal-nav-btn" onclick="calPrevMonth()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
         <div class="cal-month-label" id="cal-month-label">March 2026</div>
-        <button class="cal-nav-btn" onclick="calNextMonth()">›</button>
+        <button class="cal-nav-btn" onclick="calNextMonth()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
       </div>
       <!-- GRID -->
       <div class="cal-grid">
@@ -1003,11 +1008,11 @@
       </div>
     </div>
     <nav class="nav-bar">
-      <a class="nav-item" onclick="showScreen('home')"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></a>
-      <a class="nav-item" onclick="showScreen('meals')"><span class="nav-icon">🍽</span><span class="nav-label">Meals</span></a>
-      <a class="nav-item" onclick="showScreen('tasks')"><span class="nav-icon">📋</span><span class="nav-label">Tasks</span></a>
-      <a class="nav-item" onclick="showScreen('budget')"><span class="nav-icon">💰</span><span class="nav-label">Budget</span></a>
-      <a class="nav-item" onclick="showScreen('shop')"><span class="nav-icon">🛒</span><span class="nav-label">Shop</span></a>
+      <a class="nav-item" onclick="showScreen('home')"><span class="nav-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg></span><span class="nav-label">Home</span></a>
+      <a class="nav-item" onclick="showScreen('meals')"><span class="nav-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="2" x2="8" y2="22"/><path d="M5 2v6a3 3 0 006 0V2"/><path d="M19 2v22M19 12h-2a2 2 0 000 4h2"/></svg></span><span class="nav-label">Meals</span></a>
+      <a class="nav-item" onclick="showScreen('tasks')"><span class="nav-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></span><span class="nav-label">Tasks</span></a>
+      <a class="nav-item" onclick="showScreen('budget')"><span class="nav-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v1m0 8v1m-3-4.5h4.5a1.5 1.5 0 000-3H11a1.5 1.5 0 000 3H13a1.5 1.5 0 010 3H9"/></svg></span><span class="nav-label">Budget</span></a>
+      <a class="nav-item" onclick="showScreen('shop')"><span class="nav-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></svg></span><span class="nav-label">Shop</span></a>
     </nav>
   </div>
 
@@ -1015,8 +1020,9 @@
   <div id="add-event-overlay" class="overlay" style="display:none" onclick="closeAddEvent(event)">
     <div class="bottom-sheet">
       <div class="sheet-handle"></div>
-      <div class="sheet-header">
-        <div class="sheet-eyebrow">📅 Calendar</div>
+      <div class="sheet-header" style="position:relative">
+        <div class="sheet-eyebrow">Calendar</div>
+        <button class="sheet-close" onclick="document.getElementById('add-event-overlay').style.display='none'">✕</button>
         <div class="sheet-title" id="add-event-title">New event</div>
       </div>
       <div class="sheet-body">
@@ -1055,6 +1061,43 @@
 </div>
 
 <script>
+
+// ── SVG ICON LIBRARY ─────────────────────────────────────────
+const ICONS = {
+  home: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>`,
+  meals: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h18M3 11c0-4 2-7 5-8M21 11c0-4-2-7-5-8M9 3v8M15 3v8M5 21h14M7 15h10"/></svg>`,
+  tasks: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>`,
+  budget: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v1m0 8v1m-3-5h4.5a1.5 1.5 0 000-3H11a1.5 1.5 0 000 3H13a1.5 1.5 0 010 3H9"/></svg>`,
+  shop: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></svg>`,
+  cal: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>`,
+  cup: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><path d="M6 1v3M10 1v3M14 1v3"/></svg>`,
+  check: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
+  plus: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>`,
+  leaf: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M17 8C8 10 5.9 16.17 3.82 19.34a1 1 0 00.95 1.56 12 12 0 0014.39-7.49C20 10 20 6 20 4s-2 3-3 4z"/><path d="M3.82 19.34C5 14 9 10 12 9"/></svg>`,
+  // Category icons for grocery
+  produce: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 2a7 7 0 017 7c0 5-7 13-7 13S5 14 5 9a7 7 0 017-7z"/><circle cx="12" cy="9" r="2.5"/></svg>`,
+  dairy: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8 2h8l2 5v13a2 2 0 01-2 2H8a2 2 0 01-2-2V7l2-5z"/><path d="M6 7h12"/></svg>`,
+  meat: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M14.5 2.5c1.5 1.5 2 3.5 1 5.5L9 14.5C7 15.5 5 15 3.5 13.5S2.5 10 3.5 8.5L9.5 3c2-1 3.5-.5 5 0z"/><path d="M14 9l5 5M15 10l4 4"/></svg>`,
+  bakery: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 10a6 6 0 0112 0v1H6v-1z"/><rect x="4" y="11" width="16" height="9" rx="1"/><path d="M8 11v9M12 11v9M16 11v9"/></svg>`,
+  frozen: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="2" x2="12" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/><line x1="19.07" y1="4.93" x2="4.93" y2="19.07"/><circle cx="12" cy="12" r="2"/></svg>`,
+  pantry: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M4 9h16M4 15h16M9 3v6M9 15v6"/></svg>`,
+  other: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg>`,
+  // Budget cat icons  
+  groceries: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></svg>`,
+  kids: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a6 6 0 0112 0v2"/><path d="M9 11l1.5 2L12 11l1.5 2L15 11"/></svg>`,
+  misc: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg>`,
+  eatingout: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg>`,
+  transport: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="7" width="20" height="13" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/><circle cx="7" cy="17" r="1.5"/><circle cx="17" cy="17" r="1.5"/></svg>`,
+  household: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>`,
+  personal: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>`,
+};
+
+function icon(name, size = 20, color = 'currentColor') {
+  const svg = ICONS[name.toLowerCase().replace(/\s+/g,'').replace(/[^a-z]/g,'')];
+  if (!svg) return '';
+  return svg.replace('<svg ', \`<svg width="\${size}" height="\${size}" style="color:\${color};flex-shrink:0" \`);
+}
+
 // ── SUPABASE CONFIG ─────────────────────────────────────────
 const SB_URL = 'https://lvxkfwxjsjmvymzjkfje.supabase.co';
 const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx2eGtmd3hqc2ptdnltemprZmplIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyODI0NjIsImV4cCI6MjA4OTg1ODQ2Mn0.faR6ZGDjNONeuaIHW5tDhWRtRdGWIKvNgUdYVqbQ1d0';
@@ -1330,13 +1373,7 @@ function switchMealsTab(tab) {
   document.getElementById('meals-favourites').style.display = tab === 'favourites' ? 'flex' : 'none';
 }
 
-function getMealEmoji(type) {
-  const t = (type || '').toLowerCase();
-  if (t.includes('breakfast')) return '🥑';
-  if (t.includes('lunch'))     return '🥗';
-  if (t.includes('dinner'))    return '🍽';
-  return '🍴';
-}
+function getMealEmoji(type) { return ''; }
 
 function getSlotClass(type) {
   const t = (type || '').toLowerCase();
@@ -1388,7 +1425,7 @@ function renderWeekPlanner() {
             : `<div class="slot-empty">Tap to plan</div>`
           }
         </div>
-        <div class="slot-add">${mealName ? '›' : '+'}</div>
+        <div class="slot-add">${mealName ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>' : '+'}</div>
       </div>`;
     }).join('');
 
@@ -1415,7 +1452,6 @@ function renderFavourites(filter = '') {
 
   container.innerHTML = filtered.map(m => `
     <div class="fav-card" onclick="openAddMealFromFav('${(m.meal_name || '').replace(/'/g,"\\'")}')">
-      <div class="fav-emoji">${getMealEmoji(m.type)}</div>
       <div class="fav-info">
         <div class="fav-name">${m.meal_name}</div>
         <div class="fav-meta">${m.type || 'Dinner'} · ${m.prep_time || ''}</div>
@@ -1515,7 +1551,7 @@ async function saveTask() {
     return;
   }
   const category = document.querySelector('#task-cat-chips .chip.sel')?.textContent.trim() || 'Home';
-  const priority  = document.querySelector('#task-priority-chips .chip.sel')?.textContent.trim() || 'Medium';
+  const priority  = document.querySelector('#task-priority-chips .chip.sel')?.textContent.trim() || null;
   const due_date  = document.getElementById('task-due-input').value || todayStr;
 
   const btn = document.getElementById('save-task-btn');
@@ -1627,7 +1663,7 @@ function populateAddMealFavs(selected = '') {
   leftoverContainer.innerHTML = allMealNames.map(name =>
     `<div class="add-fav-chip leftover-chip"
       onclick="selectLeftover(this,'${name.replace(/'/g,"\\'")}')">
-      🍱 ${name}
+      ${name}
     </div>`
   ).join('');
 }
@@ -1890,7 +1926,7 @@ async function deleteEvent(e, id) {
 
 // ── SHOP / GROCERY SCREEN ────────────────────────────────────
 const ITEM_CAT_ORDER = ['Produce','Dairy','Meat','Bakery','Frozen','Pantry','Other'];
-const ITEM_CAT_EMOJI = { 'Produce':'🥦', 'Dairy':'🥛', 'Meat':'🍗', 'Bakery':'🍞', 'Frozen':'🧊', 'Pantry':'🫙', 'Other':'🛒' };
+const ITEM_CAT_EMOJI = {}; // replaced by SVG icons
 let allGrocery = [];
 
 function renderShopScreen() {
@@ -1927,17 +1963,34 @@ function renderShopScreen() {
     ...Object.keys(groups).filter(c => !ITEM_CAT_ORDER.includes(c))
   ])];
 
-  groupsEl.innerHTML = sortedCats.map(cat => `
-    <div class="shop-cat-group">
-      <div class="shop-cat-label">${ITEM_CAT_EMOJI[cat] || '🛒'} ${cat}</div>
-      ${groups[cat].map(item => `
-        <div class="shop-item-row ${item.ticked ? 'ticked' : ''}" onclick="toggleItem('${item.id}', ${item.ticked})">
-          <div class="shop-check ${item.ticked ? 'ticked' : ''}"></div>
-          <div class="shop-item-name ${item.ticked ? 'struck' : ''}">${item.item || ''}</div>
-          ${item.quantity ? `<div class="shop-item-qty">${item.quantity}</div>` : ''}
-          <button class="shop-item-delete" onclick="deleteItem(event,'${item.id}')">✕</button>
-        </div>`).join('')}
-    </div>`).join('');
+  groupsEl.innerHTML = sortedCats.map(cat => {
+    const catSvgs = {
+      'Produce': '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 2a7 7 0 017 7c0 5-7 13-7 13S5 14 5 9a7 7 0 017-7z"/></svg>',
+      'Dairy':   '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M8 2h8l2 5v13a2 2 0 01-2 2H8a2 2 0 01-2-2V7l2-5z"/><path d="M6 7h12"/></svg>',
+      'Meat':    '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M14.5 2.5c1.5 1.5 2 3.5 1 5.5L9 14.5C7 15.5 5 15 3.5 13.5S2.5 10 3.5 8.5L9.5 3c2-1 3.5-.5 5 0z"/></svg>',
+      'Bakery':  '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 10a6 6 0 0112 0v1H6v-1z"/><rect x="4" y="11" width="16" height="9" rx="1"/></svg>',
+      'Frozen':  '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="2" x2="12" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/><line x1="19.07" y1="4.93" x2="4.93" y2="19.07"/></svg>',
+      'Pantry':  '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M4 9h16M4 15h16"/></svg>',
+      'Other':   '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/></svg>',
+    };
+    const catIcon = catSvgs[cat] || catSvgs['Other'];
+    const checkSvg = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+    return `
+    <div class="shop-cat-section">
+      <div class="shop-cat-label">${cat}</div>
+      <div class="shop-items-list">
+        ${groups[cat].map(item => `
+          <div class="shop-item-row ${item.ticked ? 'ticked' : ''}" onclick="toggleItem('${item.id}', ${item.ticked})">
+            <div class="shop-check ${item.ticked ? 'ticked' : ''}">
+              <span class="shop-check-mark">${checkSvg}</span>
+            </div>
+            <div class="shop-item-name ${item.ticked ? 'struck' : ''}">${item.item || ''}</div>
+            ${item.quantity ? `<div class="shop-item-qty">${item.quantity}</div>` : ''}
+            <button class="shop-item-delete" onclick="deleteItem(event,'${item.id}')">✕</button>
+          </div>`).join('')}
+      </div>
+    </div>`;
+  }).join('');
 
   // Populate meal plan chips in add sheet
   const mealChips = document.getElementById('meal-plan-chips');
@@ -2047,10 +2100,7 @@ const CAT_COLOURS = {
   'Groceries': '#7A8C6E', 'Kids': '#C4714F', 'Misc': '#C4B5A5',
   'Eating Out': '#C9A96E', 'Transport': '#8B7355', 'Household': '#6B8CAE', 'Personal': '#B07BA8'
 };
-const CAT_ICONS = {
-  'Groceries': '🛒', 'Kids': '👧', 'Misc': '✨',
-  'Eating Out': '🍕', 'Transport': '🚗', 'Household': '🏠', 'Personal': '🌸'
-};
+const CAT_ICONS = {};
 
 let allBudgetCats = [];
 let allExpenses = [];
@@ -2088,10 +2138,19 @@ function renderBudgetScreen() {
     const limit = parseFloat(cat.monthly_limit||0);
     const pct   = limit > 0 ? Math.min(100, (spent/limit)*100) : 0;
     const barColour = pct >= 100 ? '#C4714F' : pct >= 80 ? '#C9A96E' : (CAT_COLOURS[cat.category] || '#7A8C6E');
-    const icon  = CAT_ICONS[cat.category] || '💸';
+    const budSvgs = {
+      'Groceries': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></svg>',
+      'Kids': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a6 6 0 0112 0v2"/></svg>',
+      'Misc': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg>',
+      'Eating Out': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg>',
+      'Transport': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="7" width="20" height="13" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/><circle cx="7" cy="17" r="1.5"/><circle cx="17" cy="17" r="1.5"/></svg>',
+      'Household': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>',
+      'Personal': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>',
+    };
+    const icon = `<span style="display:flex;align-items:center;justify-content:center;width:32px;height:32px;background:var(--cream);border-radius:10px;color:${colour}">${budSvgs[cat.category] || budSvgs['Misc']}</span>`;
     return `
       <div class="budget-cat-row">
-        <div class="budget-cat-emoji">${icon}</div>
+        <div class="budget-cat-emoji" style="width:10px;height:10px;border-radius:50%;background:${colour};flex-shrink:0;margin-top:2px"></div>
         <div class="budget-cat-info">
           <div class="budget-cat-name">${cat.category}</div>
           <div class="budget-cat-bar"><div class="budget-cat-bar-fill" style="width:${pct}%;background:${barColour}"></div></div>
