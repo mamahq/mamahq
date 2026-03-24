@@ -2241,6 +2241,10 @@ async function init() {
   document.getElementById('greeting-label').textContent = getGreeting();
   document.getElementById('greeting-date').textContent  = formatDate(today);
 
+  // Always hide loader after max 3 seconds no matter what
+  const hideLoader = () => document.getElementById('loading').classList.add('hidden');
+  const loaderTimeout = setTimeout(hideLoader, 3000);
+
   try {
     const [meals, mealPlan, tasks, events, groceryInit, nudges, budgetCats, expenses, groceryItems] = await Promise.all([
       sb('meals', '?order=meal_name'),
@@ -2271,13 +2275,10 @@ async function init() {
   } catch(err) {
     console.error('Init error:', err);
     document.getElementById('cup-text').textContent = 'Could not load data. Check your connection.';
-    document.getElementById('dinner-container').innerHTML =
-      `<div class="dinner-card"><div class="dinner-empty">Error loading — tap to retry</div></div>`;
+  } finally {
+    clearTimeout(loaderTimeout);
+    hideLoader();
   }
-
-  setTimeout(() => {
-    document.getElementById('loading').classList.add('hidden');
-  }, 700);
 }
 
 init();
