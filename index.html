@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Mama HQ">
@@ -1041,6 +1041,10 @@
           <input class="form-input" id="new-meal-name" type="text" placeholder="e.g. Pasta bake">
         </div>
         <div class="form-field">
+          <div class="form-label">Recipe link (optional)</div>
+          <input class="form-input" id="new-meal-url" type="url" placeholder="Paste recipe URL">
+        </div>
+        <div class="form-field">
           <div class="form-label">Meal type</div>
           <div class="chips" id="meal-type-chips">
             <div class="chip" onclick="selectChip(this,'meal-type-chips')">Breakfast</div>
@@ -1989,8 +1993,8 @@ async function saveMeal() {
       if (inserted&&inserted[0]) allMealPlan.push(inserted[0]);
     }
     document.getElementById('add-meal-overlay').style.display='none';
-    document.getElementById('new-meal-name').value=''; selectedFavMeal='';
-    renderWeekPlanner(); renderTodayMeals(allMealPlan,allMeals);
+    document.getElementById('new-meal-name').value='';if(document.getElementById('new-meal-url'))document.getElementById('new-meal-url').value=''; selectedFavMeal='';
+    renderWeekPlanner();renderTodayMeals(allMealPlan,allMeals);
     showToast('Meal saved!');
   } catch(e) { console.error(e); showToast('Could not save: '+e.message.slice(0,40)); }
   finally { if(btn){btn.textContent='✓ Save to planner';btn.disabled=false;} }
@@ -2299,7 +2303,7 @@ function calPrevMonth(){calMonth--;if(calMonth<0){calMonth=11;calYear--;}renderC
 function calNextMonth(){calMonth++;if(calMonth>11){calMonth=0;calYear++;}renderCalScreen();}
 function openAddEvent(){document.getElementById('event-title-input').value='';document.getElementById('event-time-input').value='';document.getElementById('event-location-input').value='';document.getElementById('event-date-input').value=calSelected;document.getElementById('add-event-title').textContent=new Date(calSelected+'T00:00:00').toLocaleDateString('en-AU',{weekday:'long',day:'numeric',month:'short'});document.getElementById('add-event-overlay').style.display='flex';setTimeout(()=>document.getElementById('event-title-input').focus(),100);}
 function closeAddEvent(e){if(e.target.id==='add-event-overlay')document.getElementById('add-event-overlay').style.display='none';}
-async function saveEvent(){const title=document.getElementById('event-title-input').value.trim();const date=document.getElementById('event-date-input').value||calSelected;const who=document.querySelector('#event-who-chips .chip.sel')?.textContent.trim()||'Whole family';const start_time=document.getElementById('event-time-input').value||null;const location=document.getElementById('event-location-input').value.trim()||null;if(!title){document.getElementById('event-title-input').style.borderColor='var(--terracotta)';return;}const btn=document.getElementById('save-event-btn');btn.textContent='Saving…';btn.disabled=true;try{const inserted=await sbPost('calendar',{title,date,who,start_time,location});if(inserted&&inserted[0])allEvents.push(inserted[0]);document.getElementById('add-event-overlay').style.display='none';renderCalScreen();showToast('Event added!');}catch(e){console.error(e);showToast('Could not save: '+e.message.slice(0,40));}finally{btn.textContent='✓ Add event';btn.disabled=false;}}
+async function saveEvent(){const title=document.getElementById('event-title-input').value.trim();const date=document.getElementById('event-date-input').value||calSelected;const who=document.querySelector('#event-who-chips .chip.sel')?.textContent.trim()||'Whole family';const start_time=document.getElementById('event-time-input').value||null;const location=document.getElementById('event-location-input').value.trim()||null;if(!title){document.getElementById('event-title-input').style.borderColor='var(--terracotta)';return;}const btn=document.getElementById('save-event-btn');btn.textContent='Saving…';btn.disabled=true;try{const inserted=await sbPost('calendar',{title,date,who,start_time,location});if(inserted&&inserted[0])allEvents.push(inserted[0]);document.getElementById('add-event-overlay').style.display='none';renderCalScreen();renderUpcoming(allEvents);const countEl=document.getElementById('events-count');if(countEl)countEl.textContent=allEvents.filter(e=>(e.date||'').slice(0,10)===todayStr).length;showToast('Event added!');}catch(e){console.error(e);showToast('Could not save: '+e.message.slice(0,40));}finally{btn.textContent='✓ Add event';btn.disabled=false;}}
 async function deleteEvent(e,id){e.stopPropagation();try{await sbDelete('calendar',id);allEvents=allEvents.filter(ev=>ev.id!==id);renderCalScreen();showToast('Event removed');}catch(e){console.error(e);}}
 
 // ── FILL MY CUP ──────────────────────────────────────────────
@@ -2344,15 +2348,42 @@ function toggleNoise(){
   if(noiseOn){stopNoise();return;}
   try{
     audioCtx=new(window.AudioContext||window.webkitAudioContext)();
-    const bufSize=audioCtx.sampleRate*4;const buffer=audioCtx.createBuffer(1,bufSize,audioCtx.sampleRate);const data=buffer.getChannelData(0);let last=0;
-    for(let i=0;i<bufSize;i++){const w=Math.random()*2-1;data[i]=(last+(0.02*w))/1.02;last=data[i];data[i]*=3.5;}
-    noiseNode=audioCtx.createBufferSource();noiseNode.buffer=buffer;noiseNode.loop=true;
-    noiseGain=audioCtx.createGain();noiseGain.gain.setValueAtTime(0,audioCtx.currentTime);noiseGain.gain.linearRampToValueAtTime(0.4,audioCtx.currentTime+2);
-    noiseNode.connect(noiseGain);noiseGain.connect(audioCtx.destination);noiseNode.start();
-    noiseOn=true;if(btn){btn.textContent='Stop brown noise';btn.classList.add('playing');}
-  }catch(e){console.error('Audio failed:',e);}
+    // Resume context if suspended (required after user gesture on iOS/Chrome)
+    if(audioCtx.state==='suspended') audioCtx.resume();
+    // Use ScriptProcessor for reliable cross-browser brown noise
+    const bufSize=4096;
+    noiseNode=audioCtx.createScriptProcessor(bufSize,1,1);
+    let lastOut=0;
+    noiseNode.onaudioprocess=function(e){
+      const output=e.outputBuffer.getChannelData(0);
+      for(let i=0;i<bufSize;i++){
+        const white=Math.random()*2-1;
+        output[i]=(lastOut+(0.02*white))/1.02;
+        lastOut=output[i];
+        output[i]*=3.5;
+      }
+    };
+    noiseGain=audioCtx.createGain();
+    noiseGain.gain.setValueAtTime(0,audioCtx.currentTime);
+    noiseGain.gain.linearRampToValueAtTime(0.35,audioCtx.currentTime+2);
+    noiseNode.connect(noiseGain);
+    noiseGain.connect(audioCtx.destination);
+    noiseOn=true;
+    if(btn){btn.textContent='Stop brown noise';btn.classList.add('playing');}
+  }catch(e){
+    console.error('Audio failed:',e);
+    const btn=document.getElementById('noise-btn');
+    if(btn)btn.textContent='Audio not supported';
+  }
 }
-function stopNoise(){if(noiseNode){try{noiseNode.stop();}catch(e){}noiseNode=null;}if(audioCtx){try{audioCtx.close();}catch(e){}audioCtx=null;}noiseOn=false;const btn=document.getElementById('noise-btn');if(btn){btn.textContent='Play brown noise';btn.classList.remove('playing');}}
+function stopNoise(){
+  if(noiseNode){try{noiseNode.disconnect();}catch(e){}noiseNode=null;}
+  if(noiseGain){try{noiseGain.disconnect();}catch(e){}noiseGain=null;}
+  if(audioCtx){try{audioCtx.close();}catch(e){}audioCtx=null;}
+  noiseOn=false;
+  const btn=document.getElementById('noise-btn');
+  if(btn){btn.textContent='Play brown noise';btn.classList.remove('playing');}
+}
 
 const BREATH_PHASES=[{name:'Inhale',instruction:'Breathe in',duration:4,idx:0},{name:'Hold',instruction:'Hold',duration:4,idx:1},{name:'Exhale',instruction:'Breathe out',duration:4,idx:2},{name:'Hold',instruction:'Hold',duration:4,idx:3}];
 
