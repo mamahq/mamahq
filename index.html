@@ -2111,73 +2111,31 @@ async function fetchRecipeFromUrl() {
   if (status) { status.style.display = 'block'; status.textContent = 'Reading recipe…'; status.className = 'recipe-status'; }
 
   try {
-    // Try multiple CORS proxies in sequence — no API key needed
-    const proxies = [
-      `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
-      `https://corsproxy.io/?${encodeURIComponent(url)}`,
-      `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`
-    ];
+    // Spoonacular Extract Recipe API — handles all recipe blogs reliably
+    const SPOON_KEY = 'a3c3fbceede74dc280466167cff1c623';
+    const apiUrl = `https://api.spoonacular.com/recipes/extract?url=${encodeURIComponent(url)}&apiKey=${SPOON_KEY}&forceExtraction=false&analyze=false`;
 
-    let html = '';
-    for (const proxyUrl of proxies) {
-      try {
-        const res = await fetch(proxyUrl, { signal: AbortSignal.timeout(8000) });
-        if (!res.ok) continue;
-        const data = await res.json().catch(() => null);
-        // allorigins wraps in {contents:...}, codetabs/corsproxy return text
-        if (data && data.contents) { html = data.contents; break; }
-        if (data && typeof data === 'string') { html = data; break; }
-        // Try as text
-        const text = await res.text().catch(() => '');
-        if (text.length > 500) { html = text; break; }
-      } catch(e) { continue; }
+    const res = await fetch(apiUrl, { signal: AbortSignal.timeout(15000) });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.message || `API error ${res.status}`);
     }
+    const data = await res.json();
 
-    if (!html || html.length < 100) throw new Error('Could not fetch page');
+    if (!data.title) throw new Error('No recipe found at this URL');
 
-    // Parse JSON-LD structured data — used by BBC Good Food, thekitchn, Taste, AllRecipes etc
-    let recipe = null;
-    const scriptRegex = /<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi;
-    let match;
-    while ((match = scriptRegex.exec(html)) !== null) {
-      try {
-        const parsed = JSON.parse(match[1].trim());
-        const items = Array.isArray(parsed) ? parsed : (parsed['@graph'] ? parsed['@graph'] : [parsed]);
-        for (const item of items) {
-          const type = item['@type'];
-          if (type === 'Recipe' || (Array.isArray(type) && type.includes('Recipe'))) {
-            recipe = item; break;
-          }
-        }
-      } catch(e) {}
-      if (recipe) break;
-    }
-
-    // Fallback: og:title / <title>
-    if (!recipe) {
-      const ogTitle = html.match(/property=["']og:title["'][^>]*content=["']([^"']{3,100})["']/i)
-                  || html.match(/content=["']([^"']{3,100})["'][^>]*property=["']og:title["']/i);
-      const titleTag = html.match(/<title[^>]*>([^<]{3,100})<\/title>/i);
-      const rawName = ogTitle?.[1] || titleTag?.[1] || '';
-      const name = rawName.split(/\s*[-|·—]\s*/)[0].replace(/\s+(recipe|recipes)$/i,'').trim();
-      if (name) recipe = { name };
-    }
-
-    if (!recipe?.name) throw new Error('No recipe found');
-
-    const mealName = recipe.name.replace(/<[^>]+>/g, '').trim();
+    const mealName = data.title.trim();
     document.getElementById('new-meal-name').value = mealName;
     const resultCard = document.getElementById('recipe-result-card');
     const resultName = document.getElementById('recipe-result-name');
     if (resultCard) resultCard.style.display = 'flex';
     if (resultName) resultName.textContent = mealName;
 
-    // Extract ingredients from schema.org recipeIngredient
-    const rawIng = recipe.recipeIngredient || recipe.ingredients || [];
-    const ingredients = rawIng
-      .map(i => (typeof i === 'string' ? i : i.name || '').replace(/<[^>]+>/g,'').trim())
-      .filter(i => i.length > 1 && i.length < 150)
-      .slice(0, 30);
+    // Extract ingredients with amounts
+    const ingredients = (data.extendedIngredients || [])
+      .map(i => i.original || i.originalString || i.name || '')
+      .filter(i => i.length > 1)
+      .slice(0, 40);
 
     if (ingredients.length > 0) {
       window._recipeIngredients = ingredients;
@@ -2188,7 +2146,7 @@ async function fetchRecipeFromUrl() {
       }
     } else {
       if (status) {
-        status.textContent = `✓ ${mealName} — name filled in. No ingredients found.`;
+        status.textContent = `✓ ${mealName} — meal name filled in`;
         status.className = 'recipe-status success';
       }
     }
@@ -2196,7 +2154,7 @@ async function fetchRecipeFromUrl() {
   } catch(e) {
     console.error('Recipe fetch:', e);
     if (status) {
-      status.textContent = 'Could not read this recipe. Try: bbcgoodfood.com, taste.com.au or allrecipes.com — or type the name below.';
+      status.textContent = `Could not read this recipe: ${e.message}. Try a different URL or type the name below.`;
       status.className = 'recipe-status error';
     }
   } finally {
