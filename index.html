@@ -1138,6 +1138,12 @@
             <div class="recipe-result-check">✓</div>
           </div>
 
+          <!-- DAY PICKER (shown when not opening from a specific slot) -->
+          <div class="form-field" id="meal-day-picker-field">
+            <div class="form-label">Which day?</div>
+            <div class="chips" id="meal-day-chips" style="flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px"></div>
+          </div>
+
           <!-- MEAL NAME (always visible) -->
           <div class="form-field">
             <div class="form-label">Meal name</div>
@@ -1763,7 +1769,7 @@
       <div class="ing-prompt-sub" id="delete-meal-sub"></div>
       <div class="ing-prompt-btns" style="flex-direction:column;gap:8px">
         <button class="ing-prompt-yes" style="background:#C0392B" id="delete-meal-with-ing-btn" onclick="deleteMealFromPlanner(true)">Remove meal + ingredients from shop</button>
-        <button class="ing-prompt-yes" id="delete-meal-only-btn" onclick="deleteMealFromPlanner(false)">Remove meal only</button>
+        <button class="ing-prompt-yes" id="delete-meal-only-btn" onclick="deleteMealFromPlanner(false)">Remove meal</button>
         <button class="ing-prompt-no" onclick="document.getElementById('delete-meal-modal').classList.add('hidden')">Cancel</button>
       </div>
     </div>
@@ -1868,6 +1874,29 @@ function showToast(msg) {
 function selectChip(el, groupId) {
   document.querySelectorAll(`#${groupId} .chip`).forEach(c => c.classList.remove('sel'));
   el.classList.add('sel');
+}
+
+// ── UTILITIES ────────────────────────────────────────────────
+function normaliseFractions(str) {
+  if (!str) return str;
+  const fracs = [
+    [/\b0?\.5\b/g,        '½'],
+    [/\b0?\.25\b/g,       '¼'],
+    [/\b0?\.75\b/g,       '¾'],
+    [/\b0?\.3{3,}\b/g,    '⅓'],
+    [/\b0?\.6{3,}\b/g,    '⅔'],
+    [/\b0?\.1{1,2}5?\b/g, '⅛'],
+    [/\b0?\.375\b/g,      '⅜'],
+    [/\b0?\.625\b/g,      '⅝'],
+    [/\b0?\.875\b/g,      '⅞'],
+    [/\b0?\.2\b/g,        '⅕'],
+    [/\b0?\.4\b/g,        '⅖'],
+    [/\b0?\.6\b/g,        '⅗'],
+    [/\b0?\.8\b/g,        '⅘'],
+  ];
+  let out = str;
+  fracs.forEach(([re, symbol]) => { out = out.replace(re, symbol); });
+  return out;
 }
 
 let allMeals=[], allMealPlan=[], allTasksCache=[], allEvents=[], allGrocery=[], allBudgetCats=[], allExpenses=[];
@@ -2134,17 +2163,50 @@ function openAddMeal() {
   document.getElementById('new-meal-name').value = '';
   document.querySelectorAll('#meal-type-chips .chip').forEach(c => c.className = c.textContent.trim()==='Dinner'?'chip sel':'chip');
   populateAddMealFavs();
+  // Show day picker
+  const pickerField = document.getElementById('meal-day-picker-field');
+  if (pickerField) pickerField.style.display = '';
+  populateMealDayPicker();
   document.getElementById('add-meal-overlay').style.display='flex';
+}
+function populateMealDayPicker() {
+  const container = document.getElementById('meal-day-chips');
+  if (!container) return;
+  const dow = today.getDay();
+  const monday = new Date(today);
+  monday.setDate(today.getDate() - (dow===0 ? 6 : dow-1));
+  const days = [];
+  for (let i=0; i<7; i++) {
+    const d = new Date(monday); d.setDate(monday.getDate()+i);
+    days.push({ date: d.toISOString().slice(0,10), label: d.toLocaleDateString('en-AU',{weekday:'short'}), dateNum: d.getDate() });
+  }
+  container.innerHTML = days.map(d =>
+    `<div class="chip${d.date===selectedDay?' sel':''}" style="flex-shrink:0;text-align:center;min-width:46px" onclick="selectMealDay(this,'${d.date}')">
+      <div style="font-size:0.6rem;opacity:0.7">${d.label}</div>
+      <div style="font-size:0.85rem;font-weight:600">${d.dateNum}</div>
+    </div>`
+  ).join('');
+}
+function selectMealDay(el, date) {
+  selectedDay = date;
+  document.querySelectorAll('#meal-day-chips .chip').forEach(c => c.classList.remove('sel'));
+  el.classList.add('sel');
 }
 function openAddMealFromFav(mealName) {
   selectedDay = todayStr; selectedFavMeal = mealName;
   document.getElementById('add-meal-title').textContent = 'Plan this meal';
   document.getElementById('add-meal-sub').textContent = 'Choose which day to add it to';
   populateAddMealFavs(mealName);
+  const pickerField = document.getElementById('meal-day-picker-field');
+  if (pickerField) pickerField.style.display = '';
+  populateMealDayPicker();
   document.getElementById('add-meal-overlay').style.display='flex';
 }
 function openAddMealForSlot(date, type) {
   selectedDay = date; selectedFavMeal = null;
+  // Hide day picker — day is already known from the slot
+  const pickerField = document.getElementById('meal-day-picker-field');
+  if (pickerField) pickerField.style.display = 'none';
   const d = new Date(date+'T00:00:00');
   const dayLabel = d.toLocaleDateString('en-AU',{weekday:'long',day:'numeric',month:'short'});
   const existing = allMealPlan.find(m => m.date===date && m.meal_type===type);
@@ -2281,7 +2343,7 @@ function openRecipeDetail(date, type) {
     if (ingList) ingList.innerHTML = ingredients.map((ing, i) =>
       `<div class="recipe-ing-item" id="ring-${i}" onclick="toggleIngredient(${i})">
         <div class="recipe-ing-checkbox"><span class="recipe-ing-check-mark">✓</span></div>
-        <div class="recipe-ing-text">${ing}</div>
+        <div class="recipe-ing-text">${normaliseFractions(ing)}</div>
       </div>`
     ).join('');
     updateAddToShopBtn();
@@ -2332,7 +2394,9 @@ function confirmDeleteMeal() {
   document.getElementById('delete-meal-sub').textContent = `This will remove ${mealName} from ${dayLabel}.${hasShopItems ? ` You also have ${shopMatches.length} ingredient${shopMatches.length===1?'':'s'} from this meal in your shop list.` : ''}`;
 
   const withIngBtn = document.getElementById('delete-meal-with-ing-btn');
+  const onlyBtn = document.getElementById('delete-meal-only-btn');
   if (withIngBtn) withIngBtn.style.display = hasShopItems ? 'block' : 'none';
+  if (onlyBtn) onlyBtn.textContent = hasShopItems ? 'Remove meal only' : 'Remove meal';
 
   document.getElementById('delete-meal-modal').classList.remove('hidden');
 }
@@ -2408,7 +2472,7 @@ function showIngPicker() {
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
           </span>
         </div>
-        <div class="ing-pick-text">${ing}</div>
+        <div class="ing-pick-text">${normaliseFractions(ing)}</div>
       </div>`).join('');
   }
 
@@ -2574,29 +2638,6 @@ async function fetchRecipeFromUrl() {
     if (resultCard) resultCard.style.display = 'flex';
     if (resultName) resultName.textContent = mealName;
 
-    // Normalise decimal fractions back to readable form (e.g. 0.33333 → ⅓)
-    function normaliseFractions(str) {
-      if (!str) return str;
-      // Map of decimal → unicode fraction or readable string
-      const fracs = [
-        [/\b0?\.5\b/g,        '½'],
-        [/\b0?\.25\b/g,       '¼'],
-        [/\b0?\.75\b/g,       '¾'],
-        [/\b0?\.3{3,}\b/g,    '⅓'],
-        [/\b0?\.6{3,}\b/g,    '⅔'],
-        [/\b0?\.1{1,2}5?\b/g, '⅛'],
-        [/\b0?\.375\b/g,      '⅜'],
-        [/\b0?\.625\b/g,      '⅝'],
-        [/\b0?\.875\b/g,      '⅞'],
-        [/\b0?\.2\b/g,        '⅕'],
-        [/\b0?\.4\b/g,        '⅖'],
-        [/\b0?\.6\b/g,        '⅗'],
-        [/\b0?\.8\b/g,        '⅘'],
-      ];
-      let out = str;
-      fracs.forEach(([re, symbol]) => { out = out.replace(re, symbol); });
-      return out;
-    }
 
     // Extract ingredients with amounts
     const ingredients = (data.extendedIngredients || [])
