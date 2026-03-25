@@ -2494,9 +2494,33 @@ async function fetchRecipeFromUrl() {
     if (resultCard) resultCard.style.display = 'flex';
     if (resultName) resultName.textContent = mealName;
 
+    // Normalise decimal fractions back to readable form (e.g. 0.33333 → ⅓)
+    function normaliseFractions(str) {
+      if (!str) return str;
+      // Map of decimal → unicode fraction or readable string
+      const fracs = [
+        [/\b0?\.5\b/g,        '½'],
+        [/\b0?\.25\b/g,       '¼'],
+        [/\b0?\.75\b/g,       '¾'],
+        [/\b0?\.3{3,}\b/g,    '⅓'],
+        [/\b0?\.6{3,}\b/g,    '⅔'],
+        [/\b0?\.1{1,2}5?\b/g, '⅛'],
+        [/\b0?\.375\b/g,      '⅜'],
+        [/\b0?\.625\b/g,      '⅝'],
+        [/\b0?\.875\b/g,      '⅞'],
+        [/\b0?\.2\b/g,        '⅕'],
+        [/\b0?\.4\b/g,        '⅖'],
+        [/\b0?\.6\b/g,        '⅗'],
+        [/\b0?\.8\b/g,        '⅘'],
+      ];
+      let out = str;
+      fracs.forEach(([re, symbol]) => { out = out.replace(re, symbol); });
+      return out;
+    }
+
     // Extract ingredients with amounts
     const ingredients = (data.extendedIngredients || [])
-      .map(i => i.original || i.originalString || i.name || '')
+      .map(i => normaliseFractions(i.original || i.originalString || i.name || ''))
       .filter(i => i.length > 1)
       .slice(0, 40);
 
