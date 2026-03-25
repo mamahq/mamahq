@@ -1740,6 +1740,7 @@
           <button class="save-btn" style="background:#F5F8F5;color:#1A1A1A;flex:1" onclick="editCurrentMealSlot()">Edit meal</button>
           <button class="save-btn" style="flex:1" onclick="document.getElementById('recipe-detail-overlay').style.display='none'">Done</button>
         </div>
+        <button class="save-btn" style="background:none;color:#C0392B;border:1.5px solid #F5C6C6;font-weight:500;font-size:0.8rem" onclick="confirmDeleteMeal()">Remove meal</button>
       </div>
     </div>
   </div>
@@ -1751,6 +1752,19 @@
       <div class="ing-prompt-btns">
         <button class="ing-prompt-yes" onclick="showIngPicker()">Yes, pick ingredients</button>
         <button class="ing-prompt-no" onclick="skipIngredients()">No thanks, just save meal</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DELETE MEAL CONFIRMATION MODAL -->
+  <div class="ing-prompt-modal hidden" id="delete-meal-modal">
+    <div class="ing-prompt-card">
+      <div class="ing-prompt-title" id="delete-meal-title">Remove meal?</div>
+      <div class="ing-prompt-sub" id="delete-meal-sub"></div>
+      <div class="ing-prompt-btns" style="flex-direction:column;gap:8px">
+        <button class="ing-prompt-yes" style="background:#C0392B" id="delete-meal-with-ing-btn" onclick="deleteMealFromPlanner(true)">Remove meal + ingredients from shop</button>
+        <button class="ing-prompt-yes" id="delete-meal-only-btn" onclick="deleteMealFromPlanner(false)">Remove meal only</button>
+        <button class="ing-prompt-no" onclick="document.getElementById('delete-meal-modal').classList.add('hidden')">Cancel</button>
       </div>
     </div>
   </div>
@@ -2292,6 +2306,72 @@ function closeRecipeDetail(e) {
 function editCurrentMealSlot() {
   document.getElementById('recipe-detail-overlay').style.display = 'none';
   if (_currentRecipeDate && _currentRecipeType) openAddMealForSlot(_currentRecipeDate, _currentRecipeType);
+}
+
+function confirmDeleteMeal() {
+  const planned = allMealPlan.find(m => m.date === _currentRecipeDate && m.meal_type === _currentRecipeType);
+  if (!planned) return;
+
+  const mealName = planned.meal_name || 'this meal';
+  const d = new Date(_currentRecipeDate + 'T00:00:00');
+  const dayLabel = d.toLocaleDateString('en-AU', { weekday: 'long', day: 'numeric', month: 'short' });
+
+  // Check if this meal had ingredients saved
+  let ingredients = [];
+  try { ingredients = JSON.parse(planned.ingredients || '[]'); } catch(e) {}
+
+  // Check if any of those ingredients are currently in the shop list
+  // We match by name (lowercase, trimmed)
+  const mealIngNames = ingredients.map(i => i.toLowerCase().trim());
+  const shopMatches = allGrocery.filter(g =>
+    mealIngNames.some(ing => ing.includes((g.name || '').toLowerCase().trim()) || (g.name || '').toLowerCase().trim().includes(ing.substring(0, 12)))
+  );
+  const hasShopItems = shopMatches.length > 0;
+
+  document.getElementById('delete-meal-title').textContent = `Remove ${mealName}?`;
+  document.getElementById('delete-meal-sub').textContent = `This will remove ${mealName} from ${dayLabel}.${hasShopItems ? ` You also have ${shopMatches.length} ingredient${shopMatches.length===1?'':'s'} from this meal in your shop list.` : ''}`;
+
+  const withIngBtn = document.getElementById('delete-meal-with-ing-btn');
+  if (withIngBtn) withIngBtn.style.display = hasShopItems ? 'block' : 'none';
+
+  document.getElementById('delete-meal-modal').classList.remove('hidden');
+}
+
+async function deleteMealFromPlanner(alsoRemoveIngredients) {
+  document.getElementById('delete-meal-modal').classList.add('hidden');
+  document.getElementById('recipe-detail-overlay').style.display = 'none';
+
+  const planned = allMealPlan.find(m => m.date === _currentRecipeDate && m.meal_type === _currentRecipeType);
+  if (!planned) return;
+
+  try {
+    // Delete the meal plan entry
+    await sbDelete('meal_plan', planned.id);
+    allMealPlan = allMealPlan.filter(m => m.id !== planned.id);
+
+    // Optionally remove matched shop ingredients
+    if (alsoRemoveIngredients) {
+      let ingredients = [];
+      try { ingredients = JSON.parse(planned.ingredients || '[]'); } catch(e) {}
+      const mealIngNames = ingredients.map(i => i.toLowerCase().trim());
+      const toRemove = allGrocery.filter(g =>
+        mealIngNames.some(ing => ing.includes((g.name || '').toLowerCase().trim()) || (g.name || '').toLowerCase().trim().includes(ing.substring(0, 12)))
+      );
+      await Promise.all(toRemove.map(g => sbDelete('grocery', g.id)));
+      allGrocery = allGrocery.filter(g => !toRemove.find(r => r.id === g.id));
+      if (toRemove.length > 0) showToast(`Meal removed · ${toRemove.length} shop item${toRemove.length===1?'':'s'} removed`);
+      else showToast('Meal removed');
+    } else {
+      showToast('Meal removed');
+    }
+
+    renderMealsScreen();
+    renderShopScreen();
+    renderTodayMeals(allMealPlan, allMeals);
+  } catch(e) {
+    console.error('Delete meal:', e);
+    showToast('Could not remove meal');
+  }
 }
 
 // ── INGREDIENT PROMPT & PICKER ───────────────────────────────
