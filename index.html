@@ -841,6 +841,25 @@
   .leftover-pill { padding: 8px 14px; border-radius: 20px; background: white; border: 1.5px solid #E2EAE2; font-size: 0.78rem; color: #5A725A; cursor: pointer; transition: all 0.15s; }
   .leftover-pill:active { background: #EAF2EA; border-color: #3D6B47; }
   .leftover-pill.sel { background: #3D6B47; color: white; border-color: #3D6B47; }
+
+  /* RECIPE DETAIL SHEET */
+  .recipe-sheet-url { display: flex; align-items: center; gap: 10px; background: #F5F8F5; border-radius: 12px; padding: 12px 14px; margin-bottom: 4px; }
+  .recipe-sheet-url-text { font-size: 0.75rem; color: #3D6B47; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .recipe-sheet-open-btn { background: #3D6B47; color: white; border: none; border-radius: 10px; padding: 8px 14px; font-size: 0.75rem; font-weight: 600; cursor: pointer; white-space: nowrap; font-family: 'Plus Jakarta Sans', sans-serif; flex-shrink: 0; }
+  .recipe-ing-list { display: flex; flex-direction: column; }
+  .recipe-ing-item { display: flex; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid #F0F5F0; cursor: pointer; transition: background 0.1s; -webkit-tap-highlight-color: transparent; }
+  .recipe-ing-item:last-child { border-bottom: none; }
+  .recipe-ing-item.checked .recipe-ing-text { text-decoration: line-through; color: #B0BFB0; }
+  .recipe-ing-checkbox { width: 22px; height: 22px; border-radius: 6px; border: 2px solid #C8D8C8; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.15s; background: white; }
+  .recipe-ing-item.checked .recipe-ing-checkbox { background: #3D6B47; border-color: #3D6B47; }
+  .recipe-ing-check-mark { display: none; color: white; font-size: 0.75rem; font-weight: 700; }
+  .recipe-ing-item.checked .recipe-ing-check-mark { display: block; }
+  .recipe-ing-text { font-size: 0.82rem; color: #1A1A1A; line-height: 1.4; flex: 1; }
+  .recipe-ing-select-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .recipe-ing-select-all { font-size: 0.72rem; font-weight: 600; color: #3D6B47; cursor: pointer; padding: 4px 0; background: none; border: none; font-family: 'Plus Jakarta Sans', sans-serif; }
+  .recipe-add-shop-btn { width: 100%; padding: 15px; border-radius: 14px; background: #3D6B47; color: white; border: none; font-size: 0.85rem; font-weight: 600; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: opacity 0.15s; }
+  .recipe-add-shop-btn:disabled { opacity: 0.4; }
+  .recipe-add-shop-btn:active { opacity: 0.85; }
 </style>
 </head>
 <body>
@@ -1653,6 +1672,43 @@
 
   </div>
 
+  <!-- RECIPE DETAIL SHEET -->
+  <div id="recipe-detail-overlay" class="overlay" style="display:none" onclick="closeRecipeDetail(event)">
+    <div class="bottom-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header" style="position:relative">
+        <div class="sheet-eyebrow">Recipe</div>
+        <button class="sheet-close" onclick="document.getElementById('recipe-detail-overlay').style.display='none'">✕</button>
+        <div class="sheet-title" id="recipe-detail-title">Recipe</div>
+        <div class="sheet-sub" id="recipe-detail-meta"></div>
+      </div>
+      <div class="sheet-body">
+        <div id="recipe-detail-url-wrap" style="display:none;margin-bottom:12px">
+          <div class="recipe-sheet-url">
+            <div class="recipe-sheet-url-text" id="recipe-detail-url-text"></div>
+            <button class="recipe-sheet-open-btn" onclick="openRecipeUrl()">View recipe →</button>
+          </div>
+        </div>
+        <div id="recipe-detail-ing-wrap" style="display:none">
+          <div class="recipe-ing-select-row">
+            <div class="form-label" style="margin:0">Ingredients</div>
+            <button class="recipe-ing-select-all" onclick="toggleSelectAllIngredients()">Select all</button>
+          </div>
+          <div class="recipe-ing-list" id="recipe-detail-ing-list"></div>
+        </div>
+        <div id="recipe-detail-empty" style="display:none;padding:16px 0;color:#8FA98F;font-size:0.82rem">
+          No recipe details saved. Edit this meal to add a recipe link.
+        </div>
+      </div>
+      <div class="sheet-footer" style="display:flex;flex-direction:column;gap:8px">
+        <button class="recipe-add-shop-btn" id="recipe-add-shop-btn" onclick="addCheckedToShop()" disabled>Add selected to shop</button>
+        <div style="display:flex;gap:8px">
+          <button class="save-btn" style="background:#F5F8F5;color:#1A1A1A;flex:1" onclick="editCurrentMealSlot()">Edit meal</button>
+          <button class="save-btn" style="flex:1" onclick="document.getElementById('recipe-detail-overlay').style.display='none'">Done</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -1935,7 +1991,10 @@ function renderWeekPlanner() {
     const slots = mealTypes.map(type => {
       const planned = dayMeals.find(m => m.meal_type===type);
       const mealName = planned?.meal_name || '';
-      return `<div class="plan-slot" onclick="openAddMealForSlot('${day.date}','${type}')">
+      const slotClick = mealName
+        ? `openRecipeDetail('${day.date}','${type}')`
+        : `openAddMealForSlot('${day.date}','${type}')`;
+      return `<div class="plan-slot" onclick="${slotClick}">
         <div class="slot-type-badge ${getSlotClass(type)}">${type}</div>
         <div class="slot-info">${mealName ? `<div class="slot-meal-name">${mealName}</div>` : `<div class="slot-empty">Tap to plan</div>`}</div>
         <div class="slot-add">${mealName ? '›' : '+'}</div>
@@ -2044,6 +2103,132 @@ function selectLeftover(el,name) { document.querySelectorAll('.add-fav-chip').fo
 function selectFavMeal(el,name) { document.querySelectorAll('.add-fav-chip').forEach(c=>c.classList.remove('sel')); el.classList.add('sel'); selectedFavMeal=name; document.getElementById('new-meal-name').value=name; }
 function closeAddMeal(e) { if(e.target.id==='add-meal-overlay') document.getElementById('add-meal-overlay').style.display='none'; }
 
+
+// ── RECIPE DETAIL ────────────────────────────────────────────
+let _currentRecipeDate = null, _currentRecipeType = null;
+
+
+function toggleIngredient(idx) {
+  const el = document.getElementById('ring-' + idx);
+  if (!el) return;
+  el.classList.toggle('checked');
+  updateAddToShopBtn();
+}
+
+function toggleSelectAllIngredients() {
+  const items = document.querySelectorAll('.recipe-ing-item');
+  const allChecked = [...items].every(el => el.classList.contains('checked'));
+  items.forEach(el => allChecked ? el.classList.remove('checked') : el.classList.add('checked'));
+  const btn = document.querySelector('.recipe-ing-select-all');
+  if (btn) btn.textContent = allChecked ? 'Select all' : 'Deselect all';
+  updateAddToShopBtn();
+}
+
+function updateAddToShopBtn() {
+  const checked = document.querySelectorAll('.recipe-ing-item.checked').length;
+  const btn = document.getElementById('recipe-add-shop-btn');
+  if (!btn) return;
+  btn.disabled = checked === 0;
+  btn.textContent = checked === 0 ? 'Add selected to shop' : `Add ${checked} ingredient${checked===1?'':'s'} to shop`;
+}
+
+async function addCheckedToShop() {
+  const btn = document.getElementById('recipe-add-shop-btn');
+  const planned = allMealPlan.find(m => m.date === _currentRecipeDate && m.meal_type === _currentRecipeType);
+  let ingredients = [];
+  if (planned?.ingredients) {
+    try { ingredients = JSON.parse(planned.ingredients); } catch(e) {}
+  }
+
+  const checkedEls = document.querySelectorAll('.recipe-ing-item.checked');
+  const toAdd = [...checkedEls].map(el => el.querySelector('.recipe-ing-text')?.textContent || '').filter(Boolean);
+  if (toAdd.length === 0) return;
+
+  if (btn) { btn.textContent = 'Adding…'; btn.disabled = true; }
+
+  // Determine category from ingredient name (simple heuristic)
+  const catMap = {
+    'milk':'Dairy','butter':'Dairy','cream':'Dairy','cheese':'Dairy','yoghurt':'Dairy','egg':'Dairy','eggs':'Dairy',
+    'chicken':'Meat','beef':'Meat','pork':'Meat','lamb':'Meat','mince':'Meat','bacon':'Meat','salmon':'Meat','tuna':'Meat',
+    'flour':'Pantry','sugar':'Pantry','oil':'Pantry','pasta':'Pantry','rice':'Pantry','salt':'Pantry','pepper':'Pantry','stock':'Pantry','sauce':'Pantry','vinegar':'Pantry',
+    'apple':'Produce','banana':'Produce','lemon':'Produce','lime':'Produce','onion':'Produce','garlic':'Produce','tomato':'Produce','carrot':'Produce','spinach':'Produce','lettuce':'Produce','capsicum':'Produce','zucchini':'Produce','potato':'Produce','mushroom':'Produce',
+    'bread':'Bakery',
+  };
+
+  for (const ing of toAdd) {
+    const lower = ing.toLowerCase();
+    let cat = 'Other';
+    for (const [key, val] of Object.entries(catMap)) {
+      if (lower.includes(key)) { cat = val; break; }
+    }
+    try { await addGroceryItem(ing, cat, ''); } catch(e) { console.error(e); }
+  }
+
+  // Uncheck added items
+  document.querySelectorAll('.recipe-ing-item.checked').forEach(el => el.classList.remove('checked'));
+  updateAddToShopBtn();
+  document.getElementById('recipe-detail-overlay').style.display = 'none';
+  showToast(`${toAdd.length} ingredient${toAdd.length===1?'':'s'} added to shop!`);
+}
+function openRecipeDetail(date, type) {
+  _currentRecipeDate = date;
+  _currentRecipeType = type;
+  const planned = allMealPlan.find(m => m.date === date && m.meal_type === type);
+  if (!planned) { openAddMealForSlot(date, type); return; }
+
+  const title = document.getElementById('recipe-detail-title');
+  const meta = document.getElementById('recipe-detail-meta');
+  const urlWrap = document.getElementById('recipe-detail-url-wrap');
+  const urlText = document.getElementById('recipe-detail-url-text');
+  const ingWrap = document.getElementById('recipe-detail-ing-wrap');
+  const ingList = document.getElementById('recipe-detail-ing-list');
+  const empty = document.getElementById('recipe-detail-empty');
+
+  if (title) title.textContent = planned.meal_name || '';
+  const d = new Date(date + 'T00:00:00');
+  if (meta) meta.textContent = `${type} · ${d.toLocaleDateString('en-AU',{weekday:'long',day:'numeric',month:'short'})}`;
+
+  // Show URL
+  const hasUrl = planned.source_url && planned.source_url.startsWith('http');
+  if (urlWrap) urlWrap.style.display = hasUrl ? '' : 'none';
+  if (urlText) urlText.textContent = planned.source_url || '';
+
+  // Show ingredients
+  let ingredients = [];
+  if (planned.ingredients) {
+    try { ingredients = JSON.parse(planned.ingredients); } catch(e) {}
+  }
+  if (ingredients.length > 0) {
+    if (ingWrap) ingWrap.style.display = '';
+    if (ingList) ingList.innerHTML = ingredients.map((ing, i) =>
+      `<div class="recipe-ing-item" id="ring-${i}" onclick="toggleIngredient(${i})">
+        <div class="recipe-ing-checkbox"><span class="recipe-ing-check-mark">✓</span></div>
+        <div class="recipe-ing-text">${ing}</div>
+      </div>`
+    ).join('');
+    updateAddToShopBtn();
+  } else {
+    if (ingWrap) ingWrap.style.display = 'none';
+  }
+
+  if (empty) empty.style.display = (!hasUrl && ingredients.length === 0) ? '' : 'none';
+
+  document.getElementById('recipe-detail-overlay').style.display = 'flex';
+}
+
+function openRecipeUrl() {
+  const planned = allMealPlan.find(m => m.date === _currentRecipeDate && m.meal_type === _currentRecipeType);
+  if (planned?.source_url) window.open(planned.source_url, '_blank');
+}
+
+function closeRecipeDetail(e) {
+  if (e.target.id === 'recipe-detail-overlay') document.getElementById('recipe-detail-overlay').style.display = 'none';
+}
+
+function editCurrentMealSlot() {
+  document.getElementById('recipe-detail-overlay').style.display = 'none';
+  if (_currentRecipeDate && _currentRecipeType) openAddMealForSlot(_currentRecipeDate, _currentRecipeType);
+}
 // ── MEAL SHEET FUNCTIONS ─────────────────────────────────────
 function switchMealTab(tab) {
   ['recipe','favourites','leftovers'].forEach(t => {
@@ -2173,10 +2358,16 @@ async function saveMeal() {
   if (btn) { btn.textContent='Saving…'; btn.disabled=true; }
   try {
     if (existingIdx>=0 && allMealPlan[existingIdx].id) {
-      await sbPatch('meal_plan', allMealPlan[existingIdx].id, {meal_name:mealName,day:dayName});
+      const sourceUrl2 = document.getElementById('new-meal-url')?.value.trim() || null;
+      const recipeIng2 = window._recipeIngredients ? JSON.stringify(window._recipeIngredients) : null;
+      await sbPatch('meal_plan', allMealPlan[existingIdx].id, {meal_name:mealName,day:dayName,...(sourceUrl2 && {source_url:sourceUrl2}),...(recipeIng2 && {ingredients:recipeIng2})});
+      if (sourceUrl2) allMealPlan[existingIdx].source_url = sourceUrl2;
+      if (recipeIng2) allMealPlan[existingIdx].ingredients = recipeIng2;
       allMealPlan[existingIdx].meal_name = mealName;
     } else {
-      const inserted = await sbPost('meal_plan',{date:selectedDay,day:dayName,meal_type:mealType,meal_name:mealName,planned:true});
+      const sourceUrl = document.getElementById('new-meal-url')?.value.trim() || null;
+      const recipeIngredients = window._recipeIngredients ? JSON.stringify(window._recipeIngredients) : null;
+      const inserted = await sbPost('meal_plan',{date:selectedDay,day:dayName,meal_type:mealType,meal_name:mealName,planned:true,source_url:sourceUrl,ingredients:recipeIngredients});
       if (inserted&&inserted[0]) allMealPlan.push(inserted[0]);
     }
     document.getElementById('add-meal-overlay').style.display='none';
