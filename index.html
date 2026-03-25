@@ -2296,6 +2296,10 @@ function editCurrentMealSlot() {
 
 // ── INGREDIENT PROMPT & PICKER ───────────────────────────────
 function showIngPrompt(mealName, count) {
+  // Close the meal sheet first so prompt isn't obscured
+  const mealOverlay = document.getElementById('add-meal-overlay');
+  if (mealOverlay) mealOverlay.style.display = 'none';
+
   const modal = document.getElementById('ing-prompt-modal');
   const title = document.getElementById('ing-prompt-title');
   const sub = document.getElementById('ing-prompt-sub');
@@ -2496,9 +2500,10 @@ async function fetchRecipeFromUrl() {
       window._recipeIngredients = ingredients;
       window._recipeName = mealName;
       if (status) {
-        status.textContent = `✓ ${mealName} — ${ingredients.length} ingredients ready to add to shop`;
+        status.textContent = `✓ ${mealName} — ${ingredients.length} ingredients found`;
         status.className = 'recipe-status success';
       }
+      showIngPrompt(mealName, ingredients.length);
     } else {
       if (status) {
         status.textContent = `✓ ${mealName} — meal name filled in`;
