@@ -2374,19 +2374,23 @@ async function confirmAddToShop() {
 
   if (btn) { btn.textContent = 'Adding…'; btn.disabled = true; }
 
-  const catMap = {
-    'milk':'Dairy','butter':'Dairy','cream':'Dairy','cheese':'Dairy','yoghurt':'Dairy','ricotta':'Dairy','egg':'Dairy',
-    'chicken':'Meat','beef':'Meat','pork':'Meat','lamb':'Meat','mince':'Meat','bacon':'Meat','salmon':'Meat','tuna':'Meat','prawn':'Meat',
-    'flour':'Pantry','sugar':'Pantry','oil':'Pantry','pasta':'Pantry','rice':'Pantry','salt':'Pantry','pepper':'Pantry','stock':'Pantry','sauce':'Pantry','vinegar':'Pantry','honey':'Pantry','syrup':'Pantry','baking':'Pantry','vanilla':'Pantry','cocoa':'Pantry',
-    'apple':'Produce','banana':'Produce','lemon':'Produce','lime':'Produce','onion':'Produce','garlic':'Produce','tomato':'Produce','carrot':'Produce','spinach':'Produce','lettuce':'Produce','capsicum':'Produce','zucchini':'Produce','potato':'Produce','mushroom':'Produce','herb':'Produce','basil':'Produce','parsley':'Produce','coriander':'Produce','ginger':'Produce',
-    'bread':'Bakery','loaf':'Bakery',
-  };
+  const catRules = [
+    ['Dairy',   ['milk','butter','cream','cheese','ricotta','yoghurt','yogurt','cheddar','mozzarella','parmesan','brie','feta','sour cream','buttermilk','ghee','custard','mascarpone','cream cheese','whipped cream','condensed milk','evaporated milk']],
+    ['Dairy',   ['egg','eggs']],
+    ['Meat',    ['chicken','beef','pork','lamb','mince','bacon','ham','turkey','duck','veal','sausage','salami','prosciutto','pancetta','chorizo','salmon','tuna','prawn','shrimp','fish','cod','barramundi','snapper','crab','lobster','seafood','anchovy']],
+    ['Produce', ['apple','banana','lemon','lime','orange','strawberr','blueberr','raspberr','mango','pineapple','grape','peach','pear','plum','avocado','tomato','onion','garlic','potato','carrot','capsicum','zucchini','cucumber','celery','spinach','lettuce','kale','broccoli','cauliflower','mushroom','eggplant','pumpkin','corn','pea','bean','asparagus','leek','silverbeet','bok choy','chilli','ginger','herb','basil','parsley','coriander','mint','thyme','rosemary','dill','chive','spring onion','shallot','beetroot','radish','fennel']],
+    ['Bakery',  ['bread','loaf','roll','bun','toast','sourdough','focaccia','pita','tortilla','wrap','croissant','muffin','scone','crumpet','crouton']],
+    ['Pantry',  ['flour','sugar','salt','pepper','oil','olive oil','vegetable oil','coconut oil','vinegar','soy sauce','fish sauce','oyster sauce','tomato sauce','pasta sauce','stock','broth','honey','maple syrup','syrup','jam','vegemite','peanut butter','tahini','miso','curry paste','curry powder','cumin','paprika','turmeric','cinnamon','nutmeg','oregano','bay leaf','baking powder','baking soda','bicarb','yeast','cocoa','chocolate','vanilla','almond meal','breadcrumb','panko','cornflour','cornstarch','rice','pasta','noodle','couscous','quinoa','lentil','chickpea','kidney bean','black bean','coconut milk','coconut cream','canned tomato','diced tomato','tomato paste','tuna can','sardine','anchovy can','olive','capers','mustard','mayonnaise','relish','chutney','sriracha','tabasco','worcestershire']],
+    ['Frozen',  ['frozen','ice cream','gelato','sorbet','frozen pea','frozen corn','frozen berry','frozen spinach']],
+  ];
 
   for (const ing of toAdd) {
     const lower = ing.toLowerCase();
     let cat = 'Other';
-    for (const [key, val] of Object.entries(catMap)) {
-      if (lower.includes(key)) { cat = val; break; }
+    outer: for (const [category, keywords] of catRules) {
+      for (const kw of keywords) {
+        if (lower.includes(kw)) { cat = category; break outer; }
+      }
     }
     try { await addGroceryItem(ing, cat, ''); } catch(e) { console.error(e); }
   }
