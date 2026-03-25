@@ -860,6 +860,40 @@
   .recipe-add-shop-btn { width: 100%; padding: 15px; border-radius: 14px; background: #3D6B47; color: white; border: none; font-size: 0.85rem; font-weight: 600; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: opacity 0.15s; }
   .recipe-add-shop-btn:disabled { opacity: 0.4; }
   .recipe-add-shop-btn:active { opacity: 0.85; }
+
+  /* INGREDIENT PROMPT MODAL */
+  .ing-prompt-modal { position: fixed; inset: 0; z-index: 300; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(0,0,0,0.4); }
+  .ing-prompt-modal.hidden { display: none; }
+  .ing-prompt-card { background: white; border-radius: 20px; padding: 28px 24px; width: 100%; max-width: 360px; box-shadow: 0 8px 40px rgba(0,0,0,0.15); }
+  .ing-prompt-title { font-size: 1.05rem; font-weight: 700; color: #1A1A1A; margin-bottom: 8px; }
+  .ing-prompt-sub { font-size: 0.82rem; color: #5A725A; line-height: 1.5; margin-bottom: 22px; }
+  .ing-prompt-btns { display: flex; flex-direction: column; gap: 8px; }
+  .ing-prompt-yes { background: #3D6B47; color: white; border: none; border-radius: 12px; padding: 14px; font-size: 0.85rem; font-weight: 600; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; }
+  .ing-prompt-no { background: #F5F8F5; color: #5A725A; border: none; border-radius: 12px; padding: 12px; font-size: 0.82rem; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+  /* INGREDIENT PICKER SHEET */
+  .ing-picker-overlay { position: fixed; inset: 0; z-index: 310; display: flex; align-items: flex-end; background: rgba(0,0,0,0.4); }
+  .ing-picker-overlay.hidden { display: none; }
+  .ing-picker-sheet { background: white; border-radius: 24px 24px 0 0; width: 100%; max-height: 80vh; display: flex; flex-direction: column; padding-bottom: calc(var(--safe-bottom) + 16px); }
+  .ing-picker-handle { width: 36px; height: 4px; background: #E2EAE2; border-radius: 4px; margin: 12px auto 0; flex-shrink: 0; }
+  .ing-picker-header { padding: 16px 20px 12px; border-bottom: 1px solid #E2EAE2; flex-shrink: 0; }
+  .ing-picker-title { font-size: 1rem; font-weight: 700; color: #1A1A1A; margin-bottom: 2px; }
+  .ing-picker-sub { font-size: 0.75rem; color: #8FA98F; }
+  .ing-picker-actions { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; border-bottom: 1px solid #F0F5F0; flex-shrink: 0; }
+  .ing-picker-select-all { font-size: 0.75rem; font-weight: 600; color: #3D6B47; background: none; border: none; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; padding: 4px 0; }
+  .ing-picker-count { font-size: 0.72rem; color: #8FA98F; }
+  .ing-picker-list { overflow-y: auto; -webkit-overflow-scrolling: touch; flex: 1; padding: 0 20px; }
+  .ing-pick-item { display: flex; align-items: center; gap: 14px; padding: 12px 0; border-bottom: 1px solid #F5F8F5; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  .ing-pick-item:last-child { border-bottom: none; }
+  .ing-pick-check { width: 24px; height: 24px; border-radius: 7px; border: 2px solid #C8D8C8; background: white; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+  .ing-pick-item.checked .ing-pick-check { background: #3D6B47; border-color: #3D6B47; }
+  .ing-pick-checkmark { display: none; }
+  .ing-pick-item.checked .ing-pick-checkmark { display: block; }
+  .ing-pick-text { font-size: 0.82rem; color: #1A1A1A; line-height: 1.4; }
+  .ing-pick-item.checked .ing-pick-text { color: #5A725A; }
+  .ing-picker-footer { padding: 12px 20px 0; flex-shrink: 0; }
+  .ing-picker-add-btn { width: 100%; padding: 15px; border-radius: 14px; background: #1A1A1A; color: white; border: none; font-size: 0.85rem; font-weight: 600; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: opacity 0.15s; }
+  .ing-picker-add-btn:disabled { opacity: 0.35; background: #C0C0C0; }
 </style>
 </head>
 <body>
@@ -1709,6 +1743,36 @@
       </div>
     </div>
   </div>
+  <!-- INGREDIENT PROMPT MODAL -->
+  <div class="ing-prompt-modal hidden" id="ing-prompt-modal">
+    <div class="ing-prompt-card">
+      <div class="ing-prompt-title" id="ing-prompt-title">Add ingredients to shop?</div>
+      <div class="ing-prompt-sub" id="ing-prompt-sub">This recipe has ingredients — do you want to pick which ones to add to your shop list?</div>
+      <div class="ing-prompt-btns">
+        <button class="ing-prompt-yes" onclick="showIngPicker()">Yes, pick ingredients</button>
+        <button class="ing-prompt-no" onclick="skipIngredients()">No thanks, just save meal</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- INGREDIENT PICKER SHEET -->
+  <div class="ing-picker-overlay hidden" id="ing-picker-overlay">
+    <div class="ing-picker-sheet">
+      <div class="ing-picker-handle"></div>
+      <div class="ing-picker-header">
+        <div class="ing-picker-title" id="ing-picker-title">Pick ingredients to add</div>
+        <div class="ing-picker-sub">Tap the ones you need — they'll go straight to your shop list</div>
+      </div>
+      <div class="ing-picker-actions">
+        <button class="ing-picker-select-all" onclick="ingPickerSelectAll()">Select all</button>
+        <div class="ing-picker-count" id="ing-picker-count">0 selected</div>
+      </div>
+      <div class="ing-picker-list" id="ing-picker-list"></div>
+      <div class="ing-picker-footer">
+        <button class="ing-picker-add-btn" id="ing-picker-add-btn" onclick="confirmAddToShop()" disabled>Add to shop list</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -2229,6 +2293,112 @@ function editCurrentMealSlot() {
   document.getElementById('recipe-detail-overlay').style.display = 'none';
   if (_currentRecipeDate && _currentRecipeType) openAddMealForSlot(_currentRecipeDate, _currentRecipeType);
 }
+
+// ── INGREDIENT PROMPT & PICKER ───────────────────────────────
+function showIngPrompt(mealName, count) {
+  const modal = document.getElementById('ing-prompt-modal');
+  const title = document.getElementById('ing-prompt-title');
+  const sub = document.getElementById('ing-prompt-sub');
+  if (title) title.textContent = 'Add ingredients to shop?';
+  if (sub) sub.textContent = `${mealName} has ${count} ingredients — pick the ones you need to add to your shop list.`;
+  if (modal) modal.classList.remove('hidden');
+}
+
+function showIngPicker() {
+  // Hide prompt
+  document.getElementById('ing-prompt-modal').classList.add('hidden');
+
+  const ingredients = window._recipeIngredients || [];
+  const mealName = window._recipeName || 'Recipe';
+
+  const titleEl = document.getElementById('ing-picker-title');
+  if (titleEl) titleEl.textContent = mealName;
+
+  // Render ingredient list — all pre-checked
+  const list = document.getElementById('ing-picker-list');
+  if (list) {
+    list.innerHTML = ingredients.map((ing, i) => `
+      <div class="ing-pick-item" id="ingpick-${i}" onclick="toggleIngPick(${i})">
+        <div class="ing-pick-check">
+          <span class="ing-pick-checkmark">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+        </div>
+        <div class="ing-pick-text">${ing}</div>
+      </div>`).join('');
+  }
+
+  updateIngPickerBtn();
+  document.getElementById('ing-picker-overlay').classList.remove('hidden');
+}
+
+function toggleIngPick(i) {
+  const el = document.getElementById('ingpick-' + i);
+  if (el) el.classList.toggle('checked');
+  updateIngPickerBtn();
+}
+
+function ingPickerSelectAll() {
+  const items = document.querySelectorAll('.ing-pick-item');
+  const allChecked = [...items].every(el => el.classList.contains('checked'));
+  items.forEach(el => allChecked ? el.classList.remove('checked') : el.classList.add('checked'));
+  const btn = document.querySelector('.ing-picker-select-all');
+  if (btn) btn.textContent = allChecked ? 'Select all' : 'Deselect all';
+  updateIngPickerBtn();
+}
+
+function updateIngPickerBtn() {
+  const checked = document.querySelectorAll('.ing-pick-item.checked').length;
+  const total = document.querySelectorAll('.ing-pick-item').length;
+  const btn = document.getElementById('ing-picker-add-btn');
+  const count = document.getElementById('ing-picker-count');
+  if (count) count.textContent = `${checked} of ${total} selected`;
+  if (btn) {
+    btn.disabled = checked === 0;
+    btn.textContent = checked === 0 ? 'Add to shop list' : `Add ${checked} item${checked===1?'':'s'} to shop list`;
+  }
+  // Update select all button text
+  const selBtn = document.querySelector('.ing-picker-select-all');
+  if (selBtn) selBtn.textContent = checked === total ? 'Deselect all' : 'Select all';
+}
+
+async function confirmAddToShop() {
+  const btn = document.getElementById('ing-picker-add-btn');
+  const checkedEls = document.querySelectorAll('.ing-pick-item.checked');
+  const toAdd = [...checkedEls].map(el => el.querySelector('.ing-pick-text')?.textContent || '').filter(Boolean);
+  if (toAdd.length === 0) return;
+
+  if (btn) { btn.textContent = 'Adding…'; btn.disabled = true; }
+
+  const catMap = {
+    'milk':'Dairy','butter':'Dairy','cream':'Dairy','cheese':'Dairy','yoghurt':'Dairy','ricotta':'Dairy','egg':'Dairy',
+    'chicken':'Meat','beef':'Meat','pork':'Meat','lamb':'Meat','mince':'Meat','bacon':'Meat','salmon':'Meat','tuna':'Meat','prawn':'Meat',
+    'flour':'Pantry','sugar':'Pantry','oil':'Pantry','pasta':'Pantry','rice':'Pantry','salt':'Pantry','pepper':'Pantry','stock':'Pantry','sauce':'Pantry','vinegar':'Pantry','honey':'Pantry','syrup':'Pantry','baking':'Pantry','vanilla':'Pantry','cocoa':'Pantry',
+    'apple':'Produce','banana':'Produce','lemon':'Produce','lime':'Produce','onion':'Produce','garlic':'Produce','tomato':'Produce','carrot':'Produce','spinach':'Produce','lettuce':'Produce','capsicum':'Produce','zucchini':'Produce','potato':'Produce','mushroom':'Produce','herb':'Produce','basil':'Produce','parsley':'Produce','coriander':'Produce','ginger':'Produce',
+    'bread':'Bakery','loaf':'Bakery',
+  };
+
+  for (const ing of toAdd) {
+    const lower = ing.toLowerCase();
+    let cat = 'Other';
+    for (const [key, val] of Object.entries(catMap)) {
+      if (lower.includes(key)) { cat = val; break; }
+    }
+    try { await addGroceryItem(ing, cat, ''); } catch(e) { console.error(e); }
+  }
+
+  document.getElementById('ing-picker-overlay').classList.add('hidden');
+  window._recipeIngredients = null;
+  window._recipeName = null;
+  showToast(`${toAdd.length} ingredient${toAdd.length===1?'':'s'} added to shop!`);
+}
+
+function skipIngredients() {
+  document.getElementById('ing-prompt-modal').classList.add('hidden');
+  window._recipeIngredients = null;
+  window._recipeName = null;
+}
+
 // ── MEAL SHEET FUNCTIONS ─────────────────────────────────────
 function switchMealTab(tab) {
   ['recipe','favourites','leftovers'].forEach(t => {
@@ -2373,18 +2543,7 @@ async function saveMeal() {
     document.getElementById('add-meal-overlay').style.display='none';
     document.getElementById('new-meal-name').value='';if(document.getElementById('new-meal-url'))document.getElementById('new-meal-url').value=''; selectedFavMeal='';
     renderWeekPlanner();renderTodayMeals(allMealPlan,allMeals);
-    // Add recipe ingredients to grocery list if imported
-    if (window._recipeIngredients && window._recipeIngredients.length > 0) {
-      const mealForIngredients = window._recipeName || mealName;
-      showToast(`Meal saved! Adding ${window._recipeIngredients.length} ingredients to shop…`);
-      for (const ingredient of window._recipeIngredients) {
-        try { await addGroceryItem(ingredient, 'Other', ''); } catch(e) {}
-      }
-      window._recipeIngredients = null; window._recipeName = null;
-      showToast('Ingredients added to your shop list!');
-    } else {
-      showToast('Meal saved!');
-    }
+    showToast('Meal saved!');
   } catch(e) { console.error(e); showToast('Could not save: '+e.message.slice(0,40)); }
   finally { if(btn){btn.textContent='✓ Save to planner';btn.disabled=false;} }
 }
