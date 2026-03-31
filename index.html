@@ -933,7 +933,9 @@
   .contract-ai-textarea:focus { border-color: #3D6B47; }
   .contract-ai-btn { background: #3D6B47; color: white; border: none; border-radius: 10px; padding: 9px 16px; font-size: 0.75rem; font-weight: 600; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; margin-top: 8px; width: 100%; transition: opacity 0.15s; }
   .contract-ai-btn:disabled { opacity: 0.5; }
-  .contract-ai-status { font-size: 0.72rem; color: #3D6B47; margin-top: 6px; font-weight: 500; min-height: 18px; }</style>
+  .contract-ai-status { font-size: 0.72rem; color: #3D6B47; margin-top: 6px; font-weight: 500; min-height: 18px; }
+  .contract-mode-btn { flex: 1; padding: 7px; border-radius: 8px; border: 1.5px solid #C8D8C8; background: white; font-size: 0.72rem; font-weight: 600; color: #5A725A; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: all 0.15s; }
+  .contract-mode-btn.active { background: #3D6B47; color: white; border-color: #3D6B47; }</style>
 </head>
 <body>
 <div id="app">
@@ -1827,8 +1829,30 @@
       <div class="sheet-body">
         <!-- AI EXTRACT -->
         <div class="contract-ai-box">
-          <div class="contract-ai-label">✦ Paste contract text — AI reads the renewal date</div>
-          <textarea class="contract-ai-textarea" id="contract-paste-text" placeholder="Paste any text from your contract or bill — the renewal date, provider name, or any relevant details…"></textarea>
+          <div class="contract-ai-label">✦ AI reads the renewal date</div>
+
+          <!-- INPUT MODE TOGGLE -->
+          <div style="display:flex;gap:6px;margin-bottom:10px">
+            <button class="contract-mode-btn active" id="cmode-upload" onclick="switchContractMode('upload')">📎 Upload / Photo</button>
+            <button class="contract-mode-btn" id="cmode-paste" onclick="switchContractMode('paste')">✏️ Paste text</button>
+          </div>
+
+          <!-- UPLOAD MODE -->
+          <div id="contract-upload-panel">
+            <input type="file" id="contract-file-input" accept="image/*,application/pdf" capture style="display:none" onchange="onContractFileSelected(this)">
+            <div id="contract-upload-zone" onclick="document.getElementById('contract-file-input').click()" style="border:2px dashed #C8D8C8;border-radius:10px;padding:20px;text-align:center;cursor:pointer;background:white;transition:all 0.15s">
+              <div style="font-size:1.4rem;margin-bottom:6px">📄</div>
+              <div style="font-size:0.78rem;font-weight:600;color:#3D6B47">Tap to upload or take photo</div>
+              <div style="font-size:0.68rem;color:#8FA98F;margin-top:3px">PDF, image, or screenshot</div>
+            </div>
+            <div id="contract-file-preview" style="display:none;margin-top:8px;font-size:0.72rem;color:#3D6B47;font-weight:500;padding:8px 10px;background:white;border-radius:8px;border:1.5px solid #C8D8C8"></div>
+          </div>
+
+          <!-- PASTE MODE -->
+          <div id="contract-paste-panel" style="display:none">
+            <textarea class="contract-ai-textarea" id="contract-paste-text" placeholder="Paste any text from your contract or bill…"></textarea>
+          </div>
+
           <button class="contract-ai-btn" id="contract-ai-btn" onclick="extractContractDate()">Read renewal date</button>
           <div class="contract-ai-status" id="contract-ai-status"></div>
         </div>
@@ -1886,6 +1910,9 @@
 </div>
 
 <script>
+// ── CONFIG ───────────────────────────────────────────────────
+const SPOONACULAR_API_KEY = 'a3c3fbceede74dc280466167cff1c623';
+
 const SB_URL = 'https://lvxkfwxjsjmvymzjkfje.supabase.co';
 const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx2eGtmd3hqc2ptdnltemprZmplIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyODI0NjIsImV4cCI6MjA4OTg1ODQ2Mn0.faR6ZGDjNONeuaIHW5tDhWRtRdGWIKvNgUdYVqbQ1d0';
 
@@ -2709,8 +2736,7 @@ async function fetchRecipeFromUrl() {
 
   try {
     // Spoonacular Extract Recipe API — handles all recipe blogs reliably
-    const SPOON_KEY = 'a3c3fbceede74dc280466167cff1c623';
-    const apiUrl = `https://api.spoonacular.com/recipes/extract?url=${encodeURIComponent(url)}&apiKey=${SPOON_KEY}&forceExtraction=false&analyze=false`;
+    const apiUrl = `https://api.spoonacular.com/recipes/extract?url=${encodeURIComponent(url)}&apiKey=${SPOONACULAR_API_KEY}&forceExtraction=false&analyze=false`;
 
     const res = await fetch(apiUrl, { signal: AbortSignal.timeout(15000) });
     if (!res.ok) {
@@ -3315,12 +3341,51 @@ function renderContractsBudget() {
   }).join('');
 }
 
+let _contractFileData = null; // { base64, mediaType }
+let _contractMode = 'upload';
+
+function switchContractMode(mode) {
+  _contractMode = mode;
+  document.getElementById('contract-upload-panel').style.display = mode === 'upload' ? '' : 'none';
+  document.getElementById('contract-paste-panel').style.display = mode === 'paste' ? '' : 'none';
+  document.querySelectorAll('.contract-mode-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('cmode-' + mode).classList.add('active');
+}
+
+function onContractFileSelected(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const preview = document.getElementById('contract-file-preview');
+  const zone = document.getElementById('contract-upload-zone');
+  preview.style.display = '';
+  preview.textContent = `📎 ${file.name} (${(file.size / 1024).toFixed(0)} KB) — ready`;
+  zone.style.borderColor = '#3D6B47';
+  zone.style.background = '#F5FBF5';
+
+  const reader = new FileReader();
+  reader.onload = e => {
+    const dataUrl = e.target.result;
+    const base64 = dataUrl.split(',')[1];
+    const mediaType = file.type || 'application/octet-stream';
+    _contractFileData = { base64, mediaType };
+  };
+  reader.readAsDataURL(file);
+}
+
 function openAddContract() {
+  _contractFileData = null;
+  _contractMode = 'upload';
   document.getElementById('contract-name-input').value = '';
   document.getElementById('contract-date-input').value = '';
   document.getElementById('contract-notes-input').value = '';
   document.getElementById('contract-paste-text').value = '';
   document.getElementById('contract-ai-status').textContent = '';
+  document.getElementById('contract-file-input').value = '';
+  document.getElementById('contract-file-preview').style.display = 'none';
+  const zone = document.getElementById('contract-upload-zone');
+  zone.style.borderColor = '#C8D8C8'; zone.style.background = 'white';
+  // Reset to upload mode
+  switchContractMode('upload');
   document.getElementById('add-contract-overlay').style.display = 'flex';
 }
 
@@ -3329,21 +3394,38 @@ function closeAddContract(e) {
 }
 
 async function extractContractDate() {
-  const text = document.getElementById('contract-paste-text').value.trim();
-  if (!text) { showToast('Paste some contract text first'); return; }
   const btn = document.getElementById('contract-ai-btn');
   const status = document.getElementById('contract-ai-status');
   btn.disabled = true; btn.textContent = 'Reading…';
-  status.textContent = '';
+  status.textContent = ''; status.style.color = '#3D6B47';
+
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
+    let messageContent;
+
+    if (_contractMode === 'upload') {
+      if (!_contractFileData) { showToast('Select a file first'); btn.disabled = false; btn.textContent = 'Read renewal date'; return; }
+      const { base64, mediaType } = _contractFileData;
+      const isPdf = mediaType === 'application/pdf';
+      messageContent = [
+        isPdf
+          ? { type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: base64 } }
+          : { type: 'image', source: { type: 'base64', media_type: mediaType, data: base64 } },
+        { type: 'text', text: 'Extract the renewal date and provider name from this contract. Respond ONLY with JSON: {"name":"provider name or empty string","renewal_date":"YYYY-MM-DD or empty string","notes":"brief note about what to do at renewal or empty string"}' }
+      ];
+    } else {
+      const text = document.getElementById('contract-paste-text').value.trim();
+      if (!text) { showToast('Paste some contract text first'); btn.disabled = false; btn.textContent = 'Read renewal date'; return; }
+      messageContent = `Extract the renewal date and provider name from this contract text:\n\n${text}\n\nRespond ONLY with JSON: {"name":"provider name or empty string","renewal_date":"YYYY-MM-DD or empty string","notes":"brief note about what to do at renewal or empty string"}`;
+    }
+
+    const res = await fetch('/.netlify/functions/anthropic-proxy', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 300,
-        system: 'You extract contract renewal information. Respond ONLY with a JSON object with these fields: {"name": "provider/contract name or empty string", "renewal_date": "YYYY-MM-DD or empty string", "notes": "brief note about what to do at renewal or empty string"}. No other text.',
-        messages: [{ role: 'user', content: `Extract the renewal date and provider name from this contract text:\n\n${text}` }]
+        system: 'You extract contract renewal information. Respond ONLY with a JSON object. No other text, no markdown.',
+        messages: [{ role: 'user', content: messageContent }]
       })
     });
     const data = await res.json();
