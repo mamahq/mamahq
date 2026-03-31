@@ -894,7 +894,46 @@
   .ing-picker-footer { padding: 12px 20px 0; flex-shrink: 0; }
   .ing-picker-add-btn { width: 100%; padding: 15px; border-radius: 14px; background: #1A1A1A; color: white; border: none; font-size: 0.85rem; font-weight: 600; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: opacity 0.15s; }
   .ing-picker-add-btn:disabled { opacity: 0.35; background: #C0C0C0; }
-</style>
+
+  /* CONTRACTS & RENEWALS */
+  .renewal-card { background: white; border-radius: 16px; padding: 4px 15px; display: flex; flex-direction: column; }
+  .renewal-row { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid #F0F5F0; }
+  .renewal-row:last-child { border-bottom: none; }
+  .renewal-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .renewal-dot.urgent { background: #E05252; }
+  .renewal-dot.soon { background: #E8A838; }
+  .renewal-dot.ok { background: #4A9B6A; }
+  .renewal-info { flex: 1; min-width: 0; }
+  .renewal-name { font-size: 0.82rem; font-weight: 500; color: #1A1A1A; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .renewal-date { font-size: 0.63rem; color: #8FA98F; margin-top: 1px; }
+  .renewal-badge { font-size: 0.63rem; font-weight: 700; padding: 3px 9px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; }
+  .renewal-badge.urgent { background: #FEE8E8; color: #C0392B; }
+  .renewal-badge.soon { background: #FEF3E2; color: #C07A00; }
+  .renewal-badge.ok { background: #EAF2EA; color: #3D6B47; }
+  .renewal-manage-btn { font-size: 0.65rem; color: #8FA98F; background: none; border: none; cursor: pointer; padding: 6px 0; font-family: 'Plus Jakarta Sans', sans-serif; text-align: right; }
+
+  /* CONTRACTS IN BUDGET SCREEN */
+  .contracts-section { padding: 16px 20px 8px; }
+  .contracts-section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .contracts-section-title { font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: #5A725A; font-weight: 600; }
+  .contract-add-btn { background: none; border: 1.5px solid #3D6B47; color: #3D6B47; border-radius: 10px; padding: 5px 12px; font-size: 0.72rem; font-weight: 600; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; }
+  .contract-item { background: white; border-radius: 14px; padding: 12px 15px; margin-bottom: 8px; display: flex; align-items: center; gap: 12px; }
+  .contract-item-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .contract-item-info { flex: 1; min-width: 0; }
+  .contract-item-name { font-size: 0.85rem; font-weight: 600; color: #1A1A1A; }
+  .contract-item-meta { font-size: 0.7rem; color: #8FA98F; margin-top: 2px; }
+  .contract-item-badge { font-size: 0.63rem; font-weight: 700; padding: 3px 9px; border-radius: 20px; }
+  .contract-item-delete { background: none; border: none; color: #C8D8C8; font-size: 0.85rem; cursor: pointer; padding: 4px 6px; flex-shrink: 0; }
+  .contract-item-delete:active { color: #E05252; }
+
+  /* ADD CONTRACT SHEET */
+  .contract-ai-box { background: #EAF2EA; border-radius: 14px; padding: 13px 14px; margin-bottom: 14px; }
+  .contract-ai-label { font-size: 0.65rem; font-weight: 700; color: #3D6B47; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+  .contract-ai-textarea { width: 100%; border: 1.5px solid #C8D8C8; border-radius: 10px; padding: 10px 12px; font-size: 0.78rem; font-family: 'Plus Jakarta Sans', sans-serif; color: #1A1A1A; resize: none; background: white; outline: none; height: 80px; }
+  .contract-ai-textarea:focus { border-color: #3D6B47; }
+  .contract-ai-btn { background: #3D6B47; color: white; border: none; border-radius: 10px; padding: 9px 16px; font-size: 0.75rem; font-weight: 600; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; margin-top: 8px; width: 100%; transition: opacity 0.15s; }
+  .contract-ai-btn:disabled { opacity: 0.5; }
+  .contract-ai-status { font-size: 0.72rem; color: #3D6B47; margin-top: 6px; font-weight: 500; min-height: 18px; }</style>
 </head>
 <body>
 <div id="app">
@@ -961,6 +1000,11 @@
         <div class="tasks-card" style="padding: 0 15px">
           <div class="upcoming-list" id="upcoming-list"></div>
         </div>
+      </div>
+      <div class="fade-in" id="renewals-home-section" style="display:none">
+        <div class="section-title">Upcoming renewals</div>
+        <div class="renewal-card" id="renewals-home-list"></div>
+        <button class="renewal-manage-btn" onclick="showScreen('budget');setTimeout(()=>document.getElementById('contracts-section').scrollIntoView({behavior:'smooth'}),200)">Manage contracts →</button>
       </div>
       <div class="fade-in">
         <div class="section-title">This week's shop</div>
@@ -1241,6 +1285,14 @@
       <div class="expense-section">
         <div class="expense-section-title">Recent expenses</div>
         <div id="expense-list"></div>
+      </div>
+      <!-- CONTRACTS -->
+      <div class="contracts-section" id="contracts-section">
+        <div class="contracts-section-header">
+          <div class="contracts-section-title">Contracts & renewals</div>
+          <button class="contract-add-btn" onclick="openAddContract()">+ Add</button>
+        </div>
+        <div id="contracts-list"><div style="font-size:0.75rem;color:#8FA98F;font-style:italic;padding:8px 0">No contracts yet — tap + to add one</div></div>
       </div>
     </div>
     <button class="fab" onclick="openAddExpense()">+</button>
@@ -1758,6 +1810,44 @@
       <div class="ing-prompt-btns">
         <button class="ing-prompt-yes" onclick="showIngPicker()">Yes, pick ingredients</button>
         <button class="ing-prompt-no" onclick="skipIngredients()">No thanks, just save meal</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD CONTRACT SHEET -->
+  <div id="add-contract-overlay" class="overlay" style="display:none" onclick="closeAddContract(event)">
+    <div class="bottom-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header" style="position:relative">
+        <div class="sheet-eyebrow">Budget</div>
+        <button class="sheet-close" onclick="document.getElementById('add-contract-overlay').style.display='none'">✕</button>
+        <div class="sheet-title">Add a contract</div>
+        <div class="sheet-sub" style="display:block;font-size:0.75rem;color:#8FA98F">Track renewal dates so you never get auto-renewed</div>
+      </div>
+      <div class="sheet-body">
+        <!-- AI EXTRACT -->
+        <div class="contract-ai-box">
+          <div class="contract-ai-label">✦ Paste contract text — AI reads the renewal date</div>
+          <textarea class="contract-ai-textarea" id="contract-paste-text" placeholder="Paste any text from your contract or bill — the renewal date, provider name, or any relevant details…"></textarea>
+          <button class="contract-ai-btn" id="contract-ai-btn" onclick="extractContractDate()">Read renewal date</button>
+          <div class="contract-ai-status" id="contract-ai-status"></div>
+        </div>
+        <!-- MANUAL FIELDS -->
+        <div class="form-field" style="margin-bottom:12px">
+          <div class="form-label">Contract / provider name</div>
+          <input class="form-input" id="contract-name-input" type="text" placeholder="e.g. Telstra, Gym, Netflix">
+        </div>
+        <div class="form-field" style="margin-bottom:12px">
+          <div class="form-label">Renewal date</div>
+          <input class="form-input" id="contract-date-input" type="date">
+        </div>
+        <div class="form-field" style="margin-bottom:12px">
+          <div class="form-label">Notes (optional)</div>
+          <input class="form-input" id="contract-notes-input" type="text" placeholder="e.g. Call to renegotiate, cancel if price goes up">
+        </div>
+      </div>
+      <div class="sheet-footer">
+        <button class="save-btn" onclick="saveContract()">✓ Save contract</button>
       </div>
     </div>
   </div>
@@ -3146,6 +3236,160 @@ function newJoyPrompt(){currentJoyIdx=(currentJoyIdx+1)%JOY_PROMPTS.length;docum
 
 function toggleStretch(idx){const card=document.getElementById('sc-'+idx);if(!card)return;const isOpen=card.classList.contains('open');for(let i=0;i<5;i++){const c=document.getElementById('sc-'+i);if(c)c.classList.remove('open');}if(!isOpen)card.classList.add('open');}
 
+// ── CONTRACTS & RENEWALS ─────────────────────────────────────
+let allContracts = [];
+
+function getDaysUntil(dateStr) {
+  if (!dateStr) return null;
+  const d = new Date(dateStr + 'T00:00:00');
+  const diff = Math.round((d - today) / (1000 * 60 * 60 * 24));
+  return diff;
+}
+
+function renewalClass(days) {
+  if (days === null) return 'ok';
+  if (days <= 14) return 'urgent';
+  if (days <= 30) return 'soon';
+  return 'ok';
+}
+
+function renewalBadgeText(days) {
+  if (days === null) return '';
+  if (days < 0) return 'Overdue';
+  if (days === 0) return 'Today!';
+  if (days === 1) return 'Tomorrow';
+  return `${days} days`;
+}
+
+function renderContractsHome() {
+  const section = document.getElementById('renewals-home-section');
+  const list = document.getElementById('renewals-home-list');
+  if (!section || !list) return;
+
+  // Only show contracts renewing within 60 days
+  const upcoming = allContracts
+    .map(c => ({ ...c, days: getDaysUntil(c.renewal_date) }))
+    .filter(c => c.days !== null && c.days <= 60)
+    .sort((a, b) => a.days - b.days);
+
+  if (upcoming.length === 0) { section.style.display = 'none'; return; }
+  section.style.display = '';
+
+  list.innerHTML = upcoming.map(c => {
+    const cls = renewalClass(c.days);
+    const badge = renewalBadgeText(c.days);
+    const dateLabel = new Date(c.renewal_date + 'T00:00:00').toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
+    return `<div class="renewal-row">
+      <div class="renewal-dot ${cls}"></div>
+      <div class="renewal-info">
+        <div class="renewal-name">${c.name}</div>
+        <div class="renewal-date">Renews ${dateLabel}${c.notes ? ' · ' + c.notes : ''}</div>
+      </div>
+      <div class="renewal-badge ${cls}">${badge}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderContractsBudget() {
+  const list = document.getElementById('contracts-list');
+  if (!list) return;
+  if (allContracts.length === 0) {
+    list.innerHTML = `<div style="font-size:0.75rem;color:#8FA98F;font-style:italic;padding:8px 0">No contracts yet — tap + to add one</div>`;
+    return;
+  }
+  const sorted = [...allContracts].sort((a, b) => (a.renewal_date || '').localeCompare(b.renewal_date || ''));
+  list.innerHTML = sorted.map(c => {
+    const days = getDaysUntil(c.renewal_date);
+    const cls = renewalClass(days);
+    const badge = days !== null ? renewalBadgeText(days) : '';
+    const dateLabel = c.renewal_date ? new Date(c.renewal_date + 'T00:00:00').toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' }) : '';
+    return `<div class="contract-item">
+      <div class="contract-item-dot ${cls === 'urgent' ? 'renewal-dot urgent' : cls === 'soon' ? 'renewal-dot soon' : 'renewal-dot ok'}"></div>
+      <div class="contract-item-info">
+        <div class="contract-item-name">${c.name}</div>
+        <div class="contract-item-meta">${dateLabel}${c.notes ? ' · ' + c.notes : ''}</div>
+      </div>
+      ${badge ? `<div class="contract-item-badge renewal-badge ${cls}">${badge}</div>` : ''}
+      <button class="contract-item-delete" onclick="deleteContract('${c.id}')">✕</button>
+    </div>`;
+  }).join('');
+}
+
+function openAddContract() {
+  document.getElementById('contract-name-input').value = '';
+  document.getElementById('contract-date-input').value = '';
+  document.getElementById('contract-notes-input').value = '';
+  document.getElementById('contract-paste-text').value = '';
+  document.getElementById('contract-ai-status').textContent = '';
+  document.getElementById('add-contract-overlay').style.display = 'flex';
+}
+
+function closeAddContract(e) {
+  if (e.target.id === 'add-contract-overlay') document.getElementById('add-contract-overlay').style.display = 'none';
+}
+
+async function extractContractDate() {
+  const text = document.getElementById('contract-paste-text').value.trim();
+  if (!text) { showToast('Paste some contract text first'); return; }
+  const btn = document.getElementById('contract-ai-btn');
+  const status = document.getElementById('contract-ai-status');
+  btn.disabled = true; btn.textContent = 'Reading…';
+  status.textContent = '';
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 300,
+        system: 'You extract contract renewal information. Respond ONLY with a JSON object with these fields: {"name": "provider/contract name or empty string", "renewal_date": "YYYY-MM-DD or empty string", "notes": "brief note about what to do at renewal or empty string"}. No other text.',
+        messages: [{ role: 'user', content: `Extract the renewal date and provider name from this contract text:\n\n${text}` }]
+      })
+    });
+    const data = await res.json();
+    const raw = data.content?.find(b => b.type === 'text')?.text || '{}';
+    const parsed = JSON.parse(raw.replace(/```json|```/g, '').trim());
+    if (parsed.name) document.getElementById('contract-name-input').value = parsed.name;
+    if (parsed.renewal_date) document.getElementById('contract-date-input').value = parsed.renewal_date;
+    if (parsed.notes) document.getElementById('contract-notes-input').value = parsed.notes;
+    status.textContent = parsed.renewal_date ? `✓ Found renewal date: ${parsed.renewal_date}` : 'No date found — enter it manually below';
+    status.style.color = parsed.renewal_date ? '#3D6B47' : '#E8A838';
+  } catch(e) {
+    console.error(e);
+    status.textContent = 'Could not read — enter details manually';
+    status.style.color = '#E05252';
+  } finally {
+    btn.disabled = false; btn.textContent = 'Read renewal date';
+  }
+}
+
+async function saveContract() {
+  const name = document.getElementById('contract-name-input').value.trim();
+  const date = document.getElementById('contract-date-input').value;
+  const notes = document.getElementById('contract-notes-input').value.trim();
+  if (!name) { document.getElementById('contract-name-input').style.borderColor = 'var(--terracotta)'; return; }
+  try {
+    const inserted = await sbPost('contracts', { name, renewal_date: date || null, notes: notes || null });
+    if (inserted && inserted[0]) allContracts.push(inserted[0]);
+    document.getElementById('add-contract-overlay').style.display = 'none';
+    renderContractsHome();
+    renderContractsBudget();
+    showToast('Contract saved!');
+  } catch(e) {
+    console.error(e); showToast('Could not save contract');
+  }
+}
+
+async function deleteContract(id) {
+  try {
+    await sbDelete('contracts', id);
+    allContracts = allContracts.filter(c => c.id !== id);
+    renderContractsHome();
+    renderContractsBudget();
+    showToast('Removed');
+  } catch(e) { console.error(e); }
+}
+
 // ── INIT ─────────────────────────────────────────────────────
 async function init() {
   document.getElementById('greeting-label').textContent = getGreeting();
@@ -3154,7 +3398,7 @@ async function init() {
   const hideLoader=()=>document.getElementById('loading').classList.add('hidden');
   const loaderTimeout=setTimeout(hideLoader,3000);
   const safe=(p)=>p.catch(e=>{console.warn('Fetch failed:',e.message);return[];});
-  const [meals,mealPlan,tasks,events,grocery,nudges,budgetCats,expenses]=await Promise.all([
+  const [meals,mealPlan,tasks,events,grocery,nudges,budgetCats,expenses,contracts]=await Promise.all([
     safe(sb('meals','?order=meal_name')),
     safe(sb('meal_plan','?order=date.asc')),
     safe(sb('tasks','?order=due_date.asc')),
@@ -3162,11 +3406,13 @@ async function init() {
     safe(sb('grocery','?ticked=eq.false&order=created_at.asc')),
     safe(sb('fill_your_cup','?order=date.desc&limit=5')),
     safe(sb('budget','?order=category.asc')),
-    safe(sb('expenses','?order=date.desc'))
+    safe(sb('expenses','?order=date.desc')),
+    safe(sb('contracts','?order=renewal_date.asc'))
   ]);
-  allMeals=meals;allMealPlan=mealPlan;allTasksCache=tasks;allEvents=events;allGrocery=grocery;allBudgetCats=budgetCats;allExpenses=expenses;
-  console.log('Loaded:',{meals:meals.length,mealPlan:mealPlan.length,tasks:tasks.length,events:events.length,grocery:grocery.length});
+  allMeals=meals;allMealPlan=mealPlan;allTasksCache=tasks;allEvents=events;allGrocery=grocery;allBudgetCats=budgetCats;allExpenses=expenses;allContracts=contracts;
+  console.log('Loaded:',{meals:meals.length,mealPlan:mealPlan.length,tasks:tasks.length,events:events.length,grocery:grocery.length,contracts:contracts.length});
   renderTodayMeals(mealPlan,meals);renderTasks(tasks);renderUpcoming(events);renderGrocery(grocery);renderCup(nudges);
+  renderContractsHome();renderContractsBudget();
   clearTimeout(loaderTimeout);hideLoader();
 }
 
